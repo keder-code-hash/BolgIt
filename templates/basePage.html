@@ -1,0 +1,61 @@
+{% load rest_framework %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                      </button>
+                      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                            <li class="nav-item" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="navbar-text">
+                                    <h1>BlogIt</h1>
+                              </span>
+                            </li>
+                            <li class="m-2 nav-item" data-toggle="collapse" data-target=".navbar-collapse">
+                                <a class="nav-link" href="{% url 'homePage' %}">Home</a>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav">
+                             {% if is_authenticated %}
+                                <li class="nav-item" >
+                                <a class="nav-link" href="{% url 'profile' %}" >MyProfile</a>
+                                </li>
+                                <li class="nav-item right" data-toggle="collapse" data-target=".navbar-collapse ">
+                                    <a href={%url 'createpost' %} class=" btn btn-outline-light px-5" role="button" >Post</a>
+                                    </li>
+                                <li class="nav-item" >
+                                    <a href={%url 'logout' %} class=" btn btn-outline-light px-5" role="button">LogOut</a>
+                                </li>
+                            {% else %}
+                                <li class="nav-item right" data-toggle="collapse" data-target=".navbar-collapse">
+                                <a href="{%url 'register' %}" class="btn btn-outline-light px-5 " role="button" >Signup</a>
+                                </li>
+                                <li class="nav-item right" data-toggle="collapse" data-target=".navbar-collapse">
+                                    <a href={%url 'login' %} class=" btn btn-outline-light px-5" role="button" >Login</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+    </div>
+    {% block content %}
+
+    {% endblock %}
+</body>
+</html>
+
+

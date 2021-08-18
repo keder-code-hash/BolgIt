@@ -1,0 +1,89 @@
+{% extends 'basePage.html' %}
+{% block content %}
+<!DOCTYPE html>
+{% load static %}
+{% load rest_framework %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="/static/js/jquery-3.1.1.min.js"></script>
+    <script src="/static/js/jquery.waypoints.min.js"></script>
+</head>
+<body>
+  <form action="{% url 'allPostView' %}" method="GET">
+    <div class="container-fluid ">
+      <div class="mt-sm-5 ml-sm-5 row">
+        <div class="col-sm-2"> </div>
+        <div class="col-sm-6">
+          <div class="container">
+            {% for post in posts %}
+              {% if post.status == "p" %}
+                <div class="col-md-auto infinite-item">
+                  <div id="colorTag" class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" style="background-color:powderblue;">
+                    <div class="col p-4 d-flex flex-column position-static">
+                      <strong class="d-inline-block mb-2 text-primary">{{ post.catagory }}</strong>
+                      <h3 class="mb-0">{{ post.post_title }}</h3>
+                      <div class="mb-1 text-muted">{{ post.post_created }}</div>
+                      <p class="card-text mb-auto">{{ post.content }}</p>
+                      <!-- <a href={% url 'postView' post.id %} class="stretched-link">Continue reading</a> -->
+                      <a href="{%url 'postUpdate' post.id%}" class="btn btn-primary" style="width: auto;">EditPost</a>
+                      <a id="del" class="mt-2 btn btn-danger" onclick="checkFunction('{{post.id}}')" style="width: auto;">DeletePost</a>
+                      
+                   
+                    </div>
+                    <div class="col-auto d-none d-lg-block">
+                      <img class="bd-placeholder-img"  src={% static '2.jfif' %} class="card-img-top" >
+                    </div>
+                  </div>
+                </div>
+              {% else %}
+                <div class="col-md-auto infinite-item">
+                  <div id="colorTag" class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" style="background-color:pink;">
+                    <div class="col p-4 d-flex flex-column position-static">
+                      <strong class="d-inline-block mb-2 text-primary">Post Tag</strong>
+                      <h3 class="mb-0">{{ post.post_title }}  </h3>
+                      <div class="mb-1 text-muted">{{ post.post_created }}</div>
+                      <p class="card-text mb-auto">{{ post.content }}</p>
+                      <!-- <a href={% url 'postView' post.id %} class="stretched-link">Continue reading</a> -->
+                      <a href="{%url 'postUpdate' post.id%}" class="btn btn-primary" style="width:auto;">EditPost</a>
+                      <a id="del" class="mt-2 btn btn-danger" onclick="checkFunction('{{post.id}}')" style="width: auto;">DeletePost</a>
+                    </div>
+                    <div class="col-auto d-none d-lg-block">
+                      <img class="bd-placeholder-img"  src={% static '2.jfif' %} class="card-img-top" >
+                    </div>
+                  </div>
+                </div>
+              {%endif%}
+            {% endfor %}
+            <script>
+              function checkFunction(postId){
+                $.ajax({
+                  type:'GET',
+                  url:'{%url 'deletePost' %}',
+                  dataType:'JSON',
+                  data:{
+                    "post_id":postId
+                  },
+                  success:function(response)
+                  {
+                    if(response==true)
+                    {
+                      window.location='{% url 'allPostView' %}';
+                    }
+                    else{
+                      alert("No Posts!");
+                    }
+                  }
+                })
+              }
+            </script>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</body>
+</html>
+{%endblock%}
