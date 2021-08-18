@@ -136,6 +136,7 @@ USE_TZ = True
 #     '/var/www/static/',
 # ]
 STATIC_URL = '/static/'
+STATIC_ROOT=os.path.join(BASE_DIR,'saticfiles')
 STATICFILES_DIRS = [
     "static",
 ]
