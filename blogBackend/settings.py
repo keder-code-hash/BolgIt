@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'markdown',
     'django_editorjs_fields',
 ]
-ALLOWED_HOSTS = ['0.0.0.0','127.0.0.1']
+ALLOWED_HOSTS = ['0.0.0.0','127.0.0.1','sheltered-journey-30026.herokuapp.com']
 
 
 # Application definition
