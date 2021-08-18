@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'markdown',
     'django_editorjs_fields',
 ]
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0','127.0.0.1']
 
 
 # Application definition
@@ -131,15 +131,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-
+# STATICFILES_DIRS = [
+#     BASE_DIR/"static",
+#     '/var/www/static/',
+# ]
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    "static"
+    "static",
 ]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIAFILES_DIRS = [
-    "media"
+    "media",
 ]
 AUTH_USER_MODEL='users.Register'
-EDITORJS_VERSION = '2.19.0'
