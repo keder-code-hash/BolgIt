@@ -85,14 +85,20 @@ WSGI_APPLICATION = 'blogBackend.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+#'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'datsl1e8l5o49q',
+        'HOST':'ec2-54-211-160-34.compute-1.amazonaws.com',
+        'PORT':'5432',
+        'USER':'bjileynlnjxyjf',
+        'PASSWORD':'79b4884c310ecd09b50f3c0dcbb102cee7304507436cda289f132de1f93e9b48'
     }
 }
-
+# postgres://bjileynlnjxyjf:79b4884c310ecd09b50f3c0dcbb102cee7304507436cda289f132de1f93e9b48@ec2-54-211-160-34.compute-1.amazonaws.com:5432/datsl1e8l5o49q
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
