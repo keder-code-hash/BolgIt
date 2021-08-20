@@ -19,7 +19,7 @@
                             <div class="card-text">
                                 <div>
                                     <div class="form-group">
-                                        <input type="emailid" class="form-control" placeholder="enter your regestired email" name="emailid"
+                                        <input type="email" class="form-control" placeholder="enter your regestired email" name="emailid"
                                         value="{{ emailid }}">
                                     </div>
                                     {% if form.emailid.errors %}
@@ -28,7 +28,7 @@
                                         </div>
                                     {% endif %}
                                     <div class="form-group">
-                                        <input type="user_password" class="form-control" placeholder="enter the password" name="user_password"
+                                        <input type="password" class="form-control" placeholder="enter the password" name="user_password"
                                         value="{{ user_password }}">
                                     </div>
                                     {% if form.user_password.errors %}
@@ -38,7 +38,7 @@
                                     {% endif %}
                                     <div class="text-center">
                                         <button type="submit" class="btn btn-block btn-warning"">
-                                            Submit
+                                            LogIn
                                         </button>
                                     </div>
                                 </div>

@@ -198,6 +198,7 @@ def UpdatePost(request,pk):
                 obj=Posts(**values)
                 obj.save()
             # print(values)
+            return redirect('allPostView')
             
         postData=Posts.objects.get(id=pk)
         form=postsCreateForm()
