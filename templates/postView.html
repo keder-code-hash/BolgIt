@@ -58,7 +58,7 @@
                                                 case "paragraph":
                                                     const par = document.createElement("p");
                                                     par.innerHTML = blocks[ind].data.text;
-                                                    postBody.appendChild(par)
+                                                    postBody.appendChild(par);
                                                     break;
                                                 case "Image":
                                                     let div=document.createElement("div")
@@ -111,6 +111,52 @@
                                                     pr.style.padding = "15px";
                                                     cd.appendChild(pr);
                                                     postBody.appendChild(cd);
+                                                    break;
+                                                case "List":
+                                                    if(blocks[ind].data.style==="unordered")
+                                                    {
+                                                        let List=document.createElement("ul");
+                                                        for(let j=0;j<blocks[ind].data.items.length;j++)
+                                                        {
+                                                            let data=blocks[ind].data.items[j];
+                                                            let ldiv=document.createElement("li");
+                                                            ldiv.innerHTML=data;
+                                                            List.appendChild(ldiv);
+                                                        }
+                                                        postBody.appendChild(List);
+                                                    }
+                                                    if(blocks[ind].data.style==="ordered")
+                                                    {
+                                                        let List=document.createElement("ol");
+                                                        for(let j=0;j<blocks[ind].data.items.length;j++)
+                                                        {
+                                                            let data=blocks[ind].data.items[j];
+                                                            let ldiv=document.createElement("li");
+                                                            ldiv.innerHTML=data;
+                                                            List.appendChild(ldiv);
+                                                        }
+                                                        postBody.appendChild(List);
+                                                    }
+                                                    break;
+                                                case "Checklist":
+                                                    var totList=blocks[ind].data.items.length;
+                                                    for(var j=0;j<totList;j++)
+                                                    {
+                                                        var x = document.createElement("DIV");
+                                                        var inp=document.createElement("INPUT");                                                         	 
+                                                        inp.setAttribute("type","checkbox");
+                                                        inp.setAttribute("id","val");
+                                                        inp.setAttribute("val","val");
+                                                        inp.setAttribute("checked","false");
+                                                        console.log(blocks[ind].data.items[j].checked);
+                                                        var data=blocks[ind].data.items[j].text;
+                                                        var t = document.createTextNode(data);
+                                                        var lev=document.createElement("LABEL");
+                                                        lev.setAttribute("for","val");
+                                                        lev.appendChild(t);
+                                                        x.append(inp,lev);
+                                                        postBody.appendChild(x);
+                                                    }
                                                     break;
                                                 case "Table":
                                                     let Div=document.createElement("div");

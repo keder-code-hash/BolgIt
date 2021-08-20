@@ -179,9 +179,9 @@ def is_authenticated_user(request):
                 return True
             else:
                 return False
-        except jwt.ExpiredSignatureError or jwt.DecodeError:
-            # raise exceptions.AuthenticationFailed('signature expired')
-            # custom_log_out(request)
+        except jwt.ExpiredSignatureError as ex:
+            custom_log_out(request)
+        except jwt.DecodeError:
             return False
         except Register.DoesNotExist as ne:
             raise exceptions.AuthenticationFailed('invalid email id')
