@@ -53,7 +53,7 @@
                                         const postBody=document.getElementById("postBody");
                                         let body=JSON.parse("{{ body_custom | escapejs}}");
                                         // console.log("length of the block is: ",JSON.parse(body.body_custom).blocks);
-                                        let blocks=body.body_custom.blocks;
+                                        let blocks=JSON.parse(body.body_custom).blocks;
                                         for(let ind=0;ind<=blocks.length;ind++){
                                             switch (blocks[ind].type) {
                                                 case "paragraph":
