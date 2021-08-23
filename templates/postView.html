@@ -52,13 +52,22 @@
                                     {
                                         const postBody=document.getElementById("postBody");
                                         let body=JSON.parse("{{ body_custom | escapejs}}");
-                                        const blocks=JSON.parse(body.body_custom).blocks;
+                                        // console.log("length of the block is: ",JSON.parse(body.body_custom).blocks);
+                                        let blocks=body.body_custom.blocks;
                                         for(let ind=0;ind<=blocks.length;ind++){
                                             switch (blocks[ind].type) {
                                                 case "paragraph":
                                                     const par = document.createElement("p");
                                                     par.innerHTML = blocks[ind].data.text;
-                                                    postBody.appendChild(par);
+                                                    postBody.appendChild(par)
+                                                    break;
+                                                case "Header":
+                                                    let size=blocks[ind].data.level;
+                                                    let text=blocks[ind].data.text;
+                                                    const headerTag="h"+size;
+                                                    let header=document.createElement(headerTag);
+                                                    header.innerHTML=text;
+                                                    postBody.appendChild(header);
                                                     break;
                                                 case "Image":
                                                     let div=document.createElement("div")
@@ -143,7 +152,7 @@
                                                     for(var j=0;j<totList;j++)
                                                     {
                                                         var x = document.createElement("DIV");
-                                                        var inp=document.createElement("INPUT");                                                         	 
+                                                        var inp=document.createElement("INPUT");                                                             
                                                         inp.setAttribute("type","checkbox");
                                                         inp.setAttribute("id","val");
                                                         inp.setAttribute("val","val");
@@ -169,8 +178,9 @@
                                                     tableDiv.style.padding='20px'
                                                     tableDiv.style.margin='auto'
                                                     let st='border: 1px solid #dddddd; text-align: left;padding: 8px;'
+                                                    let rowNo=blocks[ind].data.content.length;
                                                     let columNo=blocks[ind].data.content[0].length;
-                                                    for (let i=0;i<columNo;i++){
+                                                    for (let i=0;i<rowNo;i++){
                                                         let tableRow=document.createElement("tr");
                                                         if(i===0){
                                                             for(let j=0;j<columNo;j++){

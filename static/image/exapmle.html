@@ -1,39 +1,39 @@
-{% extends 'basePage.html' %}  
-{%block content%}
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link  href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/raw"></script>
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/checklist@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/list@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/quote@latest"></script>
-  <script src={% static 'js/jquery-3.1.1.min.js' %}></script>
-  <script src={%static 'js/jquery.waypoints.min.js' %}></script>
-  <script src={% static 'image/simple-image.js' %}></script>
-  <link href={% static 'image/simple-image.css' %} >
+  <script src="simple-image.js"></script>
+  <link href="simple-image.css" rel="stylesheet"/>
 </head>
 <body>
   <div class="container">
     <div class="row">
       <div class="col-sm-2"></div>
       <div class="col-sm-8  mt-5">
+        <form>
           <div class="form-group">
-            <label for="post_title">Post Title</label>
-            <input type="text" class="form-control" id="PostTitle" aria-describedby="textHelp" >
+            <label for="exampleInputEmail1">Post Title</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="textHelp">
             <small id="textHelp" class="form-text text-muted">Enter your Post title Here.</small>
           </div>
           <div class="form-group">
-            <label for="post_category">Catagory</label>
-            <input type="text" class="form-control" id="postCatagory" aria-describedby="textHelp">
+            <label for="exampleInputPassword1">Catagory</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" aria-describedby="textHelp">
             <small id="textHelp" class="form-text text-muted">Enter your Post Catagory Here.</small>
           </div>
           <div id="editorjs"></div>
+          <!-- <button id="save-button">Save</button> -->
           <script>
               const editor = new EditorJS({
                 autofocus: true,
@@ -70,6 +70,35 @@
                       }
                     },
                   },
+                data: {
+                "time": 1629485619122,
+                "blocks": [
+                    {
+                        "id": "RW__EHSwKo",
+                        "type": "image",
+                        "data": {
+                            "url": "https://cdn.pixabay.com/photo/2017/09/01/21/53/blue-2705642_1280.jpg",
+                            "caption": "newCaption"
+                        }
+                    },
+                    {
+                        "id": "ydva1RZmRD",
+                        "type": "header",
+                        "data": {
+                            "text": "newHeader",
+                            "level": 3
+                        }
+                    },
+                    {
+                        "id": "hxZiZFKDV1",
+                        "type": "paragraph",
+                        "data": {
+                            "text": "new Text."
+                        }
+                    }
+                    ],
+                    "version": "2.22.2"
+                }
               });
               
           </script>
@@ -81,43 +110,17 @@
             <input class="form-check-input" type="radio" name="status" id="inlineRadio2" value="p">
             <label class="form-check-label" for="inlineRadio2">Publish</label>
           </div>
-        </br>
           <button id="save-data" type="submit" class="btn btn-primary">Submit</button>
+        </form>
         <script>
-          
           const but=document.getElementById('save-data');
           but.addEventListener('click',()=>
               {
-                editor.save().then(savedData=>
-                    {
-                        postData=JSON.stringify(savedData,null,4);
-                        $.ajax({
-                          type:'POST',
-                          url:'{%url 'createpost'%}',
-                          dataType:'JSON',
-                          headers: {
-                            'Access-Control-Allow-Credentials' : true,
-                            'Access-Control-Allow-Origin':'*',
-                            'Access-Control-Allow-Methods':'POST',
-                            'Access-Control-Allow-Headers':'application/json',
-                          },
-                          data:{
-                              "postTitle":document.getElementById('PostTitle')!==null ? document.getElementById('PostTitle').value : '',
-                              "postCatagory":document.getElementById('PostTitle')!==null ? document.getElementById('postCatagory').value : '',
-                              "postStatus":document.getElementsByName('status')[0].checked==true ? document.getElementsByName('status')[0].value : document.getElementsByName('status')[1].value,
-                              "postData":postData
-                          },
-                          success:function(response){
-                            if(response==true)
-                            {
-                              window.location='{%url 'homePage' %}';
-                            }
-                            else{
-                              alert("Please Enter the Post title and Category");
-                            }
-                          }
-                      })
-                    })
+                  editor.save().then(savedData=>
+                  {
+                      // output.innerHTML=JSON.stringify(savedData,null,4);
+                      console.log(JSON.stringify(savedData,null,4));
+                  })
               })
         </script>
       </div>
@@ -125,7 +128,7 @@
   </div>
 </body>
 </html>
-{%endblock%}
+
 
 
 
