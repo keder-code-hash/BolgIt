@@ -136,27 +136,31 @@ def singlepostView(request,pk):
         }
     return render(request,'postView.html',context)
 
+@csrf_exempt
 def createPostView(request):
     access = request.COOKIES.get('accesstoken')
     decoded_data = jwt.decode(access, settings.SECRET_KEY, algorithms="HS256")
     email_id = decoded_data.get('email')
     user = Register.objects.get(email__iexact=email_id)
     if request.method=="POST":
-        postStatus=OrderedDict(request.POST).get('status')
-        form=postsCreateForm(request.POST)
-        if form.is_valid():
-            postData=form.save(commit=False)
-            postData.owner=user
-            postData.status=postStatus
-            context = {
-                'form': form,
-                'is_authenticated': is_authenticated_user(request),
-            }
-            postData.save()
-            return redirect('homePage')
-    form=postsCreateForm()
+        title=request.POST.get('postTitle')
+        catagory=request.POST.get('postCatagory')
+        status=request.POST.get('postStatus')
+        data=request.POST.get('postData')
+        print(len(title))
+        if status is None:
+            status="d"
+        ret_stat=False
+        if len(title)>0 and len(catagory)>0:
+            try:
+                Posts.objects.create(post_title=title,catagory=catagory,body_custom=data,status=status,owner=user)
+                ret_stat=True
+            except Posts.DoesNotExist:
+                ret_stat=False
+        else:
+            ret_stat=False
+        return JsonResponse(ret_stat,safe=False)
     context={
-        'form': form,
         'is_authenticated': is_authenticated_user(request),
     }
     return render(request,'createPost.html',context)
@@ -178,16 +182,16 @@ def UserPostView(request):
             print("user doesnot exist")
         return render(request,'UserPostView.html',context)
 
+@csrf_exempt
 def UpdatePost(request,pk):
     try:
         auth=is_authenticated_user(request)
         if request.method=="POST":
-            form=OrderedDict(request.POST)
             values={
-                'post_title':form.get('post_title'),
-                'post_catagory':form.get('post_catagory'),
-                'body_custom':form.get('body_custom'),
-                'status':form.get('status')
+                'post_title':request.POST.get('postTitle'),
+                'catagory':request.POST.get('postCatagory'),
+                'body_custom':request.POST.get('postData'),
+                'status':request.POST.get('postStatus')
             }
             try:
                 obj=Posts.objects.get(id=pk)
@@ -197,15 +201,15 @@ def UpdatePost(request,pk):
             except Posts.DoesNotExist:
                 obj=Posts(**values)
                 obj.save()
-            # print(values)
-            return redirect('allPostView')
-            
+            print(values)
+            return JsonResponse(True,safe=False)
         postData=Posts.objects.get(id=pk)
-        form=postsCreateForm()
+        values=list(Posts.objects.filter(id=pk).values('body_custom'))
+        json_values=json.dumps(values[0])
         context = {
                 'id':pk,
-                'form': form,
-                'post':postData,
+                'body_custom':json_values,
+                'data':postData,
                 'is_authenticated': auth,
             }
         return render(request,'postUpdate.html',context)

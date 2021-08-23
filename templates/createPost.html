@@ -1,44 +1,137 @@
-{% extends 'basePage.html' %}
+{% extends 'basePage.html' %}  
+{%block content%}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta http-equiv = "Content-Type" content = "multipart/form-data" charset = utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta content="image/jpeg;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@editorjs/raw"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@editorjs/checklist@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@editorjs/list@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@editorjs/quote@latest"></script>
+  <script src={% static 'image/simple-image.js' %}></script>
+  <link href={% static 'image/simple-image.css' %} rel="stylesheet"/>
+  <script src={% static 'js/jquery-3.1.1.min.js' %}></script>
+  <script src={%static 'js/jquery.waypoints.min.js' %}></script>
 </head>
 <body>
-    {% block content %}
-            <div class="row">
-                <div class="col-sm-2"></div>
-                    <div class="col-sm-8 mt-5">
-                        <div class="container-fluid" id="editorjs">
-                            <form action="{% url 'createpost' %}" method="post" content = "multipart/form-data">
-                                {% csrf_token %}
-                                {{form.media}}
-                                {% for fileds in form %}
-                                    <div class="form-group row mt-5" >
-                                        <label  for="body_custom">{{ fileds.label }}</label>
-                                        {{ fileds }}
-                                    </div>
-                                {% endfor %}
-                                <div class="form-check form-check-inline mt-5">
-                                    <input class="form-check-input" type="radio" name="status" id="inlineRadio1" value="d">
-                                    <label class="form-check-label" for="inlineRadio1">Draft</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="status" id="inlineRadio2" value="p">
-                                    <label class="form-check-label" for="inlineRadio2">Publish</label>
-                                </div>
-                                <button type="submit" class="btn btn-success" style="margin-left: 50%;
-                                border-radius:12px; width: 7%;">Save</button>
-                            </form>
-                        </div>
-                    </div>
-                <div class="col-sm-2"></div>
-            </div>
-    {% endblock %}
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-8  mt-5">
+          <div class="form-group">
+            <label for="post_title">Post Title</label>
+            <input type="text" class="form-control" id="PostTitle" aria-describedby="textHelp" >
+            <small id="textHelp" class="form-text text-muted">Enter your Post title Here.</small>
+          </div>
+          <div class="form-group">
+            <label for="post_category">Catagory</label>
+            <input type="text" class="form-control" id="postCatagory" aria-describedby="textHelp">
+            <small id="textHelp" class="form-text text-muted">Enter your Post Catagory Here.</small>
+          </div>
+          <div id="editorjs"></div>
+          <script>
+              const editor = new EditorJS({
+                autofocus: true,
+                tools:{
+                    image:{
+                      class:SimpleImage,
+                      inlineToolbar:true
+                    },
+                    header:{
+                      class:Header,
+                      shortcut:'CMD+SHIFT+H',
+                      config:{
+                        placeholder:'Enter a header',
+                        levels:[2,3,4],
+                        defaultlevel:3
+                      }
+                    },
+                    raw:RawTool,
+                    checklist:{
+                      class:Checklist,
+                      inlineToolbar:true,
+                    },
+                    list:{
+                      class:List,
+                      inlineToolbar:true
+                    },
+                    quote:{
+                      class:Quote,
+                      inlineToolbar:true,
+                      shortcut:'CTRL+SHIFT+Q',
+                      config:{
+                        placeholder:'enter a quote',
+                        captionPlaceholder:'Author of Quote'
+                      }
+                    },
+                  },
+              });
+              
+          </script>
+          <div class="form-check form-check-inline mt-5">
+            <input class="form-check-input" type="radio" name="status" id="inlineRadio1" value="d">
+            <label class="form-check-label" for="inlineRadio1">Draft</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="status" id="inlineRadio2" value="p">
+            <label class="form-check-label" for="inlineRadio2">Publish</label>
+          </div>
+        </br>
+          <button id="save-data" type="submit" class="btn btn-primary">Submit</button>
+        <script>
+          
+          const but=document.getElementById('save-data');
+          but.addEventListener('click',()=>
+              {
+                editor.save().then(savedData=>
+                    {
+                        postData=JSON.stringify(savedData,null,4);
+                        $.ajax({
+                          type:'POST',
+                          url:'{%url 'createpost'%}',
+                          dataType:'JSON',
+                          headers: {
+                            'Access-Control-Allow-Credentials' : true,
+                            'Access-Control-Allow-Origin':'*',
+                            'Access-Control-Allow-Methods':'POST',
+                            'Access-Control-Allow-Headers':'application/json',
+                          },
+                          data:{
+                              "postTitle":document.getElementById('PostTitle')!==null ? document.getElementById('PostTitle').value : '',
+                              "postCatagory":document.getElementById('PostTitle')!==null ? document.getElementById('postCatagory').value : '',
+                              "postStatus":document.getElementsByName('status')[0].checked==true ? document.getElementsByName('status')[0].value : document.getElementsByName('status')[1].value,
+                              "postData":postData
+                          },
+                          success:function(response){
+                            if(response==true)
+                            {
+                              window.location='{%url 'homePage' %}';
+                            }
+                            else{
+                              alert("Please Enter the Post title and Category");
+                            }
+                          }
+                      })
+                    })
+              })
+        </script>
+      </div>
+    </div>
+  </div>
 </body>
-
 </html>
+{%endblock%}
+
+
+
+
+
+
