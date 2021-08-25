@@ -33,9 +33,6 @@
                       
                    
                     </div>
-                    <div class="col-auto d-none d-lg-block">
-                      <img class="bd-placeholder-img"  src={% static '2.jfif' %} class="card-img-top" >
-                    </div>
                   </div>
                 </div>
               {% else %}
@@ -49,9 +46,6 @@
                       <!-- <a href={% url 'postView' post.id %} class="stretched-link">Continue reading</a> -->
                       <a href="{%url 'postUpdate' post.id%}" class="btn btn-primary" style="width:auto;">EditPost</a>
                       <a id="del" class="mt-2 btn btn-danger" onclick="checkFunction('{{post.id}}')" style="width: auto;">DeletePost</a>
-                    </div>
-                    <div class="col-auto d-none d-lg-block">
-                      <img class="bd-placeholder-img"  src={% static '2.jfif' %} class="card-img-top" >
                     </div>
                   </div>
                 </div>

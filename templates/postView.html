@@ -28,7 +28,11 @@
                         <section>
                             <div class="row mt-5">
                                 <div class="col-md-auto">
-                                    <img src="{% static 'fb.jpg' %}" class="rounded-circle" style="height:40px; width:40px ">
+                                    {% if posts.owner.profile_pic_name is not None %}
+                                        <img src="{{ posts.owner.profile_pic.url }}" class="rounded-circle" style="height:40px; width:40px ">
+                                    {% else %}
+                                        <img src="{% static 'fb.jpg' %}" class="rounded-circle" style="height:40px; width:40px ">
+                                    {% endif %}
                                 </div>
                                 <div class="col-md-auto">
                                     <section>
