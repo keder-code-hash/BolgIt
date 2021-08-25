@@ -73,17 +73,17 @@
                                                     header.innerHTML=text;
                                                     postBody.appendChild(header);
                                                     break;
-                                                case "Image":
-                                                    let div=document.createElement("div")
-                                                    let img=document.createElement("img")
-                                                    let cap=document.createElement("small")
-                                                    img.src=`${blocks[ind].data.file.url}`
+                                                case "image":
+                                                    let div=document.createElement("div");
+                                                    let img=document.createElement("img");
+                                                    let cap=document.createElement("small");
+                                                    img.src=`${blocks[ind].data.url}`
                                                     img.style="margin-top:20px";
-                                                    img.height=600;
-                                                    img.width=600;
-                                                    cap.textContent=blocks[ind].data.cap
+                                                    img.height=300;
+                                                    img.width=320;
+                                                    cap.textContent=blocks[ind].data.cap;
                                                     cap.style="margin-top:5px";
-                                                    div.appendChild(img)
+                                                    div.appendChild(img);
                                                     div.appendChild(cap)
                                                     div.style="width:100%;display:grid;place-items:center";
                                                     postBody.appendChild(div);
