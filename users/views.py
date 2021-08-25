@@ -258,18 +258,23 @@ def upDateProfile(request):
                 'date_of_birth':form.cleaned_data.get('date_of_birth'),
                 'ph_no': form.cleaned_data.get('ph_no'),
             }
-            serialized=RegisterUpdateSerializer(instance=user,data=data)
-            if serialized.is_valid():
-                serialized.save()
-                if request.FILES:
-                    # default_storage.save(request.FILES['profile_pic'].name, request.FILES['profile_pic'])
-                    fs=FileSystemStorage(location=settings.MEDIA_ROOT)
-                    fs.save(request.FILES['profile_pic'].name, request.FILES['profile_pic'])
-                    Register.objects.filter(email__iexact=user.email).update(profile_pic=request.FILES['profile_pic'],profile_pic_name=request.FILES['profile_pic'].name)
-                return redirect('profile')
-            else:
-                # raise Http404(form.errors)
-                raise exceptions.ValidationError(form.errors)
+            # print(data)
+            try:
+                user_data=Register.objects.get(email=email_id)
+                for key,val in data.items():
+                    setattr(user_data,key,val)
+                user_data.save()
+            except Register.DoesNotExist:
+                user_data=Register(**data)
+                user_data.save()
+           
+            if request.FILES:
+                # default_storage.save(request.FILES['profile_pic'].name, request.FILES['profile_pic'])
+                fs=FileSystemStorage(location=settings.MEDIA_ROOT)
+                fs.save(request.FILES['profile_pic'].name, request.FILES['profile_pic'])
+                Register.objects.filter(email__iexact=user.email).update(profile_pic=request.FILES['profile_pic'],profile_pic_name=request.FILES['profile_pic'].name)
+            return redirect('profile')
+            
     form=profileForm()
     context={
         'is_authenticated':is_authenticated_user(request),

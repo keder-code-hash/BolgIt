@@ -29,10 +29,7 @@
                                   <p class="card-text mb-auto">{{ post.content }}</p>
                                   <a href={% url 'postView' post.id %} class="stretched-link">Continue reading</a>
                                 </div>
-                                <div class="col-auto d-none d-lg-block">
-                                  <img class="bd-placeholder-img"  src={% static '2.jfif' %} class="card-img-top" >
-                                </div>
-                              </div>
+                            </div>
                             </div>
                         {% endfor %}
                     </div>

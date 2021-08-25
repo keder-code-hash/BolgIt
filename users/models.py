@@ -32,12 +32,14 @@ class Register(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), blank=False, max_length=100, primary_key=True)
     profile_pic=models.FileField(null=True)
     profile_pic_name=models.CharField(null=True,max_length=30)
-    date_of_birth = models.DateField(null=True, blank=False)
     first_name = models.CharField(default='', blank=False, max_length=20)
     last_name = models.CharField(default='', blank=False, max_length=20)
-    bio = models.CharField(default='', blank=False, max_length=100)
-    interests = models.TextField(default='', max_length=200)
-    ph_no = models.CharField(default='', blank=False, max_length=10)
+
+    date_of_birth = models.DateField(null=True, blank=False)
+    bio = models.CharField( null=True,max_length=100)
+    interests = models.TextField(null=True, max_length=200)
+    ph_no = models.CharField( null=True,max_length=10)
+
     created_user = models.DateTimeField(auto_now_add=True)
 
     is_active = models.BooleanField(default=True)
