@@ -8,7 +8,7 @@ class RegisterForm(forms.Form):
 	first_name=forms.CharField(max_length=40)
 	last_name=forms.CharField(max_length=20)
 	user_name=forms.CharField(max_length=20)
-	emailid=forms.CharField(max_length=20)
+	emailid=forms.CharField(max_length=100)
 	user_password=forms.CharField(max_length=20,required=True)
 	user_password_conf=forms.CharField(max_length=20,required=True)
 
