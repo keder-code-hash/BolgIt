@@ -10,9 +10,11 @@
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/raw"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@editorjs/checklist@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/list@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/quote@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@editorjs/table"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@editorjs/paragraph"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@editorjs/delimiter"></script>
   <script src={% static 'js/jquery-3.1.1.min.js' %}></script>
   <script src={%static 'js/jquery.waypoints.min.js' %}></script>
   <script src={% static 'image/simple-image.js' %}></script>
@@ -52,10 +54,6 @@
                       }
                     },
                     raw:RawTool,
-                    checklist:{
-                      class:Checklist,
-                      inlineToolbar:true,
-                    },
                     list:{
                       class:List,
                       inlineToolbar:true
@@ -69,6 +67,24 @@
                         captionPlaceholder:'Author of Quote'
                       }
                     },
+                    table: {
+                      class: Table,
+                      inlineToolbar: true,
+                      config: {
+                        rows: 2,
+                        cols: 3,
+                      },
+                    },
+                    paragraph: {
+                      class: Paragraph,
+                      inlineToolbar: true,
+                      config:{
+                        preserveBlank:true
+                      }
+                    },
+                    delimiter:{
+                      class:Delimiter
+                    }
                   },
               });
               

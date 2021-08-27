@@ -56,7 +56,7 @@
                                     {
                                         const postBody=document.getElementById("postBody");
                                         let body=JSON.parse("{{ body_custom | escapejs}}");
-                                        console.log("length of the block is: ",JSON.parse(body.body_custom).blocks);
+                                        // console.log("length of the block is: ",JSON.parse(body.body_custom).blocks);
                                         let blocks=JSON.parse(body.body_custom).blocks;
                                         for(let ind=0;ind<=blocks.length;ind++){
                                             switch (blocks[ind].type) {
@@ -81,7 +81,7 @@
                                                     img.style="margin-top:20px";
                                                     img.height=300;
                                                     img.width=320;
-                                                    cap.textContent=blocks[ind].data.cap;
+                                                    cap.textContent=blocks[ind].data.caption;
                                                     cap.style="margin-top:5px";
                                                     div.appendChild(img);
                                                     div.appendChild(cap)
@@ -125,7 +125,7 @@
                                                     cd.appendChild(pr);
                                                     postBody.appendChild(cd);
                                                     break;
-                                                case "List":
+                                                case "list":
                                                     if(blocks[ind].data.style==="unordered")
                                                     {
                                                         let List=document.createElement("ul");
@@ -151,7 +151,7 @@
                                                         postBody.appendChild(List);
                                                     }
                                                     break;
-                                                case "Checklist":
+                                                case "checklist":
                                                     var totList=blocks[ind].data.items.length;
                                                     for(var j=0;j<totList;j++)
                                                     {
@@ -171,7 +171,7 @@
                                                         postBody.appendChild(x);
                                                     }
                                                     break;
-                                                case "Table":
+                                                case "table":
                                                     let Div=document.createElement("div");
                                                     Div.style.marginTop='40px';
                                                     let tableDiv=document.createElement("table")
@@ -211,7 +211,7 @@
                                                     Div.appendChild(tableDiv)
                                                     postBody.appendChild(Div)
                                                     break;
-                                                case "Delimiter":
+                                                case "delimiter":
                                                     let starSvg='<svg version="1.0" xmlns="http://www.w3.org/2000/svg"\n' +
                                                         ' width="12pt" height="12pt" viewBox="0 0 1278.000000 1280.000000"\n' +
                                                         ' preserveAspectRatio="xMidYMid meet">\n' +
