@@ -42,7 +42,7 @@
                                 </li>
                             {% else %}
                                 <li class="nav-item right" data-toggle="collapse" data-target=".navbar-collapse">
-                                <a href="{%url 'register' %}" class="btn btn-outline-light px-5 " role="button" >Signup</a>
+                                <a href={%url 'register' %} class="btn btn-outline-light px-5 " role="button" >Signup</a>
                                 </li>
                                 <li class="nav-item right" data-toggle="collapse" data-target=".navbar-collapse">
                                     <a href={%url 'login' %} class=" btn btn-outline-light px-5" role="button" >Login</a>
@@ -59,6 +59,24 @@
 
     {% endblock %}
 </body>
+<footer class="page-footer font-small bg-info pt-3 ml-1 mr-1">
+    <div class="container-fluid">
+        <ul class="list-unstyled list-inline text-center py-2">
+            <li class="list-inline-item ">
+                <a href="#!" class="btn btn-outline-white btn-rounded">About Us</a>
+              </li>
+            <li class="list-inline-item">
+              <a href="#!" class="btn btn-outline-white btn-rounded">Privacy Policy</a>
+            </li>
+            <li class="list-inline-item">
+                <a href={%url 'contact'%} class="btn btn-outline-white btn-rounded">contact</a>
+              </li>
+          </ul>
+    </div>
+    <div class="footer-copyright text-center py-3">© 2021 Copyright:
+        <a href="#" class="text-white">BlogIt</a>
+      </div>
+</footer>
 </html>
 
 

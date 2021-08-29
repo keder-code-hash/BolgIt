@@ -292,3 +292,8 @@ def upDateProfile(request):
     }
     # print(context)
     return render(request, 'updateprofile.html',context)
+
+
+def contactForm(request):
+    # if request.method=='POST':
+    return render(request,'contactForm.html')
