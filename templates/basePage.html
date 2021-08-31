@@ -9,9 +9,20 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <style>
+            .footer {
+               position: fixed;
+               left: 0;
+               bottom: 0;
+               width: 100%;
+               background-color: rgb(247, 243, 243);
+               color: white;
+               text-align: center;
+            }
+            </style>
     </head>
 <body>
-    <div class="container-fluid">
+    <div class="container-fluid" style="overflow: auto;">
         <div class="row">
             <div class="col">
                 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -58,25 +69,29 @@
     {% block content %}
 
     {% endblock %}
+   </br>
+<!-- <- </br></br></br></br></br> --> 
+    <!-- <div class="footer" > -->
+        <footer class="page-footer font-small bg-info pt-3 ml-1 mr-1 sticky-md-bottom" style="padding-top: 50%; bottom: 0%;">
+            <div class="container-fluid">
+                <ul class="list-unstyled list-inline text-center py-2">
+                    <li class="list-inline-item ">
+                        <a href="#!" class="btn btn-outline-white btn-rounded">About Us</a>
+                    </li>
+                    <li class="list-inline-item">
+                    <a href="#!" class="btn btn-outline-white btn-rounded">Privacy Policy</a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href={%url 'contact'%} class="btn btn-outline-white btn-rounded">contact</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="footer-copyright text-center py-3">© 2021 Copyright:
+                <a href="#" class="text-white">BlogIt</a>
+            </div>
+        </footer>
+    <!-- </div> -->
 </body>
-<footer class="page-footer font-small bg-info pt-3 ml-1 mr-1">
-    <div class="container-fluid">
-        <ul class="list-unstyled list-inline text-center py-2">
-            <li class="list-inline-item ">
-                <a href="#!" class="btn btn-outline-white btn-rounded">About Us</a>
-              </li>
-            <li class="list-inline-item">
-              <a href="#!" class="btn btn-outline-white btn-rounded">Privacy Policy</a>
-            </li>
-            <li class="list-inline-item">
-                <a href={%url 'contact'%} class="btn btn-outline-white btn-rounded">contact</a>
-              </li>
-          </ul>
-    </div>
-    <div class="footer-copyright text-center py-3">© 2021 Copyright:
-        <a href="#" class="text-white">BlogIt</a>
-      </div>
-</footer>
 </html>
 
 

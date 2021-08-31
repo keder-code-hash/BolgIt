@@ -226,17 +226,24 @@ def homeView(request):
     if request.method=="GET":
         all_blogs=Posts.objects.filter(status='p').order_by('post_created')
 
-        blogs=Posts.objects.filter(status='p').order_by('post_created').values('id','post_created')
+        blogs=Posts.objects.filter(status='p').order_by('post_created').values('id','post_created','post_title')
         filtered_data=list(blogs)
         # print(filtered_data)
         
         dataDict=dict()
+        postName=dict()
         for raw in filtered_data:
             if raw.get('post_created').year not in dataDict.keys():
                 dataDict[raw.get('post_created').year]=[[] for i in range(12)]
+            if raw.get('id')not in postName.keys():
+                postName[raw.get('id')]=''
+            postName[raw.get('id')]=raw.get('post_title')
             month_no=raw.get('post_created').month
             dataDict[raw.get('post_created').year][month_no].append(raw.get('id'))
+
         dataDictJson=json.dumps(dataDict, separators=(',', ':'))
+
+        print(postName)
         # print(list(yearList))
 
 
@@ -254,6 +261,7 @@ def homeView(request):
             'is_authenticated':is_authenticated_user(request),
             'posts':posts,
             'postTreeData':dataDictJson,
+            'postDet':json.dumps(postName)
         }
         # print(request.GET)
         return render(request,'Home.html',context)

@@ -5,7 +5,7 @@ function toggling(togglingNode,bolckIngElem)
     // console.log(togglingNode.parentNode.childNodes);
     var parent=togglingNode.parentNode;
     var children=parent.childNodes;
-    console.log(children);
+    // console.log(children);
     
     // this.len=children.length;
     if(children.length <= 4){
@@ -96,6 +96,10 @@ window.onload=()=>{
     // console.log(cleardTreeData)
     const obj=JSON.parse(cleardTreeData);
 
+    var clearedPostName=postDet.replace(patt,'"').replace(pat1,'');
+    const postObj=JSON.parse(clearedPostName);
+    // console.log(postObj);
+
     const year=Object.keys(obj);
     const yearlyPostCount=new Array(15,17,16);
 
@@ -139,8 +143,8 @@ window.onload=()=>{
 
                     var liDom=document.createElement('li');
                     var atag=document.createElement('a');
-                    atag.setAttribute('href','post:'+obj[data.year[yr]][count][post]);
-                    atag.innerHTML="post Title";
+                    atag.setAttribute('href','post/'+obj[data.year[yr]][count][post]);
+                    atag.innerHTML=postObj[obj[data.year[yr]][count][post]];
                     liDom.appendChild(atag);
                     monthUl.appendChild(liDom);
 
@@ -154,7 +158,6 @@ window.onload=()=>{
             
         }
 
-        // yearBlock.style.display="none";
 
         parent.appendChild(yearBlock);
 
