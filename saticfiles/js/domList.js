@@ -1,32 +1,3 @@
-const obj=
-{
-    "2019":
-        [
-            [1,2,3,4,5],[],[35],[],[],[12,55],[11,23,45],[],[],[11],[11,23],[111]
-        ],
-    "2020":
-        [
-            [1,2,3,4,5],[],[3,5,7],[],[],[12,55],[11,23,45],[],[],[11],[11,23],[111]
-        ],
-    "2021":
-        [
-            [1,2,3,4,5],[],[35],[],[],[12,11,55],[11,23,45],[],[],[11],[11,23],[111]
-        ]
-}
-const year_no=3;
-const month_no=12;
-const year=new Array(2019,2020,2021);
-const yearlyPostCount=new Array(15,17,16);
-
-const month=new Array("January","February","March","April","May","June","July","August","September","October","November","December");
-
-function dataGen(months,year){
-    this.month=months;
-    this.year=year;
-    this.yearlyPostCount=yearlyPostCount;
-}
-var data=new dataGen(month,year);
-
 
 function toggling(togglingNode,bolckIngElem)
 {
@@ -115,14 +86,45 @@ function toggleBlockGen(postid,filterName,postcount)
     return parentNode;
 }
 
-window.onload=()=>{
 
-    console.log(obj)
+window.onload=()=>{
+    var patt = /'\'/g;
+    var treeData=TreeData;
+    var cleardTreeData=treeData.replace(patt,'"');
+    var pat1=/ /g;
+    cleardTreeData=cleardTreeData.replace(pat1,'');
+    // console.log(cleardTreeData)
+    const obj=JSON.parse(cleardTreeData);
+
+    const year=Object.keys(obj);
+    const yearlyPostCount=new Array(15,17,16);
+
+    const month=new Array("January","February","March","April","May","June","July","August","September","October","November","December");
+
+    function dataGen(months,year){
+        this.month=months;
+        this.year=year;
+        this.yearlyPostCount=yearlyPostCount;
+    }
+    var data=new dataGen(month,year);
+    
+
     const parent=document.getElementById('testList');
 
     // const newBlock=toggleBlockGen('none','none','none');
     for(var yr=0;yr<data.year.length;yr++){
-        const yearBlock=toggleBlockGen('none',data.year[yr],data.yearlyPostCount[yr]);
+
+        var postCnt=0
+        for(var i=0;i<12;i++){
+            if(obj[data.year[yr]][i].length>0){
+                for(var j=0;j<obj[data.year[yr]][i].length;j++){
+                    if(obj[data.year[yr]][i][j]!=0){
+                        postCnt+=1;
+                    }
+                }
+            }
+        }
+        const yearBlock=toggleBlockGen('none',data.year[yr],postCnt);
         
 
         for(var count=0;count<obj[data.year[yr]].length;count++)
