@@ -1,3 +1,5 @@
+from typing import Dict
+import json
 from django.http.response import HttpResponse
 from rest_framework.views import APIView
 from .serializers import userSerializer,RegisterSerializers,RegisterUpdateSerializer
@@ -222,7 +224,22 @@ def userProfileView(request):
 
 def homeView(request):
     if request.method=="GET":
-        all_blogs=Posts.objects.filter(status='p')
+        all_blogs=Posts.objects.filter(status='p').order_by('post_created')
+
+        blogs=Posts.objects.filter(status='p').order_by('post_created').values('id','post_created')
+        filtered_data=list(blogs)
+        # print(filtered_data)
+        
+        dataDict=dict()
+        for raw in filtered_data:
+            if raw.get('post_created').year not in dataDict.keys():
+                dataDict[raw.get('post_created').year]=[[] for i in range(12)]
+            month_no=raw.get('post_created').month
+            dataDict[raw.get('post_created').year][month_no].append(raw.get('id'))
+        dataDictJson=json.dumps(dataDict, separators=(',', ':'))
+        # print(list(yearList))
+
+
         page=request.GET.get('page',1)
         paginator=Paginator(all_blogs,3)
 
@@ -236,6 +253,7 @@ def homeView(request):
         context={
             'is_authenticated':is_authenticated_user(request),
             'posts':posts,
+            'postTreeData':dataDictJson,
         }
         # print(request.GET)
         return render(request,'Home.html',context)

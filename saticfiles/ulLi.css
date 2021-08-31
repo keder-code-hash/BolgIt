@@ -1,0 +1,18 @@
+li {
+    display: block;
+    list-style-type: none;
+    margin-top: 1em;
+    margin-bottom: 1 em;
+    margin-left: 10px;
+    margin-right: 0;
+    padding-left: 20px;
+  }
+ul{
+    display: block;
+    margin-top: 1em;
+    margin-bottom: 1 em;
+    margin-left: 10px;
+    margin-right: 0;
+    padding-left: 10px;
+
+}
