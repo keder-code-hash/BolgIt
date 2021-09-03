@@ -8,15 +8,26 @@
 <head>
        <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" href="{% static 'postview.css'%}">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="{% static 'css/postview.css' %}">
+        <link rel="stylesheet" href={% static 'css/star.css' %}>
         <script src="/static/js/jquery-3.1.1.min.js"></script>
         <script src="/static/js/jquery.waypoints.min.js"></script>
+        <script src={% static 'js/postView.js' %}></script>
+        <script src={% static 'js/starRating.js' %}></script>
 </head>
 <body >
     <div class="container-fluid d-flex flex-column" style="min-height: 100%;">
             <div class="row ">
             <div class="col-md-3" >
+                <div class="card text-center vertical-center" style="width: 14rem;position: absolute;">
+                    <div id="rate" class="container-fluid" style="padding: 2px;">
+                        <div id="starrating"></div>
+                        </br>
+                        <span id="ratVal"></span>
+                    </div>
+                </div>
+                
             </div>
             <div class="col-md-6 blog-top" style="padding-bottom: 10%;">
                 <article class="blog-view">
@@ -53,205 +64,7 @@
                         <section id="postBody">
                             <div class="container-fluid mt-5 mb-auto" >
                                 <script>
-                                window.onload=()=>
-                                        {
-                                            const postBody=document.getElementById("postBody");
-                                            let body=JSON.parse("{{ body_custom | escapejs}}");
-                                            // console.log("length of the block is: ",JSON.parse(body.body_custom).blocks);
-                                            let blocks=JSON.parse(body.body_custom).blocks;
-                                            for(let ind=0;ind<=blocks.length;ind++){
-                                                switch (blocks[ind].type) {
-                                                    case "paragraph":
-                                                        const par = document.createElement("p");
-                                                        par.innerHTML = blocks[ind].data.text;
-                                                        postBody.appendChild(par)
-                                                        break;
-                                                    case "header":
-                                                        let size=blocks[ind].data.level;
-                                                        let text=blocks[ind].data.text;
-                                                        const headerTag="h"+size;
-                                                        let header=document.createElement(headerTag);
-                                                        header.innerHTML=text;
-                                                        postBody.appendChild(header);
-                                                        break;
-                                                    case "image":
-                                                        let div=document.createElement("div");
-                                                        let img=document.createElement("img");
-                                                        let cap=document.createElement("small");
-                                                        img.src=`${blocks[ind].data.url}`
-                                                        img.style="margin-top:20px";
-                                                        img.height=300;
-                                                        img.width=320;
-                                                        cap.textContent=blocks[ind].data.caption;
-                                                        cap.style="margin-top:5px";
-                                                        div.appendChild(img);
-                                                        div.appendChild(cap)
-                                                        div.style="width:100%;display:grid;place-items:center";
-                                                        postBody.appendChild(div);
-                                                        break;
-                                                    case "quote":
-                                                        let figureDiv=document.createElement("div");
-                                                        let quote=document.createElement("blockquote");
-                                                        let figCaption=document.createElement("figcaption");
-                                                        quote.innerHTML=blocks[ind].data.text
-                                                        let dash='&mdash;'
-                                                        let figVal=dash+blocks[ind].data.caption
-                                                        figCaption.innerHTML=figVal
-                                                        figureDiv.style="margin-top:15px;" +
-                                                            "margin: 0;background: #eee;padding: 1em;" +
-                                                            "border-radius: 1em;"
-                                                        figureDiv.appendChild(quote)
-                                                        figureDiv.appendChild(figCaption)
-                                                        postBody.appendChild(figureDiv)
-                                                        break;
-                                                    case "raw":
-                                                        let blockquote = document.createElement("blockquote");
-                                                        let code = document.createElement("code");
-                                                        let pre = document.createElement("pre");
-                                                        pre.textContent = blocks[ind].data.html;
-                                                        pre.style.background = "#131313";
-                                                        pre.style.color = "#dddddd";
-                                                        pre.style.padding = "15px";
-                                                        code.appendChild(pre);
-                                                        postBody.appendChild(code);
-                                                        break;
-                                                    case "Code":
-                                                        let bq = document.createElement("blockquote");
-                                                        let cd = document.createElement("code");
-                                                        let pr = document.createElement("pre");
-                                                        pr.textContent = blocks[ind].data.code;
-                                                        pr.style.background = "#e3dfdf";
-                                                        pr.style.color = "#090909";
-                                                        pr.style.padding = "15px";
-                                                        cd.appendChild(pr);
-                                                        postBody.appendChild(cd);
-                                                        break;
-                                                    case "list":
-                                                        if(blocks[ind].data.style==="unordered")
-                                                        {
-                                                            let List=document.createElement("ul");
-                                                            for(let j=0;j<blocks[ind].data.items.length;j++)
-                                                            {
-                                                                let data=blocks[ind].data.items[j];
-                                                                let ldiv=document.createElement("li");
-                                                                ldiv.innerHTML=data;
-                                                                List.appendChild(ldiv);
-                                                            }
-                                                            postBody.appendChild(List);
-                                                        }
-                                                        if(blocks[ind].data.style==="ordered")
-                                                        {
-                                                            let List=document.createElement("ol");
-                                                            for(let j=0;j<blocks[ind].data.items.length;j++)
-                                                            {
-                                                                let data=blocks[ind].data.items[j];
-                                                                let ldiv=document.createElement("li");
-                                                                ldiv.innerHTML=data;
-                                                                List.appendChild(ldiv);
-                                                            }
-                                                            postBody.appendChild(List);
-                                                        }
-                                                        break;
-                                                    case "checklist":
-                                                        var totList=blocks[ind].data.items.length;
-                                                        for(var j=0;j<totList;j++)
-                                                        {
-                                                            var x = document.createElement("DIV");
-                                                            var inp=document.createElement("INPUT");                                                             
-                                                            inp.setAttribute("type","checkbox");
-                                                            inp.setAttribute("id","val");
-                                                            inp.setAttribute("val","val");
-                                                            inp.setAttribute("checked","false");
-                                                            console.log(blocks[ind].data.items[j].checked);
-                                                            var data=blocks[ind].data.items[j].text;
-                                                            var t = document.createTextNode(data);
-                                                            var lev=document.createElement("LABEL");
-                                                            lev.setAttribute("for","val");
-                                                            lev.appendChild(t);
-                                                            x.append(inp,lev);
-                                                            postBody.appendChild(x);
-                                                        }
-                                                        break;
-                                                    case "table":
-                                                        let Div=document.createElement("div");
-                                                        Div.style.marginTop='40px';
-                                                        let tableDiv=document.createElement("table")
-                                                        tableDiv.style.fontFamily='arial,sans-serif'
-                                                        tableDiv.style.borderCollapse='collapse'
-                                                        tableDiv.style.width='70%'
-                                                        tableDiv.style.border='1px solid #090909'
-                                                        tableDiv.style.padding='20px'
-                                                        tableDiv.style.margin='auto'
-                                                        let st='border: 1px solid #dddddd; text-align: left;padding: 8px;'
-                                                        let rowNo=blocks[ind].data.content.length;
-                                                        let columNo=blocks[ind].data.content[0].length;
-                                                        for (let i=0;i<rowNo;i++){
-                                                            let tableRow=document.createElement("tr");
-                                                            if(i===0){
-                                                                for(let j=0;j<columNo;j++){
-                                                                    let tableHeader=document.createElement("th");
-                                                                    tableHeader.style=st;
-                                                                    let row=blocks[ind].data.content[i];
-                                                                    let tabData=row[j]
-                                                                    tableHeader.innerHTML=tabData;
-                                                                    tableRow.appendChild(tableHeader);
-                                                                }
-                                                            }
-                                                            else{
-                                                                for(let j=0;j<columNo;j++){
-                                                                    let tableData=document.createElement("td");
-                                                                    tableData.style=st;
-                                                                    let row=blocks[ind].data.content[i];
-                                                                    let tabData=row[j]
-                                                                    tableData.innerHTML=tabData;
-                                                                    tableRow.appendChild(tableData);
-                                                                }
-                                                            }
-                                                        tableDiv.appendChild(tableRow);
-                                                        }
-                                                        Div.appendChild(tableDiv)
-                                                        postBody.appendChild(Div)
-                                                        break;
-                                                    case "delimiter":
-                                                        let starSvg='<svg version="1.0" xmlns="http://www.w3.org/2000/svg"\n' +
-                                                            ' width="12pt" height="12pt" viewBox="0 0 1278.000000 1280.000000"\n' +
-                                                            ' preserveAspectRatio="xMidYMid meet">\n' +
-                                                            '<g transform="translate(0.000000,1280.000000) scale(0.100000,-0.100000)"\n' +
-                                                            'fill="#000000" stroke="none">\n' +
-                                                            '<path d="M6760 12443 c-137 -26 -302 -163 -453 -375 -207 -293 -384 -645 -802\n' +
-                                                            '-1598 -347 -790 -486 -1070 -667 -1337 -211 -311 -357 -373 -878 -374 -303 0\n' +
-                                                            '-573 22 -1315 106 -310 36 -666 73 -930 97 -191 17 -792 17 -905 0 -359 -56\n' +
-                                                            '-525 -174 -538 -382 -7 -128 43 -265 161 -442 197 -294 514 -612 1317 -1323\n' +
-                                                            '955 -845 1247 -1174 1290 -1452 37 -234 -95 -656 -453 -1458 -364 -816 -430\n' +
-                                                            '-963 -490 -1110 -252 -611 -352 -998 -318 -1236 31 -222 145 -333 357 -346\n' +
-                                                            '311 -21 768 169 1699 704 749 431 885 508 1051 596 451 240 718 338 924 341\n' +
-                                                            '121 1 161 -10 310 -84 265 -133 574 -380 1300 -1040 1006 -916 1405 -1206\n' +
-                                                            '1752 -1276 102 -21 173 -13 255 27 103 50 160 135 204 304 21 81 23 111 23\n' +
-                                                            '315 0 125 -5 267 -12 320 -51 379 -107 674 -253 1335 -229 1034 -279 1327\n' +
-                                                            '-279 1647 0 162 16 260 55 346 101 221 462 490 1275 952 661 375 831 473 1005\n' +
-                                                            '578 739 446 1065 761 1065 1027 0 155 -96 273 -306 378 -300 150 -748 236\n' +
-                                                            '-1764 342 -1052 108 -1334 148 -1637 225 -387 100 -514 201 -648 515 -117 276\n' +
-                                                            '-211 629 -391 1482 -135 644 -212 973 -289 1237 -115 398 -240 668 -380 824\n' +
-                                                            '-94 105 -221 156 -335 135z"/>\n' +
-                                                            '</g>\n' +
-                                                            '</svg>\n'
-                                                        let deliDiv=document.createElement("div");
-                                                        deliDiv.className='container';
-                                                        deliDiv.style='display: flex;\n' +
-                                                            '  justify-content: center;'
-                                                        let sectionDiv=document.createElement("h2");
-                                                        let pDiv=document.createElement("p");
-                                                        pDiv.style='justify-content: center;'
-                                                        pDiv.innerHTML=starSvg+starSvg+starSvg;
-                                                        sectionDiv.appendChild(pDiv);
-                                                        deliDiv.appendChild(sectionDiv)
-                                                        postBody.appendChild(deliDiv)
-                                                        break;
-                                                    default:
-                                                        break;
-                                                }
-                                            }
-                                        };
+                                    postData="{{ body_custom | escapejs}}";
                                 </script>
                             </div>
                         </section>

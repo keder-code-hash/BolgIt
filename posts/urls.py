@@ -17,7 +17,8 @@ urlpatterns=[
     path('uploadImage/',views.upload_image_view,name='uploadimageview'),
     path('UserPostView/',views.UserPostView,name='allPostView'),
     path('updatePost/<int:pk>/',views.UpdatePost,name="postUpdate"),
-    path('deletePost/',views.delPost,name="deletePost")
+    path('deletePost/',views.delPost,name="deletePost"),
+    path('rate/',views.rate,name="rating")
     # path('likePost/',views.postLikeHandler,name='postLike'),
     # path('postsave/',views.savePostAjaxHandeler,name='savePost')
     ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

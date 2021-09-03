@@ -1,0 +1,12 @@
+span {
+    /* background-color: powderblue; */
+    transition: background-color .5s;
+  }
+  
+  span:hover {
+    color: gold;
+  }
+  
+#starrating{
+  padding-top: 20%;
+}

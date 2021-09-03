@@ -233,3 +233,8 @@ def delPost(request):
                 return JsonResponse(False,safe=False)
     except ValidationError as err:
         print(err)
+
+
+def rate(request):
+    if request.method=="POST":
+        print(request.POST.get('rating'))
