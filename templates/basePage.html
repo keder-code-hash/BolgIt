@@ -82,7 +82,7 @@
                     <a href="#!" class="btn btn-outline-white btn-rounded">Privacy Policy</a>
                     </li>
                     <li class="list-inline-item">
-                        <a href={%url 'contact'%} class="btn btn-outline-white btn-rounded">contact</a>
+                        <a class="btn btn-outline-white btn-rounded" data-toggle="modal" data-target="#contact">contact</a>
                     </li>
                 </ul>
             </div>
@@ -90,6 +90,27 @@
                 <a href="#" class="text-white">BlogIt</a>
             </div>
         </footer>
+        <div class="modal fade" id="contact" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content bg-dark">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-light ml-auto id="exampleModalLabel">Contact Us</h5> <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action={%url 'homePage'%} class="form my-3 mr-2 ml-2">
+                            <div class="form-row">
+                                <div class="form-group col-sm"> <label for="exampleInputEmail1" style="color: #fff;">Enter Name</label> <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="First"> </div>
+                                <div class="form-group col-sm"> <label class="sm-lbl" for="exampleInputEmail1" style="color:rgba(0, 0, 0, 0); visibility: hidden;">Enter Name</label> <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Last"> </div>
+                            </div>
+                            <div class="form-group"> <label for="exampleInputEmail1" style="color: #fff;">Enter Email</label> <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder=""> </div>
+                            <div class="form-group"> <label for="exampleFormControlTextarea1" style="color: #fff;">Your Query or Question</label> <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea> </div>
+                            <br>
+                            <div class="modal-footer"> <button type="button" class="btn btn-outline-light ml-sm-2" style="border-radius: 50px; width:100%;" data-dismiss="modal" aria-label="Close">Submit</button> </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     <!-- </div> -->
 </body>
 </html>
