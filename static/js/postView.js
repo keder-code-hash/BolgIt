@@ -13,6 +13,7 @@ window.onload=()=>
         sr.append(span);
     }
 
+    //contact submit
 
 
     const postBody=document.getElementById("postBody");
