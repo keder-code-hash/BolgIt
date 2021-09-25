@@ -152,3 +152,13 @@ MEDIAFILES_DIRS = [
     "media",
 ]
 AUTH_USER_MODEL='users.Register'
+
+
+# message sending
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "kedernath.mallick.tint022@gmail.com" 
+EMAIL_HOST_PASSWORD ="Keder@1234"

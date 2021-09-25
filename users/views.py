@@ -26,6 +26,9 @@ from django.http import Http404
 from django.core.files.storage import default_storage
 from django.core.files.storage import FileSystemStorage
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.views.decorators.csrf import requires_csrf_token,ensure_csrf_cookie,csrf_exempt
+from django.core.mail import EmailMultiAlternatives
+# from 
 
 class Users(APIView):
     # authentication_classes =[JWTAuthentication]
@@ -319,7 +322,18 @@ def upDateProfile(request):
     # print(context)
     return render(request, 'updateprofile.html',context)
 
-
+@csrf_exempt
 def contactForm(request):
-    # if request.method=='POST':
-    return render(request,'contactForm.html')
+    if request.method=='POST':
+        name=request.POST.get('firstName')+request.POST.get('lastName')
+        email=request.POST.get('email')
+        message=request.POST.get('message')
+
+        subject,from_email,to='contact',"kedernath.mallick.tint022@gmail.com","kedernath.mallick.tint022@gmail.com"
+        text_context=f'{name}wants to contact with you'
+        html_content='<p><strong>EMAIL:</strong>'+email+'</p><br><h4>MESSAGE:</h4>'+message
+        msg=EmailMultiAlternatives(subject,text_context,from_email,[to])
+        msg.attach_alternative(html_content,'text/html')
+        msg.send()
+        
+    return HttpResponse({"msg":"success"})
