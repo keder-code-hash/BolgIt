@@ -5,21 +5,23 @@
 {% load rest_framework %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-       <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="{% static 'css/postview.css' %}">
-        <link rel="stylesheet" href={% static 'css/star.css' %}>
-        <script src="/static/js/jquery-3.1.1.min.js"></script>
-        <script src="/static/js/jquery.waypoints.min.js"></script>
-        <script src={% static 'js/postView.js' %}></script>
-        <script src={% static 'js/starRating.js' %}></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'css/postview.css' %}">
+    <link rel="stylesheet" href={% static 'css/star.css' %}>
+    <script src="/static/js/jquery-3.1.1.min.js"></script>
+    <script src="/static/js/jquery.waypoints.min.js"></script>
+    <script src={% static 'js/postView.js' %}></script>
+    <script src={% static 'js/starRating.js' %}></script>
 </head>
-<body >
+
+<body>
     <div class="container-fluid d-flex flex-column" style="min-height: 100%;">
-            <div class="row ">
-            <div class="col-md-3 col-sm-3 col-lg-3 order-md-1 order-sm-1 order-lg-1 order-xl-1 order-2" >
+        <div class="row ">
+            <div class="col-md-3 col-sm-3 col-lg-3 order-md-1 order-sm-1 order-lg-1 order-xl-1 order-2">
                 <div class="pt-5 pb-5 px-0"></div>
                 <div class="card text-center">
                     <div id="rate" class="container-fluid" style="padding: 2px;">
@@ -28,53 +30,59 @@
                         <span id="ratVal"></span>
                     </div>
                 </div>
-                
+
             </div>
-            <div class="col-md-6 col-sm-6 col-lg-6  blog-top order-md-2 order-sm-2 order-lg-2  order-xl-2 order-1" style="padding-bottom: 10%;">
+            <div class="col-md-6 col-sm-6 col-lg-6  blog-top order-md-2 order-sm-2 order-lg-2  order-xl-2 order-1"
+                style="padding-bottom: 10%;">
                 <article class="blog-view">
                     <div class="row justify-content-center">
                         <section>
-                        <section>
-                            <h1 class="blog-post-title text-center">{{ posts.post_title | convert_markdown |safe}}</h1>
-                        </section>
-                        <section>
-                            <div class="row mt-5">
-                                <div class="col-md-auto">
-                                    {% if posts.owner.profile_pic_name is not None %}
-                                        <img src="{{ posts.owner.profile_pic.url }}" class="rounded-circle" style="height:40px; width:40px ">
-                                    {% else %}
-                                        <img src="{% static 'fb.jpg' %}" class="rounded-circle" style="height:40px; width:40px ">
-                                    {% endif %}
+                            <section>
+                                <h1 class="blog-post-title text-center">{{ posts.post_title | convert_markdown |safe}}
+                                </h1>
+                            </section>
+                            <section>
+                                <div class="row mt-5">
+                                    <div class="col-md-auto">
+                                        {% if posts.owner.profile_pic_name is not None %}
+                                        <img src="{{ posts.owner.profile_pic.url }}" class="rounded-circle"
+                                            style="height:40px; width:40px ">
+                                        {% else %}
+                                        <img src="{% static 'fb.jpg' %}" class="rounded-circle"
+                                            style="height:40px; width:40px ">
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-auto">
+                                        <section>
+                                            <span>{{ posts.owner.user_name }}</span>
+                                        </section>
+                                        <section>
+                                            <h6 class="blog-post-meta">{{ posts.post_created|date:"Y-m-d " |
+                                                convert_markdown|safe }} </h6>
+                                        </section>
+                                    </div>
                                 </div>
-                                <div class="col-md-auto">
-                                    <section>
-                                        <span>{{ posts.owner.user_name }}</span>
-                                    </section>
-                                    <section>
-                                        <h6 class="blog-post-meta">{{ posts.post_created|date:"Y-m-d " | convert_markdown|safe }} </h6>
-                                    </section>
-                                </div>
-                            </div>
+                            </section>
                         </section>
-                    </section>
                     </div>
                     <section class="mt-5">
                         <img src="{% static '3.png'%}" class="img-fluid full-width">
                     </section>
                     <div class="mb-auto">
                         <section id="postBody">
-                            <div class="container-fluid mt-5 mb-auto" >
+                            <div class="container-fluid mt-5 mb-auto">
                                 <script>
-                                    postData="{{ body_custom | escapejs}}";
+                                    postData = "{{ body_custom | escapejs}}";
                                 </script>
                             </div>
                         </section>
                     </div>
                 </article>
             </div>
-            <div class="col-md-2 col-sm-2 col-lg-2 order-md-3 order-sm-3 order-lg-3 order-3" ></div>
+            <div class="col-md-2 col-sm-2 col-lg-2 order-md-3 order-sm-3 order-lg-3 order-3"></div>
         </div>
     </div>
 </body>
+
 </html>
 {% endblock %}
