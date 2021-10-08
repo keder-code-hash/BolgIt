@@ -21,4 +21,4 @@ urlpatterns=[
     path('updateProfile/', upDateProfile, name='updateProfile'),
     path('refreshtoken/',refresh_acsess_token),
     path('contact',contactForm,name='contact')
-]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

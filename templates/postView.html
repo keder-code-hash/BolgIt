@@ -12,8 +12,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{% static 'css/postview.css' %}">
     <link rel="stylesheet" href={% static 'css/star.css' %}>
-    <script src="/static/js/jquery-3.1.1.min.js"></script>
-    <script src="/static/js/jquery.waypoints.min.js"></script>
+    <!-- <script src="/static/js/jquery-3.1.1.min.js"></script>
+    <script src="/static/js/jquery.waypoints.min.js"></script> -->
     <script src={% static 'js/postView.js' %}></script>
     <script src={% static 'js/starRating.js' %}></script>
 </head>
@@ -57,8 +57,7 @@
                                             <span>{{ posts.owner.user_name }}</span>
                                         </section>
                                         <section>
-                                            <h6 class="blog-post-meta">{{ posts.post_created|date:"Y-m-d " |
-                                                convert_markdown|safe }} </h6>
+                                            <h6 class="blog-post-meta">{{ posts.post_created|date:"Y-m-d "  }} </h6>
                                         </section>
                                     </div>
                                 </div>
