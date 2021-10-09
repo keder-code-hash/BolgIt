@@ -128,8 +128,13 @@ def singlepostView(request,pk):
         print(err)
     posts=Posts.objects.get(id=pk)
     values=list(Posts.objects.filter(id=pk).values('body_custom'))
+    postOwner=posts.owner
+    # print(postOwner)
+    otherPosts=Posts.objects.filter(owner=postOwner).filter(status='p').order_by('post_created')
+    # print(otherPosts)
     json_values=json.dumps(values[0])
     context={
+            'other_post':otherPosts,
             'posts':posts,
             'body_custom':json_values,
             'is_authenticated':is_authenticated,

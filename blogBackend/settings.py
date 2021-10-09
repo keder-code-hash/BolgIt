@@ -11,18 +11,16 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from decouple import config
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
+SECRET_KEY = config('SECRET_KEY')
+REFRESH_SECRET_KEY =config('REFRESH_SECRET_KEY')
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'xvfrme8uf*024agc-i*o9w_28cl4(6l&z4xl17vno&)db_na8g'
-REFRESH_SECRET_KEY = 'c7gK>el-0x0sMGpLs&bro38`G/{.X*B2bm(}Yb.N`X1l>v3MtlrAhy|A'
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -91,11 +89,11 @@ WSGI_APPLICATION = 'blogBackend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'datsl1e8l5o49q',
-        'HOST':'ec2-54-211-160-34.compute-1.amazonaws.com',
-        'PORT':'5432',
-        'USER':'bjileynlnjxyjf',
-        'PASSWORD':'79b4884c310ecd09b50f3c0dcbb102cee7304507436cda289f132de1f93e9b48'
+        'NAME': config('NAME'),
+        'HOST':config('HOST'),
+        'PORT':config('PORT'),
+        'USER':config('USER'),
+        'PASSWORD':config('PASSWORD')
     }
 }
 # postgres://bjileynlnjxyjf:79b4884c310ecd09b50f3c0dcbb102cee7304507436cda289f132de1f93e9b48@ec2-54-211-160-34.compute-1.amazonaws.com:5432/datsl1e8l5o49q
@@ -160,5 +158,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = "kedernath.mallick.tint022@gmail.com" 
-EMAIL_HOST_PASSWORD ="Keder@1234"
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD =config('EMAIL_HOST_PASSWORD')

@@ -23,14 +23,31 @@
         <div class="row ">
             <div class="col-md-3 col-sm-3 col-lg-3 order-md-1 order-sm-1 order-lg-1 order-xl-1 order-2">
                 <div class="pt-5 pb-5 px-0"></div>
-                <div class="card text-center">
+                    <div class="card showOtherPost">
+                        <h5 class="card-header text-center">Other Posts From {{ posts.owner.user_name }}</h5>
+                        <div class="card-body">
+                            <ul>
+                                {% for p in other_post %}
+                                    <li>
+                                        <p class="card-text">
+                                            <a href={% url 'postView' p.id %} class="stretched-link" target="_blank" >{{ p.post_title }}</a>
+                                        </p>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <!-- <h5 class="card-title">Special title treatment</h5>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
+                        </div>
+                    </div>
+                <br/>
+                <br/>
+                <div class="card text-center starCard">
                     <div id="rate" class="container-fluid" style="padding: 2px;">
                         <div id="starrating"></div>
                         </br>
                         <span id="ratVal"></span>
                     </div>
                 </div>
-
             </div>
             <div class="col-md-6 col-sm-6 col-lg-6  blog-top order-md-2 order-sm-2 order-lg-2  order-xl-2 order-1"
                 style="padding-bottom: 10%;">
