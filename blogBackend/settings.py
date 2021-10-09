@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = config('SECRET_KEY')
 REFRESH_SECRET_KEY =config('REFRESH_SECRET_KEY')
 
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = config('DEBUG',cast=bool)
 
 INSTALLED_APPS = [
     'django.contrib.admin',
