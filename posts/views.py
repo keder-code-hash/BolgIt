@@ -142,14 +142,16 @@ def singlepostView(request,pk):
     otherPosts=Posts.objects.filter(owner=postOwner).filter(status='p').order_by('post_created')
     # print(otherPosts)
     allDict=list(rate.values())
-    avg=allDict[0].get('rating')
-    if email_id is None:
-        avg=0
-        noOfQuery=len(allDict)
-        avg=0
-        for i in allDict:
-            avg+=i.get('rating')
-        avg/=noOfQuery
+    avg=0
+    if len(allDict)!=0:
+        avg=allDict[0].get('rating')
+        if email_id is None:
+            avg=0
+            noOfQuery=len(allDict)
+            avg=0
+            for i in allDict:
+                avg+=i.get('rating')
+            avg/=noOfQuery
     # print(list(rate.values()))
     print(avg)
     json_values=json.dumps(values[0])
