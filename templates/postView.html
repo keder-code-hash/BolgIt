@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{% static 'css/postview.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href={% static 'css/star.css' %}>
     <!-- <script src="/static/js/jquery-3.1.1.min.js"></script>
     <script src="/static/js/jquery.waypoints.min.js"></script> -->
@@ -46,6 +47,25 @@
                         <div id="starrating"></div>
                         </br>
                         <span id="ratVal"></span>
+                        <script>
+                            starCount={{ postRate }}
+                            function sendData(val){
+                                $.ajax({
+                                    type:'POST',
+                                    url:'{%url 'rating'%}',
+                                    dataType:'JSON',
+                                    data:{ 
+                                        postTitle:val,
+                                        postId:{{ posts.id }}   
+                                    },
+                                    success :function(response){
+                                        if(response==true){
+                                            document.getElementById('ratVal').innerHTML="thank you for rating."
+                                        }
+                                    }
+                                })
+                            }
+                        </script>
                     </div>
                 </div>
             </div>

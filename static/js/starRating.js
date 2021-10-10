@@ -10,7 +10,7 @@ function giveStar(clickedNode){
     const parentNode=clickedNode.parentNode;
     var starBt=parentNode.childNodes;
      
-    console.log(starBt)
+    // console.log(starBt)
     var currentNodeId=parseInt(clickedNode.id.split(' ')[1]);
     
     
@@ -36,25 +36,11 @@ function giveStar(clickedNode){
         prevClicked=-1;
     }
     
-    document.getElementById('ratVal').innerHTML=(prevClicked==-1)?0:(currentNodeId+1);
-    console.log(prevClicked);
+    var rateValue= (prevClicked==-1)?0:(currentNodeId+1);
+    // document.getElementById('ratVal').innerHTML=rateValue;
+    // document.getElementById('ratVal').setAttribute('value',rate);
+
+    sendData(rateValue);
+
 }
 
-
-window.onload=()=>{
-
-
-    const sr=document.getElementById("starrating");
-
-    for(var i=0;i<5;i++){
-
-        const span=document.createElement('span');
-        span.setAttribute("id",'starSpan '+i);
-        span.setAttribute('class','fa fa-star notclicked hov');
-        span.setAttribute('type','button');
-        span.setAttribute('onclick','giveStar(this)');
-        span.style.fontSize="30px";
-        sr.append(span);
-    }
-    
-}

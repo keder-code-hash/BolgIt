@@ -21,6 +21,9 @@ from django.http import JsonResponse
 from posts.forms import postsCreateForm
 import json
 from django.core.serializers.json import DjangoJSONEncoder
+from .models import PostRate
+
+
 
 class PostViewByPostTitle(APIView):
     def get(self,request,foemat=None):
@@ -126,18 +129,36 @@ def singlepostView(request,pk):
             is_authenticated=True
     except ValueError as err:
         print(err)
+    if access is not None:
+        decoded_data = jwt.decode(access, settings.SECRET_KEY, algorithms="HS256")
+        email_id = decoded_data.get('email')
+    else: 
+        email_id=None
     posts=Posts.objects.get(id=pk)
     values=list(Posts.objects.filter(id=pk).values('body_custom'))
+    rate=PostRate.objects.filter(user_id__email=email_id).filter(post_id__id=pk)
     postOwner=posts.owner
     # print(postOwner)
     otherPosts=Posts.objects.filter(owner=postOwner).filter(status='p').order_by('post_created')
     # print(otherPosts)
+    allDict=list(rate.values())
+    avg=allDict[0].get('rating')
+    if email_id is None:
+        avg=0
+        noOfQuery=len(allDict)
+        avg=0
+        for i in allDict:
+            avg+=i.get('rating')
+        avg/=noOfQuery
+    # print(list(rate.values()))
+    print(avg)
     json_values=json.dumps(values[0])
     context={
             'other_post':otherPosts,
             'posts':posts,
             'body_custom':json_values,
             'is_authenticated':is_authenticated,
+            'postRate':int(avg)
         }
     return render(request,'postView.html',context)
 
@@ -206,7 +227,7 @@ def UpdatePost(request,pk):
             except Posts.DoesNotExist:
                 obj=Posts(**values)
                 obj.save()
-            print(values)
+            # print(values)
             return JsonResponse(True,safe=False)
         postData=Posts.objects.get(id=pk)
         values=list(Posts.objects.filter(id=pk).values('body_custom'))
@@ -239,7 +260,30 @@ def delPost(request):
     except ValidationError as err:
         print(err)
 
-
+@csrf_exempt
 def rate(request):
     if request.method=="POST":
-        print(request.POST.get('rating'))
+        ratingValue=request.POST.get("postTitle")
+        postId=request.POST.get("postId")
+        print(ratingValue,postId)
+        if request.COOKIES.get('accesstoken') is not None:
+            access = request.COOKIES.get('accesstoken')
+            decoded_data = jwt.decode(access, settings.SECRET_KEY, algorithms="HS256")
+            email_id = decoded_data.get('email')
+            user = Register.objects.get(email__iexact=email_id)
+            rateValues={
+                'post_id':Posts.objects.get(id=postId),
+                'user_id':user,
+                'rating':ratingValue
+            }
+            try:
+                obj=PostRate.objects.get(post_id=postId,user_id=email_id)
+                for key,value in rateValues.items():
+                    setattr(obj,key,value)
+                obj.save()
+            except PostRate.DoesNotExist:
+                obj=PostRate(**rateValues)
+                obj.save()
+        else:
+            PostRate.objects.create(post_id=Posts.objects.get(id=postId),rating=ratingValue)
+        return JsonResponse(True,safe=False)

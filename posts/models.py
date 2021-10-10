@@ -15,12 +15,12 @@ class Posts(models.Model):
         ordering=['post_title']
 
 
-# class PostLike(models.Model):
-#    post_id=models.ForeignKey(Posts,on_delete=models.CASCADE)
-#    user_id=models.ForeignKey(Register,on_delete=models.CASCADE)
-#    isLiked=models.BooleanField(default=False)
-#    def __str__(self):
-#        return self.post_id_id
+class PostRate(models.Model):
+   post_id=models.ForeignKey(Posts,on_delete=models.CASCADE)
+   user_id=models.ForeignKey(Register,on_delete=models.CASCADE,null=True)
+   rating=models.IntegerField(default=0,null=True)
+   def __str__(self):
+       return self.post_id_id
 
 # class PostSave(models.Model):
 #     post_id=models.ForeignKey(Posts,on_delete=models.CASCADE)

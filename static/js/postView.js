@@ -12,7 +12,9 @@ window.onload=()=>
         span.style.fontSize="30px";
         sr.append(span);
     }
-
+    
+    const starNode=document.getElementById(`starSpan ${starCount-1}`);
+    giveStar(starNode);
     //contact submit
 
 

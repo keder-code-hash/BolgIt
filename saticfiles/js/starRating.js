@@ -10,7 +10,7 @@ function giveStar(clickedNode){
     const parentNode=clickedNode.parentNode;
     var starBt=parentNode.childNodes;
      
-    console.log(starBt)
+    // console.log(starBt)
     var currentNodeId=parseInt(clickedNode.id.split(' ')[1]);
     
     
@@ -36,9 +36,11 @@ function giveStar(clickedNode){
         prevClicked=-1;
     }
     
-    
-    document.getElementById('ratVal').innerHTML=(prevClicked==-1)?0:(currentNodeId+1);
-    // console.log(prevClicked);
-}
+    var rateValue= (prevClicked==-1)?0:(currentNodeId+1);
+    // document.getElementById('ratVal').innerHTML=rateValue;
+    // document.getElementById('ratVal').setAttribute('value',rate);
 
+    sendData(rateValue);
+
+}
 
