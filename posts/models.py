@@ -29,3 +29,7 @@ class PostRate(models.Model):
 #     def __str__(self):
 #         return self.post_id_id
     
+class postTag(models.Model):
+    tag_name=models.CharField(max_length=50,blank=False,default="NULL")
+    def __str__(self) -> str:
+        return self.tag_name

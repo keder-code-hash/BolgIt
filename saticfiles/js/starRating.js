@@ -36,7 +36,7 @@ function giveStar(clickedNode){
         prevClicked=-1;
     }
     
-    var rateValue= (prevClicked==-1)?0:(currentNodeId+1);
+    var rateValue= (prevClicked==-1) ? 0 : (currentNodeId+1);
     // document.getElementById('ratVal').innerHTML=rateValue;
     // document.getElementById('ratVal').setAttribute('value',rate);
 
