@@ -7,7 +7,7 @@ import rest_framework
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import Users, contactForm,register_view,login_view,homeView,custom_log_out,userProfileView,upDateProfile
+from .views import Users, contactForm, postViewByTag,register_view,login_view,homeView,custom_log_out,userProfileView,upDateProfile
 # from django.contrib.auth.views import logout
 
 
@@ -20,5 +20,6 @@ urlpatterns=[
     path('logout/',custom_log_out,name='logout'),
     path('updateProfile/', upDateProfile, name='updateProfile'),
     path('refreshtoken/',refresh_acsess_token),
-    path('contact',contactForm,name='contact')
+    path('contact',contactForm,name='contact'),
+    path('post/tag/<str:tag_name>/',postViewByTag,name='viewByTag')
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

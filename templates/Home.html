@@ -19,24 +19,63 @@
     <form action="{% url 'homePage' %}" method="get">
         <div class="container-fluid ">
             <div class="mt-sm-5 ml-sm-5 row">
-                <div class="col-sm-2"> 
-                    <div class="chip">
-                        <div class="chip-head">C</div>
-                        <div class="chip-content">Chip Content</div>
-                        <div class="chip-close">
-                            <svg class="chip-svg" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"></path></svg>
-                        
+                <div class="col-sm-6 col-md-6 col-xl-3 col-lg-3 col-3"> 
+                    <div class="container tags mb-0">
+                        <h5 class="text-center">Choice Chips</h5>
+                        <br/>
+                        <br/>
+                        <div id="tagsChip" class="md-chips ">
+                            <br/>
+                            <br/>
+                            <a type="checkbox" name="foo" value="bar2" id="0" href={% url 'viewByTag' 'MakeFile' %} onclick="clickHandler()"> 
+                            <label for="0" class="md-chip md-chip-clickable md-chip-hover">MakeFile</label>
+                            <a type="checkbox" name="foo" value="bar2" id="1" href={% url 'viewByTag' 'C' %}> 
+                            <label for="1" class="md-chip md-chip-clickable md-chip-hover"> C</label>
+                            <a type="checkbox" name="foo" value="bar2" id="2" href={% url 'viewByTag' 'C++' %}> 
+                            <label for="2" class="md-chip md-chip-clickable md-chip-hover" > C++</label>
+                            <a type="checkbox" name="foo" value="bar2" id="3" href={% url 'viewByTag' 'Java' %}> 
+                            <label for="3" class="md-chip md-chip-clickable md-chip-hover"> Java</label>
+                            <a type="checkbox" name="foo" value="bar2" id="4" href={% url 'viewByTag' 'Django' %}> 
+                            <label for="4" class="md-chip md-chip-clickable md-chip-hover"> Django</label>
+                            <a type="checkbox" name="foo" value="bar2" id="5" href={% url 'viewByTag' 'HTML' %}> 
+                            <label for="5" class="md-chip md-chip-clickable md-chip-hover"  >HTML</label>
+                            <a type="checkbox" name="foo" value="bar2" id="6" href={% url 'viewByTag' 'CSS' %}> 
+                            <label for="6" class="md-chip md-chip-clickable md-chip-hover">CSS</label>
+                            <a type="checkbox" name="foo" value="bar2" id="7" href={% url 'viewByTag' 'express.js' %}> 
+                            <label for="7" class="md-chip md-chip-clickable md-chip-hover">Express.js</label>
+                            <a type="checkbox" name="foo" value="bar2" id="8" href={% url 'viewByTag' 'node' %}> 
+                            <label for="8" class="md-chip md-chip-clickable md-chip-hover"> Node.js</label>
+                            <a type="checkbox" name="foo" value="bar2" id="9" href={% url 'viewByTag' 'ML' %}> 
+                            <label for="9" class="md-chip md-chip-clickable md-chip-hover">ML</label>
+                            <a type="checkbox" name="foo" value="bar2" id="10" href={% url 'viewByTag' 'NLP' %}> 
+                            <label for="10" class="md-chip md-chip-clickable md-chip-hover">NLP</label>
+                            <a type="checkbox" name="foo" value="bar2" id="11" href={% url 'viewByTag' 'DL' %}> 
+                            <label for="11" class="md-chip md-chip-clickable md-chip-hover">DL</label>
+                            <a type="checkbox" name="foo" value="bar2" id="12" href={% url 'viewByTag' 'web-development' %}> 
+                            <label for="12" class="md-chip md-chip-clickable md-chip-hover">webdevelopment</label>
+                            
                         </div>
-                      </div>
+                        <script>
+                            function toggle(source) {
+                                checkboxes = document.getElementsByName('foo');
+                                for(var i=0, n=checkboxes.length;i<n;i++) {
+                                    checkboxes[i].checked = source.checked;
+                                }
+                            }
+                            function clickHandler(){
+                               
+                            }
+                        </script>
+                    </div>
                 </div>
-                <div class="col-sm-6 ">
+                <div class="col-sm-6 order-sm-2">
                     <div class="infinite-container">
                         {% for post in posts %}
                             <div class="col-md-auto infinite-item">
                               <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                                 <div class="col p-4 d-flex flex-column position-static">
                                   <strong class="d-inline-block mb-2 text-primary">{{ post.catagory }}</strong>
-                                  <h3 class="mb-0">{{ post.post_title }}</h3>
+                                  <h2 class="mb-0">{{ post.post_title }}</h2>
                                   <div class="mb-1 text-muted">{{ post.post_created }}</div>
                                   <p class="card-text mb-auto">{{ post.content }}</p>
                                   <a href={% url 'postView' post.id %} class="stretched-link">Continue reading</a>
@@ -80,7 +119,7 @@
                 });
 
                 </script>
-                <div class="col-sm-4"> 
+                <div class="col-sm-3 order-sm-3"> 
                     <div id="testList"></div>
                     <script>
                         TreeData='{{postTreeData | escapejs}}';

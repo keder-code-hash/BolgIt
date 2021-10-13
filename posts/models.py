@@ -2,6 +2,13 @@ from django.db import models
 from users.models import Register
 from django_editorjs_fields import EditorJsJSONField,EditorJsTextField
 
+
+class postTag(models.Model):
+    tag_name=models.CharField(max_length=50,blank=False,default="NULL")
+    def __str__(self) -> str:
+        return self.tag_name
+
+        
 class Posts(models.Model):
     post_title=models.CharField(blank=False,max_length=100)
     catagory=models.CharField(blank=False,max_length=30)
@@ -9,6 +16,8 @@ class Posts(models.Model):
     owner=models.ForeignKey(Register,on_delete=models.CASCADE)
     status=models.CharField(default='',blank=False,max_length=5)
     post_created=models.DateTimeField(auto_now_add=True)
+    
+    tag=models.ManyToManyField(postTag)
     def __str__(self):
         return self.post_title
     class Meta:
@@ -29,7 +38,5 @@ class PostRate(models.Model):
 #     def __str__(self):
 #         return self.post_id_id
     
-class postTag(models.Model):
-    tag_name=models.CharField(max_length=50,blank=False,default="NULL")
-    def __str__(self) -> str:
-        return self.tag_name
+
+# class relationTag(models.Model):
