@@ -18,6 +18,7 @@ window.onload=()=>
     //contact submit
 
 
+
     const postBody=document.getElementById("postBody");
     let body=JSON.parse(postData);
     // console.log("length of the block is: ",JSON.parse(body.body_custom).blocks);
