@@ -8,7 +8,7 @@ class postTag(models.Model):
     def __str__(self) -> str:
         return self.tag_name
 
-        
+
 class Posts(models.Model):
     post_title=models.CharField(blank=False,max_length=100)
     catagory=models.CharField(blank=False,max_length=30)
@@ -16,8 +16,8 @@ class Posts(models.Model):
     owner=models.ForeignKey(Register,on_delete=models.CASCADE)
     status=models.CharField(default='',blank=False,max_length=5)
     post_created=models.DateTimeField(auto_now_add=True)
-    
     tag=models.ManyToManyField(postTag)
+
     def __str__(self):
         return self.post_title
     class Meta:

@@ -19,7 +19,7 @@ from django.urls import reverse
 import jwt
 from rest_framework import exceptions
 from django.conf import settings
-from posts.models import Posts
+from posts.models import Posts,postTag
 from comments.models import Comments
 import datetime
 from django.http import Http404
@@ -227,12 +227,16 @@ def userProfileView(request):
 
 def homeView(request):
     if request.method=="GET":
-        all_blogs=Posts.objects.filter(status='p').order_by('post_created')
+        all_blogs=Posts.objects.filter(status='p').order_by('post_created').values()
 
         blogs=Posts.objects.filter(status='p').order_by('post_created').values('id','post_created','post_title')
         filtered_data=list(blogs)
         # print(filtered_data)
-        
+
+        for blg in all_blogs:
+            p=postTag.objects.filter(posts__id=blg.get('id')).values('tag_name')
+            blg['tags']=p
+
         dataDict=dict()
         postName=dict()
         for raw in filtered_data:
@@ -272,11 +276,16 @@ def homeView(request):
 def postViewByTag(request,tag_name):
     if request.method=="GET":
         # print(tag_name)
-        all_blogs=Posts.objects.filter(status='p').filter(tag__tag_name=tag_name).order_by('post_created')
+        all_blogs=Posts.objects.filter(status='p').filter(tag__tag_name=tag_name).order_by('post_created').values()
 
         blogs=Posts.objects.filter(status='p').order_by('post_created').values('id','post_created','post_title')
         filtered_data=list(blogs)
-        # print(filtered_data)
+        for blg in all_blogs:
+            p=postTag.objects.filter(posts__id=blg.get('id')).values('tag_name')
+            blg['tags']=p
+
+        # print(all_blogs[0].get('tags'))
+        
         
         dataDict=dict()
         postName=dict()

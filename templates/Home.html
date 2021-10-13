@@ -27,31 +27,31 @@
                         <div id="tagsChip" class="md-chips ">
                             <br/>
                             <br/>
-                            <a type="checkbox" name="foo" value="bar2" id="0" href={% url 'viewByTag' 'MakeFile' %} > 
+                            <a class="deactivate"  type="checkbox" name="foo" value="bar2" id="0" href={% url 'viewByTag' 'MakeFile' %} > 
                             <label for="0" class="md-chip md-chip-clickable md-chip-hover">MakeFile</label>
-                            <a type="checkbox" name="foo" value="bar2" id="1" href={% url 'viewByTag' 'C' %}> 
+                            <a class="deactivate" type="checkbox" name="foo" value="bar2" id="1" href={% url 'viewByTag' 'C' %}> 
                             <label for="1" class="md-chip md-chip-clickable md-chip-hover"> C</label>
-                            <a type="checkbox" name="foo" value="bar2" id="2" href={% url 'viewByTag' 'C++' %}> 
+                            <a class="deactivate" type="checkbox" name="foo" value="bar2" id="2" href={% url 'viewByTag' 'C++' %}> 
                             <label for="2" class="md-chip md-chip-clickable md-chip-hover" > C++</label>
-                            <a type="checkbox" name="foo" value="bar2" id="3" href={% url 'viewByTag' 'Java' %}> 
+                            <a class="deactivate" type="checkbox" name="foo" value="bar2" id="3" href={% url 'viewByTag' 'Java' %}> 
                             <label for="3" class="md-chip md-chip-clickable md-chip-hover"> Java</label>
-                            <a type="checkbox" name="foo" value="bar2" id="4" href={% url 'viewByTag' 'Django' %}> 
+                            <a class="deactivate" type="checkbox" name="foo" value="bar2" id="4" href={% url 'viewByTag' 'Django' %}> 
                             <label for="4" class="md-chip md-chip-clickable md-chip-hover"> Django</label>
-                            <a type="checkbox" name="foo" value="bar2" id="5" href={% url 'viewByTag' 'HTML' %}> 
+                            <a class="deactivate" type="checkbox" name="foo" value="bar2" id="5" href={% url 'viewByTag' 'HTML' %}> 
                             <label for="5" class="md-chip md-chip-clickable md-chip-hover"  >HTML</label>
-                            <a type="checkbox" name="foo" value="bar2" id="6" href={% url 'viewByTag' 'CSS' %}> 
+                            <a class="deactivate" type="checkbox" name="foo" value="bar2" id="6" href={% url 'viewByTag' 'CSS' %}> 
                             <label for="6" class="md-chip md-chip-clickable md-chip-hover">CSS</label>
-                            <a type="checkbox" name="foo" value="bar2" id="7" href={% url 'viewByTag' 'express.js' %}> 
+                            <a class="deactivate" type="checkbox" name="foo" value="bar2" id="7" href={% url 'viewByTag' 'express.js' %}> 
                             <label for="7" class="md-chip md-chip-clickable md-chip-hover">Express.js</label>
-                            <a type="checkbox" name="foo" value="bar2" id="8" href={% url 'viewByTag' 'node' %}> 
+                            <a class="deactivate" type="checkbox" name="foo" value="bar2" id="8" href={% url 'viewByTag' 'node' %}> 
                             <label for="8" class="md-chip md-chip-clickable md-chip-hover"> Node.js</label>
-                            <a type="checkbox" name="foo" value="bar2" id="9" href={% url 'viewByTag' 'ML' %}> 
+                            <a class="deactivate" type="checkbox" name="foo" value="bar2" id="9" href={% url 'viewByTag' 'ML' %}> 
                             <label for="9" class="md-chip md-chip-clickable md-chip-hover">ML</label>
-                            <a type="checkbox" name="foo" value="bar2" id="10" href={% url 'viewByTag' 'NLP' %}> 
+                            <a class="deactivate" type="checkbox" name="foo" value="bar2" id="10" href={% url 'viewByTag' 'NLP' %}> 
                             <label for="10" class="md-chip md-chip-clickable md-chip-hover">NLP</label>
-                            <a type="checkbox" name="foo" value="bar2" id="11" href={% url 'viewByTag' 'DL' %}> 
+                            <a class="deactivate" type="checkbox" name="foo" value="bar2" id="11" href={% url 'viewByTag' 'DL' %}> 
                             <label for="11" class="md-chip md-chip-clickable md-chip-hover">DL</label>
-                            <a type="checkbox" name="foo" value="bar2" id="12" href={% url 'viewByTag' 'web-development' %}> 
+                            <a class="deactivate" type="checkbox" name="foo" value="bar2" id="12" href={% url 'viewByTag' 'web-development' %}> 
                             <label for="12" class="md-chip md-chip-clickable md-chip-hover">webdevelopment</label>
                             
                         </div>
@@ -63,7 +63,18 @@
                             <div class="col-md-auto infinite-item">
                               <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                                 <div class="col p-4 d-flex flex-column position-static">
-                                  <strong class="d-inline-block mb-2 text-primary">{{ post.catagory }}</strong>
+                                    <ul>
+                                        {% for t in post.tags %}
+                                            <li>
+                                                <label for="12" class="md-chip md-chip-clickable md-chip-hover">
+                                                    <strong class="d-inline-block mb-2 text-primary"> 
+                                                        #{{t.tag_name}}
+                                                    </strong>
+                                                </label>
+                                            </li>
+                                        {% endfor %} 
+                                    </ul>
+                                <br>
                                   <h2 class="mb-0">{{ post.post_title }}</h2>
                                   <div class="mb-1 text-muted">{{ post.post_created }}</div>
                                   <p class="card-text mb-auto">{{ post.content }}</p>

@@ -251,3 +251,29 @@ input[type="checkbox"]:checked + label {
        -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
             box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
 }
+
+
+ .position-static a.deactivate{
+  pointer-events: none;
+  cursor: default;
+  color: black;
+ }
+
+ .col ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+
+}
+
+.col ul li {
+  float: left;
+  padding: 0px;
+  margin: 0px;
+}
+
+.col ul li label{
+  pointer-events: none;
+  cursor: text;
+}
