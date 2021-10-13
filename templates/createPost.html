@@ -7,6 +7,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link  href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link href="https://goodies.pixabay.com/jquery/tag-editor/jquery.tag-editor.css" rel="stylesheet" />
+
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/raw"></script>
@@ -15,6 +17,8 @@
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/table"></script>
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/paragraph"></script>
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/delimiter"></script>
+
+  
   <script src={% static 'js/jquery-3.1.1.min.js' %}></script>
   <script src={%static 'js/jquery.waypoints.min.js' %}></script>
   <script src={% static 'image/simple-image.js' %}></script>
@@ -32,8 +36,18 @@
           </div>
           <div class="form-group">
             <label for="post_category">Catagory</label>
-            <input type="text" class="form-control" id="postCatagory" aria-describedby="textHelp">
-            <small id="textHelp" class="form-text text-muted">Enter your Post Catagory Here.</small>
+            <!-- <input type="text" class="form-control" id="postCatagory" aria-describedby="textHelp"> -->
+            <br>
+            <small id="textHelp" class="form-text text-muted">Select your Post Catagory Here.</small>
+
+            <!-- <div id="output"></div>
+            <select  data-placeholder="Choose tags ..." name="tags[]" multiple class="chosen-select" style="width: 50%;">
+              {% for t in tags %}
+                <option value="{{ t.tag_name }}">{{ t.tag_name }}</option>
+              {% endfor %}
+            </select> -->
+            
+            <div id="demo2"></div>
           </div>
           <div id="editorjs"></div>
           <script>
@@ -99,8 +113,32 @@
           </div>
         </br>
           <button id="save-data" type="submit" class="btn btn-primary">Submit</button>
+
+
+
+          <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+          <script src="https://code.jquery.com/ui/1.10.2/jquery-ui.min.js"></script>
+          <script src="https://goodies.pixabay.com/jquery/tag-editor/jquery.caret.min.js"></script>
+          <script src="https://goodies.pixabay.com/jquery/tag-editor/jquery.tag-editor.js"></script>
         <script>
-          
+          const source = ['ActionScript', 'AppleScript', 'Asp', ...'Python', 'Ruby'];
+
+          $('#demo2').tagEditor({
+          autocomplete: {
+              delay: 0, // show suggestions immediately
+              position: {
+              collision: 'flip'
+              }, // automatic menu position up/down
+              source
+          },
+          forceLowercase: false,
+          placeholder: 'Programming languages ...',
+          // initialTags: ['ActionScript', 'AppleScript'],
+          // beforeTagSave: (field, editor, tags, tag, val) => {
+          //     return source.includes(val) && val;
+          // }
+          });
+
           const but=document.getElementById('save-data');
           but.addEventListener('click',()=>
               {
@@ -119,7 +157,7 @@
                           },
                           data:{
                               "postTitle":document.getElementById('PostTitle')!==null ? document.getElementById('PostTitle').value : '',
-                              "postCatagory":document.getElementById('PostTitle')!==null ? document.getElementById('postCatagory').value : '',
+                              // "postCatagory":$("#selectedTags").val(),
                               "postStatus":document.getElementsByName('status')[0].checked==true ? document.getElementsByName('status')[0].value : document.getElementsByName('status')[1].value,
                               "postData":postData
                           },

@@ -3,7 +3,7 @@ from django.db.models.fields import EmailField
 from django.http.request import QueryDict
 from django_editorjs_fields import fields
 from rest_framework.exceptions import ValidationError
-from .models import Posts
+from .models import Posts, postTag
 from users.models import Register
 from .serializers import post_update_serializer
 from .serializers import post_view
@@ -188,8 +188,10 @@ def createPostView(request):
         else:
             ret_stat=False
         return JsonResponse(ret_stat,safe=False)
+    allTags=postTag.objects.all().values()
     context={
         'is_authenticated': is_authenticated_user(request),
+        'tags':allTags
     }
     return render(request,'createPost.html',context)
 
