@@ -27,7 +27,7 @@
                         <div id="tagsChip" class="md-chips ">
                             <br/>
                             <br/>
-                            <a type="checkbox" name="foo" value="bar2" id="0" href={% url 'viewByTag' 'MakeFile' %} onclick="clickHandler()"> 
+                            <a type="checkbox" name="foo" value="bar2" id="0" href={% url 'viewByTag' 'MakeFile' %} > 
                             <label for="0" class="md-chip md-chip-clickable md-chip-hover">MakeFile</label>
                             <a type="checkbox" name="foo" value="bar2" id="1" href={% url 'viewByTag' 'C' %}> 
                             <label for="1" class="md-chip md-chip-clickable md-chip-hover"> C</label>
@@ -55,17 +55,6 @@
                             <label for="12" class="md-chip md-chip-clickable md-chip-hover">webdevelopment</label>
                             
                         </div>
-                        <script>
-                            function toggle(source) {
-                                checkboxes = document.getElementsByName('foo');
-                                for(var i=0, n=checkboxes.length;i<n;i++) {
-                                    checkboxes[i].checked = source.checked;
-                                }
-                            }
-                            function clickHandler(){
-                               
-                            }
-                        </script>
                     </div>
                 </div>
                 <div class="col-sm-6 order-sm-2">
