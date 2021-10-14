@@ -101,14 +101,14 @@ window.onload=()=>{
     // console.log(postObj);
 
     const year=Object.keys(obj);
-    const yearlyPostCount=new Array(15,17,16);
+    // const yearlyPostCount=new Array(15,17,16);
 
-    const month=new Array("","January","February","March","April","May","June","July","August","September","October","November","December");
+    const month=new Array("January","February","March","April","May","June","July","August","September","October","November","December");
 
     function dataGen(months,year){
         this.month=months;
         this.year=year;
-        this.yearlyPostCount=yearlyPostCount;
+        // this.yearlyPostCount=yearlyPostCount;
     }
     var data=new dataGen(month,year);
     

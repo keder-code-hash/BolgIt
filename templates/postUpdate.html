@@ -152,7 +152,8 @@
               {
                 editor.save().then(savedData=>
                   {
-                    console.log(savedData);
+                    window.location='{%url 'allPostView' %}';
+                    // console.log(savedData);
                     let id="{{data.id}}";
                     let postData=JSON.stringify(savedData,null,4);
                     $.ajax({
@@ -164,15 +165,6 @@
                           "postCatagory": $("#demo2").val(),
                           "postStatus":document.getElementsByName('status')[0].checked==true ? document.getElementsByName('status')[0].value : document.getElementsByName('status')[1].value,
                           "postData":postData
-                      },
-                      success:function(response){
-                        if(response==true)
-                        {
-                          window.location='{%url 'allPostView' %}';
-                        }
-                        else{
-                          alert("Please Enter the Post title and Category");
-                        }
                       }
                     })
                   })

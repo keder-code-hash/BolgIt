@@ -139,6 +139,7 @@
               {
                 editor.save().then(savedData=>
                     {
+                        // window.location='{%url 'homePage' %}';
                         postData=JSON.stringify(savedData,null,4);
                         $.ajax({
                           type:'POST',
