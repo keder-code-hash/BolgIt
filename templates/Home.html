@@ -27,32 +27,10 @@
                         <div id="tagsChip" class="md-chips ">
                             <br/>
                             <br/>
-                            <a class="deactivate"  type="checkbox" name="foo" value="bar2" id="0" href={% url 'viewByTag' 'MakeFile' %} > 
-                            <label for="0" class="md-chip md-chip-clickable md-chip-hover">MakeFile</label>
-                            <a class="deactivate" type="checkbox" name="foo" value="bar2" id="1" href={% url 'viewByTag' 'C' %}> 
-                            <label for="1" class="md-chip md-chip-clickable md-chip-hover"> C</label>
-                            <a class="deactivate" type="checkbox" name="foo" value="bar2" id="2" href={% url 'viewByTag' 'C++' %}> 
-                            <label for="2" class="md-chip md-chip-clickable md-chip-hover" > C++</label>
-                            <a class="deactivate" type="checkbox" name="foo" value="bar2" id="3" href={% url 'viewByTag' 'Java' %}> 
-                            <label for="3" class="md-chip md-chip-clickable md-chip-hover"> Java</label>
-                            <a class="deactivate" type="checkbox" name="foo" value="bar2" id="4" href={% url 'viewByTag' 'Django' %}> 
-                            <label for="4" class="md-chip md-chip-clickable md-chip-hover"> Django</label>
-                            <a class="deactivate" type="checkbox" name="foo" value="bar2" id="5" href={% url 'viewByTag' 'HTML' %}> 
-                            <label for="5" class="md-chip md-chip-clickable md-chip-hover"  >HTML</label>
-                            <a class="deactivate" type="checkbox" name="foo" value="bar2" id="6" href={% url 'viewByTag' 'CSS' %}> 
-                            <label for="6" class="md-chip md-chip-clickable md-chip-hover">CSS</label>
-                            <a class="deactivate" type="checkbox" name="foo" value="bar2" id="7" href={% url 'viewByTag' 'express.js' %}> 
-                            <label for="7" class="md-chip md-chip-clickable md-chip-hover">Express.js</label>
-                            <a class="deactivate" type="checkbox" name="foo" value="bar2" id="8" href={% url 'viewByTag' 'node' %}> 
-                            <label for="8" class="md-chip md-chip-clickable md-chip-hover"> Node.js</label>
-                            <a class="deactivate" type="checkbox" name="foo" value="bar2" id="9" href={% url 'viewByTag' 'ML' %}> 
-                            <label for="9" class="md-chip md-chip-clickable md-chip-hover">ML</label>
-                            <a class="deactivate" type="checkbox" name="foo" value="bar2" id="10" href={% url 'viewByTag' 'NLP' %}> 
-                            <label for="10" class="md-chip md-chip-clickable md-chip-hover">NLP</label>
-                            <a class="deactivate" type="checkbox" name="foo" value="bar2" id="11" href={% url 'viewByTag' 'DL' %}> 
-                            <label for="11" class="md-chip md-chip-clickable md-chip-hover">DL</label>
-                            <a class="deactivate" type="checkbox" name="foo" value="bar2" id="12" href={% url 'viewByTag' 'web-development' %}> 
-                            <label for="12" class="md-chip md-chip-clickable md-chip-hover">webdevelopment</label>
+                            {% for t in allTags %}
+                                <a class="deactivate" type="checkbox" name="foo" value="bar2" id={{ t.id }} href={% url 'viewByTag' t.tag_name  %} > 
+                                <label for={{ t.id }} class="md-chip md-chip-clickable md-chip-hover">{{ t.tag_name }}</label>
+                            {% endfor %}
                             
                         </div>
                     </div>

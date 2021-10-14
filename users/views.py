@@ -257,6 +257,7 @@ def homeView(request):
         page=request.GET.get('page',1)
         paginator=Paginator(all_blogs,3)
 
+        allTags=postTag.objects.all().values()
         try:
             posts=paginator.page(page)
         except PageNotAnInteger:
@@ -268,7 +269,8 @@ def homeView(request):
             'is_authenticated':is_authenticated_user(request),
             'posts':posts,
             'postTreeData':dataDictJson,
-            'postDet':json.dumps(postName)
+            'postDet':json.dumps(postName),
+            'allTags':allTags
         }
         # print(request.GET)
         return render(request,'Home.html',context)
@@ -302,7 +304,8 @@ def postViewByTag(request,tag_name):
 
         page=request.GET.get('page',1)
         paginator=Paginator(all_blogs,3)
-
+        
+        allTags=postTag.objects.all().values()
         try:
             posts=paginator.page(page)
         except PageNotAnInteger:
@@ -314,7 +317,8 @@ def postViewByTag(request,tag_name):
             'is_authenticated':is_authenticated_user(request),
             'posts':posts,
             'postTreeData':dataDictJson,
-            'postDet':json.dumps(postName)
+            'postDet':json.dumps(postName),
+            'allTags':allTags
         }
         # print(request.GET)
         return render(request,'Home.html',context)

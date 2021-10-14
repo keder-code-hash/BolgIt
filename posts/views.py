@@ -216,7 +216,10 @@ def UserPostView(request):
     user = Register.objects.get(email__iexact=email_id)
     if request.method=="GET":
         if user is not None:
-            PostData=Posts.objects.filter(owner__email__iexact=email_id)
+            PostData=Posts.objects.filter(owner__email__iexact=email_id).values()
+            for pData in PostData:
+                relatedTags=postTag.objects.filter(posts__id=pData.get('id')).values()
+                pData['tags']=relatedTags
             context={
                 'posts':PostData,
                 'is_authenticated':True
