@@ -173,22 +173,36 @@ def createPostView(request):
     if request.method=="POST":
         title=request.POST.get('postTitle')
         catagory=request.POST.get('postCatagory')
+        # print(catagory)
         status=request.POST.get('postStatus')
         data=request.POST.get('postData')
-        print(len(title))
+        # print(len(title))
         if status is None:
             status="d"
         ret_stat=False
-        if len(title)>0 and len(catagory)>0:
+        if title is not None and title is not None:
             try:
-                Posts.objects.create(post_title=title,catagory=catagory,body_custom=data,status=status,owner=user)
+                post=Posts(post_title=title,catagory=catagory,body_custom=data,status=status,owner=user)
+                post.save()
+                for tag in catagory.split(","):
+                    try:
+                        t=postTag.objects.get(tag_name=tag)
+                        post.tag.add(t)
+                    except postTag.DoesNotExist:
+                        t=postTag(tag_name=tag)
+                        t.save()
+                        post.tag.add(t)
                 ret_stat=True
             except Posts.DoesNotExist:
                 ret_stat=False
         else:
             ret_stat=False
         return JsonResponse(ret_stat,safe=False)
-    allTags=postTag.objects.all().values()
+    Tags=postTag.objects.all().values()
+    allTags=[]
+    # print(Tags)
+    for i in Tags:
+        allTags.append(i.get('tag_name'))
     context={
         'is_authenticated': is_authenticated_user(request),
         'tags':allTags
@@ -228,19 +242,52 @@ def UpdatePost(request,pk):
                 for key,value in values.items():
                     setattr(obj,key,value)
                 obj.save()
+
+                relatedTags=postTag.objects.filter(posts__id=pk).values()
+                relatedTagList=[]
+                for t in relatedTags:
+                    relatedTagList.append(t.get('tag_name'))
+                prevTagSet=set(relatedTagList)
+                newTagSet=set(values['catagory'].split(","))
+                deleteTags=prevTagSet.difference(newTagSet)
+                for delTags in list(deleteTags):
+                    obj.tag.filter(tag_name=delTags).delete()
+                print(values['catagory'].split(","))
+                for newTags in values['catagory'].split(","):
+                    try:
+                        t=postTag.objects.get(tag_name=newTags)
+                        obj.tag.add(t)
+                    except postTag.DoesNotExist:
+                        newTag=postTag(tag_name=newTags)
+                        newTag.save()
+                        print(newTag)
+                        obj.tag.add(newTag)
+
             except Posts.DoesNotExist:
                 obj=Posts(**values)
                 obj.save()
             # print(values)
             return JsonResponse(True,safe=False)
+
         postData=Posts.objects.get(id=pk)
         values=list(Posts.objects.filter(id=pk).values('body_custom'))
         json_values=json.dumps(values[0])
+        Tags=postTag.objects.all().values()
+        initTags=postTag.objects.filter(posts__id=pk).values()
+        initialTags=[]
+        allTags=[]
+        # print(Tags)
+        for it in initTags:
+            initialTags.append(it.get('tag_name'))
+        for i in Tags:
+            allTags.append(i.get('tag_name'))
         context = {
                 'id':pk,
                 'body_custom':json_values,
                 'data':postData,
                 'is_authenticated': auth,
+                'tags':allTags,
+                'initTags':initialTags
             }
         return render(request,'postUpdate.html',context)
     except ValueError as err:

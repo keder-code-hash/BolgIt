@@ -42,9 +42,7 @@
 
             <!-- <div id="output"></div>
             <select  data-placeholder="Choose tags ..." name="tags[]" multiple class="chosen-select" style="width: 50%;">
-              {% for t in tags %}
-                <option value="{{ t.tag_name }}">{{ t.tag_name }}</option>
-              {% endfor %}
+              
             </select> -->
             
             <div id="demo2"></div>
@@ -116,12 +114,13 @@
 
 
 
-          <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-          <script src="https://code.jquery.com/ui/1.10.2/jquery-ui.min.js"></script>
-          <script src="https://goodies.pixabay.com/jquery/tag-editor/jquery.caret.min.js"></script>
-          <script src="https://goodies.pixabay.com/jquery/tag-editor/jquery.tag-editor.js"></script>
+        <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.10.2/jquery-ui.min.js"></script>
+        <script src="https://goodies.pixabay.com/jquery/tag-editor/jquery.caret.min.js"></script>
+        <script src="https://goodies.pixabay.com/jquery/tag-editor/jquery.tag-editor.js"></script>
         <script>
-          const source = ['ActionScript', 'AppleScript', 'Asp', ...'Python', 'Ruby'];
+          
+          const source = {{tags | safe}};
 
           $('#demo2').tagEditor({
           autocomplete: {
@@ -132,11 +131,7 @@
               source
           },
           forceLowercase: false,
-          placeholder: 'Programming languages ...',
-          // initialTags: ['ActionScript', 'AppleScript'],
-          // beforeTagSave: (field, editor, tags, tag, val) => {
-          //     return source.includes(val) && val;
-          // }
+          placeholder: 'Tags ...', 
           });
 
           const but=document.getElementById('save-data');
@@ -152,12 +147,11 @@
                           headers: {
                             'Access-Control-Allow-Credentials' : true,
                             'Access-Control-Allow-Origin':'*',
-                            'Access-Control-Allow-Methods':'POST',
-                            'Access-Control-Allow-Headers':'application/json',
+                            'Access-Control-Allow-Methods':'POST'
                           },
                           data:{
                               "postTitle":document.getElementById('PostTitle')!==null ? document.getElementById('PostTitle').value : '',
-                              // "postCatagory":$("#selectedTags").val(),
+                              "postCatagory": $("#demo2").val(),
                               "postStatus":document.getElementsByName('status')[0].checked==true ? document.getElementsByName('status')[0].value : document.getElementsByName('status')[1].value,
                               "postData":postData
                           },
