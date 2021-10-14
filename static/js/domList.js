@@ -74,7 +74,7 @@ function toggleBlockGen(postid,filterName,postcount)
     PostCount.setAttribute('class','post-count');
     PostCount.innerHTML="&nbsp&nbsp&nbsp[&nbsp"+postcount+"&nbsp]";
 
-    //if the parent node is for year themn we have to add again a parentNode for months.
+    //if the parent node is for year then we have to add again a parentNode for months.
     //if the parent Node is for month then we have to add again a childNode of postaList
 
     togglingPNode.appendChild(spanToggleSign);
@@ -101,14 +101,14 @@ window.onload=()=>{
     // console.log(postObj);
 
     const year=Object.keys(obj);
-    const yearlyPostCount=new Array(15,17,16);
+    // const yearlyPostCount=new Array(15,17,16);
 
     const month=new Array("January","February","March","April","May","June","July","August","September","October","November","December");
 
     function dataGen(months,year){
         this.month=months;
         this.year=year;
-        this.yearlyPostCount=yearlyPostCount;
+        // this.yearlyPostCount=yearlyPostCount;
     }
     var data=new dataGen(month,year);
     

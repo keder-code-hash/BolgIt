@@ -1,7 +1,7 @@
 from django.db import models
 from users.models import Register
 from django_editorjs_fields import EditorJsJSONField,EditorJsTextField
-
+import datetime
 
 class postTag(models.Model):
     tag_name=models.CharField(max_length=50,blank=False,default="NULL")
@@ -15,7 +15,7 @@ class Posts(models.Model):
     body_custom =models.JSONField(null=True)
     owner=models.ForeignKey(Register,on_delete=models.CASCADE)
     status=models.CharField(default='',blank=False,max_length=5)
-    post_created=models.DateTimeField(auto_now_add=True)
+    post_created=models.DateTimeField(default=datetime.datetime.now())
     tag=models.ManyToManyField(postTag)
 
     def __str__(self):

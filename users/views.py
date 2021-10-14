@@ -245,7 +245,7 @@ def homeView(request):
             if raw.get('id')not in postName.keys():
                 postName[raw.get('id')]=''
             postName[raw.get('id')]=raw.get('post_title')
-            month_no=raw.get('post_created').month
+            month_no=raw.get('post_created').month-1
             dataDict[raw.get('post_created').year][month_no].append(raw.get('id'))
 
         dataDictJson=json.dumps(dataDict, separators=(',', ':'))
@@ -297,7 +297,7 @@ def postViewByTag(request,tag_name):
             if raw.get('id')not in postName.keys():
                 postName[raw.get('id')]=''
             postName[raw.get('id')]=raw.get('post_title')
-            month_no=raw.get('post_created').month
+            month_no=raw.get('post_created').month-1
             dataDict[raw.get('post_created').year][month_no].append(raw.get('id'))
 
         dataDictJson=json.dumps(dataDict, separators=(',', ':'))
