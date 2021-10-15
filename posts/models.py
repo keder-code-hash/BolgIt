@@ -37,8 +37,8 @@ class Comments(MPTTModel):
     comment=models.TextField(blank=False)
     parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
     post=models.ForeignKey(Posts,on_delete=models.CASCADE)
-    # owner=models.ForeignKey(Register,on_delete=models.CASCADE)
-    created=models.DateTimeField(auto_now_add=True)
+    owner=models.ForeignKey(Register,on_delete=models.CASCADE)
+    created=models.DateTimeField(default=datetime.datetime.now())
     status=models.BooleanField(default=True)
     name=models.CharField(blank=False,max_length=100,default="NULL")
 

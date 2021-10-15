@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+
+<head> 
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> 
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+  </script>
+
+</head>
+
+<body>
+    <style>
+        @media screen and (min-width: 600px) {
+          .children form {
+            margin-left: -48px; 
+          }
+      
+          .children .children form {
+            margin-left: -96px; 
+          }
+        }
+      </style>
+      
+      <div class="container">
+        <div class=" justify-content-md-center pt-5">
+       
+      
+            {% with allcomments.count as total_comments %}
+            <h2>
+              {{ total_comments }} comment{{ total_comments|pluralize }}
+            </h2>
+            <br />
+            <br />
+
+            {% endwith %}
+      
+            {% load mptt_tags %}
+      
+            <!-- recursive comment generate mttp -->
+            <!-- <div class="col-md-8"> -->
+
+              {% load mptt_tags %}
+              <div class="allcommments">
+        
+                {% recursetree allcomments %}
+                <div id="{{ node.id }}" class="my-2 p-2" style="border: 0px solid grey">
+        
+        
+                  <div class="d-flex justify-content-between">
+        
+                    <div><img class="avatar_single mr-3" src="{{ node.author.profile.avatar.url }}">By {{ node.author }}</div>
+                    {{ node.publish }}
+        
+        
+                  </div>
+        
+                  <div class="node-content">{{ node.comment }}</div>
+        
+                  <div class="d-flex flex-row-reverse">
+                    {% if node.level < 3 %}
+                    <button class="btn btn-primary btn-sm" onclick="myFunction({{ node.id }})">Reply</button>
+                    {% endif %}
+                    {% if node.author|stringformat:"s" == user.get_username  %}
+                    <button class="btn btn-secondary btn-sm mr-2" onclick="deleteComment({{ node.id }})">Delete</button>
+                    {% endif %}
+                  </div>
+                  <hr />
+                </div>
+                {% if not node.is_leaf_node %}
+                <div class="children pl-2 pl-md-5">
+                  {{ children }}
+                </div>
+                {% endif %}
+                {% endrecursetree %}
+        
+              </div> 
+            <!-- </div> -->
+      
+            
+      
+            <!-- for for creating new comment -->
+
+            <div id="myDIV" style="display:block;">
+              <form id="myForm" method="post">
+                <h2>Create new comment</h2>
+                {{ comment_form.as_p  }}
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
+              </form>
+            </div>
+      
+          </div>
+        </div>
+      </div>
+      <script>
+        //Comments
+      
+        $(document).on('click', '#newcomment, #newcommentinner', function (e) {
+          e.preventDefault();
+      
+          var button = $(this).attr("value");
+      
+          var placement = "commentform"
+          if (button == "newcommentform") {
+            var placement = "newcommentform"
+          }
+      
+          $.ajax({
+            type: 'POST',
+            url: '{% url "addcomment" %}',
+            data: $("#" + button).serialize(),
+            cache: false,
+            success: function (json) {
+              console.log(json)
+      
+      
+              $('<div id="" class="my-2 p-2" style="border: 1px solid grey"> \
+                <div class="d-flex justify-content-between">By ' + json['user'] + '<div></div>Posted: Just now!</div> \
+                <div>' + json['result'] + '</div> \
+                <hr> \
+                </div>').insertBefore('#' + placement);
+      
+              $('.commentform').trigger("reset");
+              formExit()
+      
+            },
+            error: function (xhr, errmsg, err) {
+      
+            }
+          });
+        })
+      
+        function formExit() {
+          // e.preventDefault();
+          document.getElementById("newcommentform").remove();
+          $("#newcommentform").remove();
+        }
+      
+        function deleteComment(id) {
+          console.log(id)
+          $.ajax({
+            type: 'POST',
+            url: '{% url "addcomment" %}',
+            data: {
+              nodeid: id,
+              action: 'delete',
+              csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+            },
+            success: function (json) {
+              $("#" + json['remove']).remove();
+            },
+            error: function (xhr, errmsg, err) {}
+          });
+        }
+      
+        function myFunction(id) {
+          if (document.contains(document.getElementById("newcommentform"))) {
+            document.getElementById("newcommentform").remove();
+          }
+          // var postid = document.getElementById('thumbs').getAttribute('data-value');
+          // var imgFullURL = $('img.avatar_comment')[0].src;
+          var d1 = document.getElementById(id);
+          d1.insertAdjacentHTML('afterend',
+            '<form id="newcommentform" class="commentform" method="post"> \
+              {% csrf_token %} \
+              </select> <label class="small font-weight-bold"></label> \
+              <select name="parent" class="d-none" id="id_parent"> \
+                <option value="' + id + '" selected="' + id + '"></option> \
+              </select> \
+              <div class="d-flex"> \
+                <textarea name="comment" cols="40" rows="1" class="ml-3 mb-3 form-control border-0 comment-add rounded-0" placeholder="Add a public comment" required="" id="id_comment"></textarea> \
+              </div> \
+              <div class="d-flex flex-row-reverse"> \
+                <button type="button" class="btn btn-outline-secondary" onclick="formExit()">Close</button> \
+                <button value="newcommentform" id="newcommentinner" type="submit" class="mr-1 newcomment btn btn-primary ">Submit</button> \
+              </div> \
+            </form>'
+          );
+        }
+        
+      
+      
+        //Reset form on page reload
+      
+        $('.commentform').trigger("reset");
+      
+      
+      
+      
+        
+      </script>
+      
+  
+</body>
+
+</html>

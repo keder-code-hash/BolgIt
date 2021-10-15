@@ -1,8 +1,36 @@
-# from markdownx.fields import MarkdownxFormField
+ 
 from django import forms
-from django.forms import ModelForm
-# from mdeditor.fields import MDTextFormField
+from django.forms import ModelForm 
 from posts.models import Posts
+from django import forms
+from .models import Comments
+from mptt.forms import TreeNodeChoiceField
+
+
+class NewCommentForm(forms.ModelForm):
+    parent = TreeNodeChoiceField(queryset=Comments.objects.all())
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['parent'].widget.attrs.update(
+            {'class': 'd-none'})
+
+        self.fields['parent'].label = ''
+        self.fields['parent'].required = False
+
+    class Meta:
+        model = Comments
+        fields = ('parent', 'comment')
+
+        widgets = {
+            'content': forms.Textarea(attrs={'class': 'ml-3 mb-3 form-control border-0 comment-add rounded-0', 'rows': '1', 'placeholder': 'Add a public comment'}),
+        }
+
+    def save(self, *args, **kwargs):
+        Comments.objects.rebuild()
+        return super(NewCommentForm, self).save(*args, **kwargs)
+
 
 # class markDownForm(forms.Form):
 #     myField = MarkdownxFormField()

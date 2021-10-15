@@ -3,7 +3,7 @@ from django.db.models.fields import EmailField
 from django.http.request import QueryDict
 from django_editorjs_fields import fields
 from rest_framework.exceptions import ValidationError
-from .models import Posts, postTag
+from .models import Posts, postTag,Comments
 from users.models import Register
 from .serializers import post_update_serializer
 from .serializers import post_view
@@ -23,6 +23,10 @@ import json
 from django.core.serializers.json import DjangoJSONEncoder
 from .models import PostRate
 
+from django.shortcuts import render, get_object_or_404, HttpResponseRedirect 
+from .forms import NewCommentForm
+from django.views.generic import ListView
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 class PostViewByPostTitle(APIView):
@@ -341,3 +345,47 @@ def rate(request):
         else:
             PostRate.objects.create(post_id=Posts.objects.get(id=postId),rating=ratingValue)
         return JsonResponse(True,safe=False)
+
+
+
+def post_single(request):
+
+    post = get_object_or_404(Posts,id=9)
+
+
+    allcomments = Comments.objects.filter(status=True).filter(post__id=9)
+
+    comment_form = NewCommentForm()
+
+    return render(request, 'comments.html', {'comment_form': comment_form, 'allcomments': allcomments })
+
+
+def addcomment(request):
+
+    if request.method == 'POST':
+
+        if request.POST.get('action') == 'delete':
+            id = request.POST.get('nodeid')
+            print(id)
+            c = Comments.objects.get(id=id)
+            c.delete()
+            return JsonResponse({'remove': id})
+        else:
+            comment_form = NewCommentForm(request.POST)
+            print(comment_form)
+            if comment_form.is_valid():
+                user_comment = comment_form.save(commit=False)
+                result = comment_form.cleaned_data.get('content')
+                user = 'keder123@gmail.com'
+                user_comment.owner = Register.objects.get(email='keder123@gmail.com')
+                user_comment.post=Posts.objects.get(id=9)
+                user_comment.save()
+                return JsonResponse({'result': result, 'user': user})
+
+
+
+
+
+
+
+
