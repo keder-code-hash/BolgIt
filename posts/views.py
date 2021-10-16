@@ -170,7 +170,7 @@ def singlepostView(request,pk):
             user_comment.post = posts
             user_comment.owner = Register.objects.get(email=email_id)
             user_comment.save()
-            return HttpResponseRedirect('/post/'+pk)
+            return HttpResponseRedirect('/post/'+str(pk))
         else:
             comment_form = NewCommentForm()
     comment_form = NewCommentForm()
