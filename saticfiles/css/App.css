@@ -277,3 +277,13 @@ input[type="checkbox"]:checked + label {
   pointer-events: none;
   cursor: text;
 }
+
+
+/* admin lte style change */
+
+#changelist {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
