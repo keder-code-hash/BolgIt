@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en">
 
@@ -58,7 +59,7 @@
         
                   <div class="d-flex justify-content-between">
         
-                    <div><img class="avatar_single mr-3" src="{{ node.author.profile.avatar.url }}">By {{ node.author }}</div>
+                    <div><img class="avatar_single mr-3" src="{{ node.author.profile.avatar.url }}">By {{ node.owner }}</div>
                     {{ node.publish }}
         
         
@@ -121,13 +122,14 @@
             data: $("#" + button).serialize(),
             cache: false,
             success: function (json) {
-              console.log(json)
+              // console.log(json)
       
       
-              $('<div id="" class="my-2 p-2" style="border: 1px solid grey"> \
+              $('<div id="'+ json['comment_id'] +'" class="my-2 p-2" style="border: 1px solid grey"> \
                 <div class="d-flex justify-content-between">By ' + json['user'] + '<div></div>Posted: Just now!</div> \
                 <div>' + json['result'] + '</div> \
                 <hr> \
+                <button class="mr-1 btn btn-primary btn-sm" onclick="myFunction('+json['comment_id']+')">Reply</button>\
                 </div>').insertBefore('#' + placement);
       
               $('.commentform').trigger("reset");

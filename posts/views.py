@@ -138,7 +138,7 @@ def singlepostView(request,pk):
         email_id = decoded_data.get('email')
     else: 
         email_id=None
-    posts=Posts.objects.get(id=pk)
+    posts=get_object_or_404(Posts,id=pk)
     values=list(Posts.objects.filter(id=pk).values('body_custom'))
     rate=PostRate.objects.filter(user_id__email=email_id).filter(post_id__id=pk)
     postOwner=posts.owner
@@ -159,12 +159,31 @@ def singlepostView(request,pk):
     # print(list(rate.values()))
     print(avg)
     json_values=json.dumps(values[0])
+
+    # post = get_object_or_404(Posts,id=pk)
+    # Comments.objects.filter(id__lt=25).delete()
+    allcomments = Comments.objects.filter(status=True).filter(post__id=pk)
+    if request.method == 'POST':
+        comment_form = NewCommentForm(request.POST)
+        if comment_form.is_valid():
+            user_comment = comment_form.save(commit=False)
+            user_comment.post = posts
+            user_comment.owner = Register.objects.get(email=email_id)
+            user_comment.save()
+            return HttpResponseRedirect('/post/'+pk)
+        else:
+            comment_form = NewCommentForm()
+    comment_form = NewCommentForm()
     context={
             'other_post':otherPosts,
             'posts':posts,
             'body_custom':json_values,
             'is_authenticated':is_authenticated,
-            'postRate':int(avg)
+            'postRate':int(avg),
+            'comment_form': comment_form,
+            'allcomments': allcomments ,
+            'user_name':email_id,
+            # 'avtar_url':
         }
     return render(request,'postView.html',context)
 
@@ -353,8 +372,18 @@ def post_single(request):
     post = get_object_or_404(Posts,id=9)
 
 
+    # Comments.objects.filter(id__lt=25).delete()
     allcomments = Comments.objects.filter(status=True).filter(post__id=9)
-
+    if request.method == 'POST':
+        comment_form = NewCommentForm(request.POST)
+        if comment_form.is_valid():
+            user_comment = comment_form.save(commit=False)
+            user_comment.post = post
+            user_comment.owner = Register.objects.get(email='keder123@gmail.com')
+            user_comment.save()
+            return HttpResponseRedirect('/comment/')
+        else:
+            comment_form = NewCommentForm()
     comment_form = NewCommentForm()
 
     return render(request, 'comments.html', {'comment_form': comment_form, 'allcomments': allcomments })
@@ -372,15 +401,17 @@ def addcomment(request):
             return JsonResponse({'remove': id})
         else:
             comment_form = NewCommentForm(request.POST)
-            print(comment_form)
+            # print(comment_form)
             if comment_form.is_valid():
                 user_comment = comment_form.save(commit=False)
-                result = comment_form.cleaned_data.get('content')
+                result = comment_form.cleaned_data.get('comment')
                 user = 'keder123@gmail.com'
                 user_comment.owner = Register.objects.get(email='keder123@gmail.com')
                 user_comment.post=Posts.objects.get(id=9)
                 user_comment.save()
-                return JsonResponse({'result': result, 'user': user})
+                comment_id=Comments.objects.filter(comment=result).order_by('-created').values_list()
+                # print(list(comment_id[0])[0])
+                return JsonResponse({'result': result, 'user': user,'comment_id': list(comment_id[0])[0]})
 
 
 

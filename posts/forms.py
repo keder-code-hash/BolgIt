@@ -24,7 +24,7 @@ class NewCommentForm(forms.ModelForm):
         fields = ('parent', 'comment')
 
         widgets = {
-            'content': forms.Textarea(attrs={'class': 'ml-3 mb-3 form-control border-0 comment-add rounded-0', 'rows': '1', 'placeholder': 'Add a public comment'}),
+            'content': forms.TextInput(attrs={'class': 'ml-3 mb-3 form-control border-0 comment-add rounded-0', 'rows': '1', 'placeholder': 'Add a public comment'}),
         }
 
     def save(self, *args, **kwargs):
