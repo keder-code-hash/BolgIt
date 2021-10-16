@@ -199,15 +199,18 @@
             
       
             <!-- for for creating new comment -->
-
-            <div id="myDIV" style="display:block;">
-              <form id="myForm" method="post">
-                <h2>Create new comment</h2>
-                {{ comment_form.as_p  }}
-                {% csrf_token %}
-                <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
-              </form>
-            </div>
+            {% if is_authenticated is True %}
+                <div id="myDIV" style="display:block;">
+                <form id="myForm" method="post">
+                    <h2>Create new comment</h2>
+                    {{ comment_form.as_p  }}
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Submit</button>
+                </form>
+                </div>
+            {% else %}
+                <h2>Please Log In to Comment</h2>
+            {% endif %}
       
           </div>
         </div>
@@ -281,22 +284,27 @@
           // var postid = document.getElementById('thumbs').getAttribute('data-value');
           // var imgFullURL = $('img.avatar_comment')[0].src;
           var d1 = document.getElementById(id);
-          d1.insertAdjacentHTML('afterend',
-            '<form id="newcommentform" class="commentform" method="post"> \
-              {% csrf_token %} \
-              </select> <label class="small font-weight-bold"></label> \
-              <select name="parent" class="d-none" id="id_parent"> \
-                <option value="' + id + '" selected="' + id + '"></option> \
-              </select> \
-              <div class="d-flex"> \
-                <textarea name="comment" cols="40" rows="1" class="ml-3 mb-3 form-control border-0 comment-add rounded-0" placeholder="Add a public comment" required="" id="id_comment"></textarea> \
-              </div> \
-              <div class="d-flex flex-row-reverse"> \
-                <button type="button" class="btn btn-outline-secondary" onclick="formExit()">Close</button> \
-                <button value="newcommentform" id="newcommentinner" type="submit" class="mr-1 newcomment btn btn-primary ">Submit</button> \
-              </div> \
-            </form>'
-          );
+          if("{{is_authenticated}}"==="True"){
+                d1.insertAdjacentHTML('afterend',
+                    '<form id="newcommentform" class="commentform" method="post"> \
+                    {% csrf_token %} \
+                    </select> <label class="small font-weight-bold"></label> \
+                    <select name="parent" class="d-none" id="id_parent"> \
+                        <option value="' + id + '" selected="' + id + '"></option> \
+                    </select> \
+                    <div class="d-flex"> \
+                        <textarea name="comment" cols="40" rows="1" class="ml-3 mb-3 form-control border-0 comment-add rounded-0" placeholder="Add a public comment" required="" id="id_comment"></textarea> \
+                    </div> \
+                    <div class="d-flex flex-row-reverse"> \
+                        <button type="button" class="btn btn-outline-secondary" onclick="formExit()">Close</button> \
+                        <button value="newcommentform" id="newcommentinner" type="submit" class="mr-1 newcomment btn btn-primary ">Submit</button> \
+                    </div> \
+                    </form>'
+                );
+          }
+          else{
+              alert('Please Log In to Comment'); 
+          }
         }
         
       
