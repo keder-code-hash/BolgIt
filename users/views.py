@@ -19,8 +19,7 @@ from django.urls import reverse
 import jwt
 from rest_framework import exceptions
 from django.conf import settings
-from posts.models import Posts,postTag
-from comments.models import Comments
+from posts.models import Posts,postTag,Comments 
 import datetime
 from django.http import Http404
 from django.core.files.storage import default_storage

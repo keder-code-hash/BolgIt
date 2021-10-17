@@ -19,11 +19,10 @@
     <form action="{% url 'homePage' %}" method="get">
         <div class="container-fluid ">
             <div class="mt-sm-5 ml-sm-5 row">
-                <div class="col-sm-6 col-md-6 col-xl-3 col-lg-3 col-3"> 
-                    <div class="container tags mb-0" style="background-color: azure;">
+                <div class="col-sm-12 col-md-12 col-xl-3 col-lg-6 order-1 py-5"> 
+                    <div class="conatiner-fluid tags mb-0" style="background-color: azure;">
                         <h5 class="text-center">Available Tags</h5>
-                        <br/>
-                        <br/>
+                        <br/> 
                         <div id="tagsChip" class="md-chips ">
                             <br/>
                             <br/>
@@ -35,7 +34,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 order-sm-2">
+                <br/>
+                <br/>
+                <div class="col-sm-12 order-sm-1 order-md-1 order-sm-1 col-xl-6 order-xl-2">
                     <div class="infinite-container">
                         {% for post in posts %}
                             <div class="col-md-auto infinite-item">
