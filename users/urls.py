@@ -21,5 +21,8 @@ urlpatterns=[
     path('updateProfile/', upDateProfile, name='updateProfile'),
     path('refreshtoken/',refresh_acsess_token),
     path('contact',contactForm,name='contact'),
-    path('post/tag/<str:tag_name>/',postViewByTag,name='viewByTag')
+    path('post/tag/<str:tag_name>/',postViewByTag,name='viewByTag'),
+    path('reset_password/<str:token>/',views.resetPassword,name='reset_password'),
+    
+    path('reset_password_init/',views.resetPasswordInit,name='reset_password_init')
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

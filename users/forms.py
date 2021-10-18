@@ -31,7 +31,6 @@ class RegisterForm(forms.Form):
 			self.add_error('user_password',msg1)
 		return cleaned_data
 
-
 class LogInForm(forms.Form):
 	emailid = forms.CharField(max_length=50,required=True)
 	user_password = forms.CharField(max_length=50, required=True)
@@ -72,5 +71,14 @@ class profileForm(forms.Form):
 		cleaned_data=super().clean()
 		return cleaned_data
 
-
+class resetPassInit(forms.Form):
+	email=forms.EmailField(max_length=200,required=True)
+	def clean(self):
+		cleaned_data =super().clean()
+		email=cleaned_data.get('email')
+		user=Register.objects.filter(email=email)
+		if user.exists() is False:
+			msg='user with this email does not exist.Provide the verified email.'
+			self.add_error('email',msg)
+		return cleaned_data
 

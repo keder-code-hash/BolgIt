@@ -1,6 +1,6 @@
 from typing import Dict
 import json
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, JsonResponse
 from rest_framework.views import APIView
 from .serializers import userSerializer,RegisterSerializers,RegisterUpdateSerializer
 from .models import Register
@@ -13,7 +13,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 #user view or delete.
 from django.shortcuts import render, redirect
-from .forms import RegisterForm,LogInForm,profileForm
+from .forms import RegisterForm,LogInForm,profileForm ,resetPassInit
 from rest_framework import exceptions
 from django.urls import reverse
 import jwt
@@ -25,8 +25,12 @@ from django.http import Http404
 from django.core.files.storage import default_storage
 from django.core.files.storage import FileSystemStorage
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.views.decorators.csrf import requires_csrf_token,ensure_csrf_cookie,csrf_exempt
-from django.core.mail import EmailMultiAlternatives
+from django.views.decorators.csrf import csrf_protect, requires_csrf_token,ensure_csrf_cookie,csrf_exempt
+from django.core.mail import EmailMultiAlternatives 
+from django.template.loader import get_template
+from django.core.mail import EmailMessage
+
+from django.template import Context
 # from 
 
 class Users(APIView):
@@ -391,3 +395,46 @@ def contactForm(request):
         msg.send()
         
     return HttpResponse({"msg":"success"})
+
+@csrf_exempt
+def resetPassword(request,token):
+    print(token) 
+    return render(request,'resetPassword.html')
+
+
+@csrf_exempt
+def resetPasswordInit(request):
+    if request.method=='POST':
+        email=request.POST.get('email')
+        user=Register.objects.filter(email=email)
+        print(email)
+        if user.exists() is False:
+            msg={
+                "ms":"please give the registered email"
+            }
+            return JsonResponse(msg)
+        else:
+            msg={
+                "ms":"Success"
+            }
+            access_token=get_access_token(Register.objects.get(email=email))
+            url=access_token
+            ctx={
+                'resetPass_url':'sheltered-journey-30026.herokuapp.com'+access_token
+            }
+            message = get_template("emails/reset_pass.html").render(ctx)
+            mail = EmailMessage(
+                subject="Reset Password",
+                body=message,
+                from_email="kedernath.mallick.tint022@gmail.com",
+                to=["kedernath.mallick.tint022@gmail.com"],
+                reply_to=["kedernath.mallick.tint022@gmail.com"],
+            )
+            mail.content_subtype = "html"
+            mail.send() 
+            
+            return JsonResponse(msg)
+    context={
+        'is_authenticated':is_authenticated_user(request),
+    }
+    return render(request,'resetPasswordInit.html',context)
