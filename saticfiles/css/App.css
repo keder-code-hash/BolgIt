@@ -287,3 +287,6 @@ input[type="checkbox"]:checked + label {
   flex-wrap: wrap;
   flex-direction: column;
 }
+
+
+/* reset password form */
