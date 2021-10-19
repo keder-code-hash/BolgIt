@@ -1,5 +1,6 @@
 from typing import Dict
 import json
+from django.contrib.auth.hashers import make_password
 from django.http.response import HttpResponse, JsonResponse
 from rest_framework.views import APIView
 from .serializers import userSerializer,RegisterSerializers,RegisterUpdateSerializer
@@ -30,7 +31,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import get_template
 from django.core.mail import EmailMessage
 
-from django.template import Context
+from django.template import Context, context
 # from 
 
 class Users(APIView):
@@ -396,10 +397,51 @@ def contactForm(request):
         
     return HttpResponse({"msg":"success"})
 
-@csrf_exempt
+# @csrf_exempt
 def resetPassword(request,token):
-    print(token) 
-    return render(request,'resetPassword.html')
+    if request.method=='POST': 
+        access_tok=token
+        password=request.POST.get('password')
+        conf_password=request.POST.get('conf_password') 
+        if password!=conf_password: 
+            msg={
+                'st':'nm'
+            }
+            return JsonResponse(msg)
+        else:
+            try:
+                payload = jwt.decode(access_tok, settings.SECRET_KEY, algorithms="HS256")
+                email = payload['email']
+                try:
+                    new_pass=make_password(password)
+                    data={
+                        'password':new_pass
+                    }
+                    user = Register.objects.get(email=email)
+                    for key,val in data.items():
+                        setattr(user,key,val)
+                    user.save()
+                    msg={
+                        "st":"su"
+                    }
+                    return JsonResponse(msg)
+                except Register.DoesNotExist:
+                    print("user does not exist")
+            except jwt.ExpiredSignatureError as ex:
+                msg={
+                        "st":"le"
+                    }
+                return JsonResponse(msg)
+            except jwt.DecodeError:
+                print("ERROR")
+            except Register.DoesNotExist as ne:
+                raise exceptions.AuthenticationFailed('invalid email id') 
+    # print(make_password("token")) 
+    context={
+        'token':token,
+        'is_authenticated':is_authenticated_user(request)
+    }
+    return render(request,'resetPassword.html',context)
 
 
 @csrf_exempt
@@ -410,17 +452,18 @@ def resetPasswordInit(request):
         print(email)
         if user.exists() is False:
             msg={
-                "ms":"please give the registered email"
+                "st":"er",
+                "ms":"please give the verified email with your account"
             }
             return JsonResponse(msg)
         else:
             msg={
-                "ms":"Success"
+                "st":"su",
+                "ms":"We have e-mailed your password reset link!"
             }
-            access_token=get_access_token(Register.objects.get(email=email))
-            url=access_token
+            access_token=get_access_token(Register.objects.get(email=email)) 
             ctx={
-                'resetPass_url':'sheltered-journey-30026.herokuapp.com'+access_token
+                'resetPass_url':'http://127.0.0.1:8000/'+'reset_password/'+access_token
             }
             message = get_template("emails/reset_pass.html").render(ctx)
             mail = EmailMessage(
