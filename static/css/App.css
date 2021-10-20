@@ -410,3 +410,8 @@ input[type="checkbox"]:checked + label {
 	margin-top: 10px;
 	text-align: right;
 } 
+
+
+.fade:not(.show) {
+  opacity: 1;
+}
