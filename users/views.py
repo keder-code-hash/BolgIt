@@ -147,6 +147,12 @@ def login_view(request):
             user_data=Register.objects.get(email__exact=data.get('email'))
             if user_data.check_password(data.get('password'))==True:
                 response=HttpResponseRedirect(reverse('homePage'))
+                data={
+                    'last_login':datetime.datetime.now(datetime.timezone.utc)
+                }
+                for key,val in data.items():
+                        setattr(user_data,key,val)
+                user_data.save()
                 access_token = get_access_token(user_data)
                 refresh_token = get_refresh_token(user_data)
                 response.set_cookie(key='refreshtoken', value=refresh_token, httponly=True)
@@ -272,8 +278,12 @@ def homeView(request):
             Ratings=PostRate.objects.filter(post_id__id=all_blogs[i].get('id')).count()
             all_blogs[i]['comment_no']=noOfComments
             all_blogs[i]['rated_no']=Ratings
-            all_blogs[i]['user_info']=Register.objects.filter(email=all_blogs[i].get('owner_id')).values('user_name','profile_pic')[0]
-        # print(all_blogs[0]['user_name'].get('user_name'))
+            all_blogs[i]['user_info']=Register.objects.filter(email=all_blogs[i].get('owner_id')).values('user_name','profile_pic','profile_pic_name')[0]
+            currentTime=datetime.datetime.now(datetime.timezone.utc)
+            daysDiff=currentTime-all_blogs[i].get('post_created')
+            all_blogs[i]['days_diff']=daysDiff.days
+            # print()
+        # print(all_blogs[0]['user_info'].get('profile_pic'))
         # print(all_blogs[0])
 
         page=request.GET.get('page',1)
@@ -323,6 +333,24 @@ def postViewByTag(request,tag_name):
             dataDict[raw.get('post_created').year][month_no].append(raw.get('id'))
 
         dataDictJson=json.dumps(dataDict, separators=(',', ':'))
+
+        for i in range(len(all_blogs)):
+            jsonifyData=json.loads(all_blogs[i].get('body_custom'))
+            for block in jsonifyData.get('blocks'):
+                try:
+                    if(block.get('type')=='paragraph'):
+                        all_blogs[i]['paraData']=block.get('data').get('text')
+                        break
+                except ValueError:
+                    pass
+            noOfComments=Comments.objects.filter(post__id=all_blogs[i].get('id')).count()
+            Ratings=PostRate.objects.filter(post_id__id=all_blogs[i].get('id')).count()
+            all_blogs[i]['comment_no']=noOfComments
+            all_blogs[i]['rated_no']=Ratings
+            all_blogs[i]['user_info']=Register.objects.filter(email=all_blogs[i].get('owner_id')).values('user_name','profile_pic','profile_pic_name')[0]
+            currentTime=datetime.datetime.now(datetime.timezone.utc)
+            daysDiff=currentTime-all_blogs[i].get('post_created')
+            all_blogs[i]['days_diff']=daysDiff.days
 
         page=request.GET.get('page',1)
         paginator=Paginator(all_blogs,3)

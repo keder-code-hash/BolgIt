@@ -20,24 +20,24 @@
     <form action="{% url 'homePage' %}" method="get">
         <div class="container-fluid ">
             <div class="mt-sm-5 ml-sm-5 row">
-                <div class="col-sm-12 col-md-12 col-xl-3 col-lg-6 order-1 py-5"> 
-                    <div class="conatiner-fluid tags mb-0" style="background-color: azure;">
-                        <h5 class="text-center">Available Tags</h5>
-                        <br/> 
-                        <div id="tagsChip" class="md-chips ">
+                <div class="col-sm-12 col-md-12 col-xl-2 col-lg-2 order-1 py-5"> 
+                    <div class="conatiner-fluid mb-0" style="background-color: azure;width: fit-content;">
+                        <h5 class="text-center">Available Tags</h5> 
+                        <div style=" width: 200px; height: 300px; overflow: auto; text-align: justify;">
                             <br/>
-                            <br/>
+                            <ul>
                             {% for t in allTags %}
-                                <a class="deactivate" type="checkbox" name="foo" value="bar2" id={{ t.id }} href={% url 'viewByTag' t.tag_name  %} > 
-                                <label for={{ t.id }} class="md-chip md-chip-clickable md-chip-hover">{{ t.tag_name }}</label>
+                                <li>
+                                    <a class="deactivate" type="checkbox" name="foo" value="bar2" id={{ t.id }} href={% url 'viewByTag' t.tag_name  %} >{{ t.tag_name }}</a>
+                                </li>
                             {% endfor %}
-                            
+                            </ul>
                         </div>
                     </div>
                 </div>
                 <br/>
                 <br/>
-                <div class="col-sm-12 order-sm-1 order-md-1 order-sm-1 col-xl-6 order-xl-2">
+                <div class="col-sm-12 order-sm-1 order-md-1 order-sm-1 col-xl-7 order-xl-2">
                     <div class="infinite-container">
                         {% for post in posts %}
                             <svg display="none" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -56,9 +56,18 @@
                             <div class="blog-container">
                                 
                                 <div class="blog-header">
-                                <div class="blog-cover">
+                                <div class="blog-cover"> 
                                     <div class="blog-author">
-                                    <h3>{{ post.user_info.user_name }}</h3>
+                                        <h3>
+                                            {% if post.user_info.profile_pic_name is not None %}
+                                            <img src="/media/{{ post.user_info.profile_pic }}" class="rounded-circle "
+                                                style="height:40px; width:40px;margin-left:10%">
+                                            {% else %}
+                                            <img src="/media/fb.jpg" class="rounded-circle "
+                                                style="height:40px; width:40px;margin-left:10%">
+                                            {% endif %}
+                                            {{ post.user_info.user_name }}
+                                        </h3>
                                     </div>
                                 </div>
                                 </div>
@@ -71,14 +80,13 @@
                                     <p id=text{{ post.id }}> </p>
                                     <script>
                                         jsObj=JSON.parse(JSON.stringify("{{ post.paraData | escapejs }}"));
-                                        document.getElementById('text'+"{{ post.id }}").innerHTML=jsObj+`<a href={% url 'postView' post.id %} class="stretched-link">Continue reading</a>`;
-                                        
+                                        document.getElementById('text'+"{{ post.id }}").innerHTML=jsObj+`<a href={% url 'postView' post.id %} class="stretched-link">Continue reading</a>`; 
                                     </script>
                                 </div>
                                 <div class="blog-tags">
                                     <ul>
                                         {% for t in post.tags %}
-                                            <li>
+                                            <li style="margin: 0rem;padding: 0rem;">
                                                 <a href="#"> 
                                                     #{{t.tag_name}} 
                                                 </a>
@@ -90,7 +98,7 @@
                                 
                                 <div class="blog-footer">
                                 <ul>
-                                    <li class="published-date">{{ post.post_created }}</li>
+                                    <li class="published-date">{{ post.days_diff }} &nbsp days ago</li>
                                     <li class="comments"><a href="#"><svg class="icon-bubble"><use xlink:href="#icon-bubble"></use></svg><span class="numero">{{ post.comment_no }}</span></a></li>
                                     <li class="shares"><a href="#"><svg class="icon-star"><use xlink:href="#icon-star"></use></svg><span class="numero">{{ post.rated_no }}</span></a></li>
                                 </ul>
