@@ -20,7 +20,7 @@ from django.urls import reverse
 import jwt
 from rest_framework import exceptions
 from django.conf import settings
-from posts.models import Posts,postTag,Comments 
+from posts.models import PostRate, Posts,postTag,Comments 
 import datetime
 from django.http import Http404
 from django.core.files.storage import default_storage
@@ -254,9 +254,27 @@ def homeView(request):
 
         dataDictJson=json.dumps(dataDict, separators=(',', ':'))
 
-        # print(postName)
+        # print(Posts.objects.all()[0])
         # print(list(yearList))
 
+        # print(json.loads(all_blogs[0].get('body_custom')))
+        # add some data to eact post qs...
+        for i in range(len(all_blogs)):
+            jsonifyData=json.loads(all_blogs[i].get('body_custom'))
+            for block in jsonifyData.get('blocks'):
+                try:
+                    if(block.get('type')=='paragraph'):
+                        all_blogs[i]['paraData']=block.get('data').get('text')
+                        break
+                except ValueError:
+                    pass
+            noOfComments=Comments.objects.filter(post__id=all_blogs[i].get('id')).count()
+            Ratings=PostRate.objects.filter(post_id__id=all_blogs[i].get('id')).count()
+            all_blogs[i]['comment_no']=noOfComments
+            all_blogs[i]['rated_no']=Ratings
+            all_blogs[i]['user_info']=Register.objects.filter(email=all_blogs[i].get('owner_id')).values('user_name','profile_pic')[0]
+        # print(all_blogs[0]['user_name'].get('user_name'))
+        # print(all_blogs[0])
 
         page=request.GET.get('page',1)
         paginator=Paginator(all_blogs,3)
