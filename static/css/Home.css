@@ -145,8 +145,8 @@ body {
     white-space: nowrap;
     
   }
-  .blog-footer li a {
-    color: lighten(#333, 40%);
+  .blog-footer li a { 
+    color: lightsalmon;
   }
   .comments {
     margin-right: 1rem;

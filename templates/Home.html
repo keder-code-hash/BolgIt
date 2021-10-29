@@ -20,7 +20,7 @@
     <form action="{% url 'homePage' %}" method="get">
         <div class="container-fluid ">
             <div class="mt-sm-5 ml-sm-5 row">
-                <div class="col-sm-12 col-md-12 col-xl-2 col-lg-2 order-1 py-5"> 
+                <div class="col-sm-12 col-md-12 col-xl-2 col-lg-2 order-1 order-md-2 order-sm-2 py-5"> 
                     <div class="conatiner-fluid mb-0" style="background-color: azure;width: fit-content;">
                         <h5 class="text-center">Available Tags</h5> 
                         <div style=" width: 200px; height: 300px; overflow: auto; text-align: justify;">
@@ -60,7 +60,7 @@
                                     <div class="blog-author">
                                         <h3>
                                             {% if post.user_info.profile_pic_name is not None %}
-                                            <img src="/media/{{ post.user_info.profile_pic }}" class="rounded-circle "
+                                            <img src="/media/uploads/profile/{{ post.user_info.profile_pic }}" class="rounded-circle "
                                                 style="height:40px; width:40px;margin-left:10%">
                                             {% else %}
                                             <img src="/media/fb.jpg" class="rounded-circle "
@@ -87,7 +87,7 @@
                                     <ul>
                                         {% for t in post.tags %}
                                             <li style="margin: 0rem;padding: 0rem;">
-                                                <a href="#"> 
+                                                <a href={% url 'viewByTag' t.tag_name  %} > 
                                                     #{{t.tag_name}} 
                                                 </a>
                                             </li>
@@ -107,25 +107,25 @@
                             </div>
                         {% endfor %}
                     </div>
-                    <div class="loading">
+                    <!-- <div class="loading">
                         <div class="ball"></div>
                         <div class="ball"></div>
                         <div class="ball"></div>
-                    </div>
+                    </div> -->
 
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="col-md-auto">
-                                {% if posts.has_next %}
-                                <a class="infinite-more-link" href="?page={{ posts.next_page_number }}">
-                                Next
-                                </a>
-                                {% endif %}
+                            {% if posts.has_next %}
+                            <a class="infinite-more-link" href="?page={{ posts.next_page_number }}">
+                            Next
+                            </a>
+                            {% endif %}
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
                
-                <script>
+                <!-- <script>
                 let infinite = new Waypoint.Infinite({
                     element: $('.infinite-container')[0],
 
@@ -142,7 +142,7 @@
                 });
 
                 
-                </script>
+                </script> -->
                 <div class="col-sm-3 order-sm-3"> 
                     <div id="testList"></div>
                     <script>

@@ -235,6 +235,15 @@ def userProfileView(request):
         #     return redirect('homePage')
     # return render(request,'userProfile.html')
 
+def truncateP(string,maxLength):
+    spceList=str(string).split(" ")
+    currStr=str("") 
+    currStr=spceList[0:maxLength]
+    newStr=str("")
+    for s in currStr:
+        newStr+=s+" "
+    return newStr
+
 def homeView(request):
     if request.method=="GET":
         all_blogs=Posts.objects.filter(status='p').order_by('post_created').values()
@@ -270,7 +279,7 @@ def homeView(request):
             for block in jsonifyData.get('blocks'):
                 try:
                     if(block.get('type')=='paragraph'):
-                        all_blogs[i]['paraData']=block.get('data').get('text')
+                        all_blogs[i]['paraData']=truncateP(block.get('data').get('text'),100)
                         break
                 except ValueError:
                     pass
@@ -286,20 +295,20 @@ def homeView(request):
         # print(all_blogs[0]['user_info'].get('profile_pic'))
         # print(all_blogs[0])
 
-        page=request.GET.get('page',1)
-        paginator=Paginator(all_blogs,3)
+        # page=request.GET.get('page',1)
+        # paginator=Paginator(all_blogs,3)
 
         allTags=postTag.objects.all().values()
-        try:
-            posts=paginator.page(page)
-        except PageNotAnInteger:
-            posts=paginator.page(1)
-        except:
-            posts=paginator.page(paginator.num_pages)
+        # try:
+        #     posts=paginator.page(page)
+        # except PageNotAnInteger:
+        #     posts=paginator.page(1)
+        # except:
+        #     posts=paginator.page(paginator.num_pages)
 
         context={
             'is_authenticated':is_authenticated_user(request),
-            'posts':posts,
+            'posts':all_blogs,
             'postTreeData':dataDictJson,
             'postDet':json.dumps(postName),
             'allTags':allTags
@@ -339,7 +348,7 @@ def postViewByTag(request,tag_name):
             for block in jsonifyData.get('blocks'):
                 try:
                     if(block.get('type')=='paragraph'):
-                        all_blogs[i]['paraData']=block.get('data').get('text')
+                        all_blogs[i]['paraData']=truncateP(block.get('data').get('text'),100)
                         break
                 except ValueError:
                     pass
@@ -404,7 +413,7 @@ def upDateProfile(request):
            
             if request.FILES:
                 # default_storage.save(request.FILES['profile_pic'].name, request.FILES['profile_pic'])
-                fs=FileSystemStorage(location=settings.MEDIA_ROOT)
+                fs=FileSystemStorage(location=settings.MEDIA_ROOT+'/uploads/profile/')
                 fs.save(request.FILES['profile_pic'].name, request.FILES['profile_pic'])
                 Register.objects.filter(email__iexact=user.email).update(profile_pic=request.FILES['profile_pic'],profile_pic_name=request.FILES['profile_pic'].name)
             return redirect('profile')

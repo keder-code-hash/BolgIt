@@ -30,7 +30,7 @@ class CustomAccountManager(BaseUserManager):
 class Register(AbstractBaseUser, PermissionsMixin):
     user_name = models.CharField(max_length=100, unique=True)
     email = models.EmailField(_('email address'), blank=False, max_length=100, primary_key=True)
-    profile_pic=models.FileField(null=True)
+    profile_pic=models.FileField(upload_to='uploads/profile/',null=True)
     profile_pic_name=models.CharField(null=True,max_length=30)
     first_name = models.CharField(default='', blank=False, max_length=20)
     last_name = models.CharField(default='', blank=False, max_length=20)
