@@ -30,6 +30,7 @@ window.onload=()=>
             case "paragraph":
                 const par = document.createElement("p");
                 par.innerHTML = blocks[ind].data.text;
+                par.id="editorP"
                 postBody.appendChild(par)
                 break;
             case "header":

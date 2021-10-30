@@ -78,3 +78,15 @@ td, th {
 tr:nth-child(even) {
   background-color: #dddddd;
 }
+
+#id_comment{
+  width: 276px;
+}
+
+#editorP{
+  font-size: larger;
+  font-family: cursive;  
+  margin-top: 0;
+  margin-bottom: 1rem;
+  line-height: 2rem;
+}

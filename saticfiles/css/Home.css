@@ -8,9 +8,9 @@ body {
   .blog-container {
     background: #fff;
     border-radius: 5px;
-    box-shadow: hsla(0, 0, 0, .2) 0 4px 2px -2px;
+    box-shadow: hsla(0, 0, 0, .2) 0 4px 2px -2px !important;
     font-family: "adelle-sans", sans-serif;
-    font-weight: 100;
+    /* font-weight: 100; */
     margin: 48px auto; 
     @media screen and (min-width: 480px) {
       width: 28rem;
@@ -145,14 +145,14 @@ body {
     white-space: nowrap;
     
   }
-  .blog-footer li a {
-    color: lighten(#333, 40%);
+  .blog-footer li a { 
+    color: lightsalmon;
   }
   .comments {
     margin-right: 1rem;
   }
   .published-date {
-    border: 1px solid lighten(#333, 40%);
+    border: 1px solid #999999!important;
     border-radius: 3px;
     padding: 0 .5rem;
   }
