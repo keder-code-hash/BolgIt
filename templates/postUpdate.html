@@ -21,6 +21,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/table"></script>
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/paragraph"></script>
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/delimiter"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@editorjs/image@2.3.0"></script>
   <script src={% static 'image/simple-image.js' %}></script>
   <link href={% static 'image/simple-image.css' %} rel="stylesheet"/>
   <script src={% static 'js/jquery-3.1.1.min.js' %}></script>
@@ -54,9 +55,14 @@
               const editor = new EditorJS({
                 autofocus: true,
                 tools:{
-                    image:{
-                      class:SimpleImage,
-                      inlineToolbar:true
+                    
+                  image: {
+                      class: ImageTool,
+                      config: {
+                        endpoints: {
+                          byFile: '{%url 'uploadimageview' %}',
+                        }
+                      }
                     },
                     header:{
                       class:Header,

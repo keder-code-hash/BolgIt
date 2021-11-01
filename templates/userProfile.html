@@ -18,7 +18,7 @@
               <div class="col-lg-offset-2">
                 <div class="card-profile-image ">
                     {% if user.profile_pic_name is not None %}
-                        <img src="{{ user.profile_pic.url }}" class="rounded-circle" style="height:200px; width:200px ">
+                        <img src="/media/uploads/profile/{{ user.profile_pic.url }}" class="rounded-circle" style="height:200px; width:200px ">
                     {% else %}
                         <img src="{% static 'fb.jpg' %}" class="rounded-circle" style="height:200px; width:200px ">
                     {% endif %}

@@ -51,23 +51,12 @@
           <script>
               const editor = new EditorJS({
                 autofocus: true,
-                tools:{
-                    // image:{
-                    //   class:SimpleImage,
-                    //   inlineToolbar:true
-                    // },
-                    // attaches: {
-                    //   class: AttachesTool,
-                    //   config: {
-                    //     endpoint: 'http://127.0.0.1:8000/uploadImage/'
-                    //   }
-                    // }
-                    // ,
+                tools:{ 
                     image: {
                       class: ImageTool,
                       config: {
                         endpoints: {
-                          byFile: 'http://127.0.0.1:8000/uploadImage/' 
+                          byFile: '{%url 'uploadimageview' %}',
                         }
                       }
                     }
