@@ -17,7 +17,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/table"></script>
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/paragraph"></script>
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/delimiter"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/@editorjs/attaches@latest"></script>
   
   <script src={% static 'js/jquery-3.1.1.min.js' %}></script>
   <script src={%static 'js/jquery.waypoints.min.js' %}></script>
@@ -56,6 +56,13 @@
                       class:SimpleImage,
                       inlineToolbar:true
                     },
+                    attaches: {
+                      class: AttachesTool,
+                      config: {
+                        endpoint: 'http://localhost:8008/uploadFile'
+                      }
+                    }
+                    ,
                     header:{
                       class:Header,
                       shortcut:'CMD+SHIFT+H',
