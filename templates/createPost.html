@@ -17,7 +17,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/table"></script>
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/paragraph"></script>
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/delimiter"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@editorjs/attaches@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@editorjs/image@2.3.0"></script>
   
   <script src={% static 'js/jquery-3.1.1.min.js' %}></script>
   <script src={%static 'js/jquery.waypoints.min.js' %}></script>
@@ -52,14 +52,23 @@
               const editor = new EditorJS({
                 autofocus: true,
                 tools:{
-                    image:{
-                      class:SimpleImage,
-                      inlineToolbar:true
-                    },
-                    attaches: {
-                      class: AttachesTool,
+                    // image:{
+                    //   class:SimpleImage,
+                    //   inlineToolbar:true
+                    // },
+                    // attaches: {
+                    //   class: AttachesTool,
+                    //   config: {
+                    //     endpoint: 'http://127.0.0.1:8000/uploadImage/'
+                    //   }
+                    // }
+                    // ,
+                    image: {
+                      class: ImageTool,
                       config: {
-                        endpoint: 'http://localhost:8008/uploadFile'
+                        endpoints: {
+                          byFile: 'http://127.0.0.1:8000/uploadImage/' 
+                        }
                       }
                     }
                     ,
