@@ -45,7 +45,8 @@ window.onload=()=>
                 let div=document.createElement("div");
                 let img=document.createElement("img");
                 let cap=document.createElement("small");
-                img.src=`${blocks[ind].data.url}`
+                img.src=`${blocks[ind].data.file.url}`
+                console.log(`${blocks[ind].data}`)
                 img.style="margin-top:20px";
                 img.height=300;
                 img.width=320;
