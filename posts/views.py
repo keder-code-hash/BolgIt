@@ -115,10 +115,10 @@ class postView(APIView):
 def upload_image_view(request):
     # print(request.FILES)
     file=request.FILES['image']
-    fs=FileSystemStorage(location=settings.MEDIA_ROOT+'uploads/postImage')
+    fs=FileSystemStorage(location=settings.MEDIA_ROOT+'/uploads/postImage')
     filename=file.name
     file=fs.save(filename,file)
-    fileurl=settings.MEDIA_URL+'uploads/postImage/'+filename
+    fileurl=settings.MEDIA_URL+'/uploads/postImage/'+filename
     # print(fileurl)
     return JsonResponse({
         'success':1,
