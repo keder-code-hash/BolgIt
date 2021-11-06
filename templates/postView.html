@@ -163,34 +163,34 @@
               <div class="allcommments">
         
                 {% recursetree allcomments %}
-                <div id="{{ node.id }}" class="my-2 p-2" style="border: 0px solid grey">
-        
-        
-                  <div class="d-flex justify-content-between">
-        
-                    <div><img class="avatar_single mr-3" src="{{ node.owner.profile_pic.url }}" style="height:40px; width:40px;border-radius: 50%;">By {{ node.owner }}</div>
-                    {{ node.publish }}
-        
-        
+                  <div id="{{ node.id }}" class="my-2 p-2" style="border: 0px solid grey">
+          
+          
+                    <div class="d-flex justify-content-between">
+          
+                      <div><img class="avatar_single mr-3" src="/media/uploads/profile/{{ node.owner.profile_pic_name }}" style="height:40px; width:40px;border-radius: 50%;">By {{ node.owner }}</div>
+                      {{ node.publish }}
+          
+          
+                    </div>
+          
+                    <div class="node-content">{{ node.comment }}</div>
+          
+                    <div class="d-flex flex-row-reverse">
+                      {% if node.level < 3 %}
+                      <button class="btn btn-primary btn-sm" onclick="myFunction({{ node.id }})">Reply</button>
+                      {% endif %}
+                      {% if node.owner|stringformat:"s" ==  user_name  %}
+                      <button class="btn btn-secondary btn-sm mr-2" onclick="deleteComment({{ node.id }})">Delete</button>
+                      {% endif %}
+                    </div>
+                    <hr />
                   </div>
-        
-                  <div class="node-content">{{ node.comment }}</div>
-        
-                  <div class="d-flex flex-row-reverse">
-                    {% if node.level < 3 %}
-                    <button class="btn btn-primary btn-sm" onclick="myFunction({{ node.id }})">Reply</button>
-                    {% endif %}
-                    {% if node.owner|stringformat:"s" ==  user_name  %}
-                    <button class="btn btn-secondary btn-sm mr-2" onclick="deleteComment({{ node.id }})">Delete</button>
-                    {% endif %}
-                  </div>
-                  <hr />
-                </div>
-                {% if not node.is_leaf_node %}
-                <div class="children pl-2 pl-md-5">
-                  {{ children }}
-                </div>
-                {% endif %}
+                  {% if not node.is_leaf_node %}
+                    <div class="children pl-2 pl-md-5">
+                      {{ children }}
+                    </div>
+                  {% endif %}
                 {% endrecursetree %}
         
               </div> 
@@ -218,11 +218,11 @@
       <script>
         //Comments
       
-        $(document).on('click', '#newcomment, #newcommentinner', function (e) {
+        $(document).on('click', '#newcommentform, #newcommentinner', function (e) {
           e.preventDefault();
       
           var button = $(this).attr("value");
-      
+          console.log($("#" + button).serialize());
           var placement = "commentform"
           if (button == "newcommentform") {
             var placement = "newcommentform"
@@ -233,10 +233,8 @@
             url: '{% url "addcomment" %}',
             data: $("#" + button).serialize(),
             cache: false,
-            success: function (json) {
-              // console.log(json)
-      
-      
+            success: function (json) {  
+              
               $('<div id="'+ json['comment_id'] +'" class="my-2 p-2" style="border: 1px solid grey"> \
                 <div class="d-flex justify-content-between">By ' + json['user'] + '<div></div>Posted: Just now!</div> \
                 <div>' + json['result'] + '</div> \
@@ -281,13 +279,16 @@
           if (document.contains(document.getElementById("newcommentform"))) {
             document.getElementById("newcommentform").remove();
           }
-          // var postid = document.getElementById('thumbs').getAttribute('data-value');
+          var postid = "{{ posts.id }}";
+          // console.log("{{ posts.id }}");
           // var imgFullURL = $('img.avatar_comment')[0].src;
           var d1 = document.getElementById(id);
           if("{{is_authenticated}}"==="True"){
                 d1.insertAdjacentHTML('afterend',
                     '<form id="newcommentform" class="commentform" method="post"> \
                     {% csrf_token %} \
+                    <select name="post" class="d-none" id="id_post"> \
+                      <option value="' + postid + '" selected="' + postid + '"></option> \
                     </select> <label class="small font-weight-bold"></label> \
                     <select name="parent" class="d-none" id="id_parent"> \
                         <option value="' + id + '" selected="' + id + '"></option> \

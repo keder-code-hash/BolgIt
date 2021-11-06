@@ -393,7 +393,10 @@ def post_single(request):
 def addcomment(request):
 
     if request.method == 'POST':
-
+        access = request.COOKIES.get('accesstoken')
+        decoded_data = jwt.decode(access, settings.SECRET_KEY, algorithms="HS256")
+        email_id = decoded_data.get('email')
+        user = Register.objects.get(email__iexact=email_id)
         if request.POST.get('action') == 'delete':
             id = request.POST.get('nodeid')
             print(id)
@@ -406,13 +409,15 @@ def addcomment(request):
             if comment_form.is_valid():
                 user_comment = comment_form.save(commit=False)
                 result = comment_form.cleaned_data.get('comment')
-                user = 'keder123@gmail.com'
-                user_comment.owner = Register.objects.get(email='keder123@gmail.com')
-                user_comment.post=Posts.objects.get(id=9)
+                # user = 'keder123@gmail.com'
+                
+                user_comment.owner = user
+                # print(comment_form.cleaned_data.get('post').get('id'))
+                user_comment.post=comment_form.cleaned_data.get('post')
                 user_comment.save()
                 comment_id=Comments.objects.filter(comment=result).order_by('-created').values_list()
                 # print(list(comment_id[0])[0])
-                return JsonResponse({'result': result, 'user': user,'comment_id': list(comment_id[0])[0]})
+                return JsonResponse({'result': result, 'user': email_id,'comment_id': list(comment_id[0])[0]})
 
 
 

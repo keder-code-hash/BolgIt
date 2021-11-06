@@ -19,9 +19,15 @@ class NewCommentForm(forms.ModelForm):
         self.fields['parent'].label = ''
         self.fields['parent'].required = False
 
+        self.fields['post'].widget.attrs.update(
+            {'class': 'd-none'})
+
+        self.fields['post'].label = ''
+        self.fields['post'].required = False
+
     class Meta:
         model = Comments
-        fields = ('parent', 'comment')
+        fields = ('parent', 'comment','post')
 
         widgets = {
             'content': forms.TextInput(attrs={'class': 'ml-3 mb-3 form-control border-0 comment-add rounded-0', 'rows': '1', 'placeholder': 'Add a public comment'}),
