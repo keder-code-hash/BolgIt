@@ -58,14 +58,9 @@
                                 <div class="blog-header">
                                 <div class="blog-cover"> 
                                     <div class="blog-author">
-                                        <h3>
-                                            {% if post.user_info.profile_pic_name is not None %}
-                                            <img src="/media/uploads/profile/{{ post.user_info.profile_pic }}" class="rounded-circle "
-                                                style="height:40px; width:40px;margin-left:10%">
-                                            {% else %}
-                                            <img src="/media/fb.jpg" class="rounded-circle "
-                                                style="height:40px; width:40px;margin-left:10%">
-                                            {% endif %}
+                                        <h3> 
+                                            <img src="{{ post.user_info.profile_pic_url }}" class="rounded-circle "
+                                                style="height:40px; width:40px;margin-left:10%"> 
                                             {{ post.user_info.user_name }}
                                         </h3>
                                     </div>

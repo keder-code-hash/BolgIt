@@ -15,13 +15,14 @@ from django.shortcuts import redirect, render
 from django.conf import settings
 import jwt
 from users.views import is_authenticated_user
-from django.views.decorators.csrf import requires_csrf_token,ensure_csrf_cookie,csrf_exempt
+from django.views.decorators.csrf import csrf_exempt
 from django.core.files.storage import FileSystemStorage
 from django.http import JsonResponse
 from posts.forms import postsCreateForm
 import json
 from django.core.serializers.json import DjangoJSONEncoder
 from .models import PostRate
+from .handle_upload import *
 
 from django.shortcuts import render, get_object_or_404, HttpResponseRedirect 
 from .forms import NewCommentForm
@@ -114,12 +115,9 @@ class postView(APIView):
 @csrf_exempt
 def upload_image_view(request):
     # print(request.FILES)
-    file=request.FILES['image']
-    fs=FileSystemStorage(location=settings.MEDIA_ROOT+'/uploads/postImage')
+    file=request.FILES['image'] 
     filename=file.name
-    file=fs.save(filename,file)
-    fileurl=settings.MEDIA_URL+'/uploads/postImage/'+filename
-    # print(fileurl)
+    fileurl=upload_image(file,filename,"Blog/PostImage/").get('secure_url') 
     return JsonResponse({
         'success':1,
         'file':{'url':fileurl}
@@ -204,7 +202,7 @@ def createPostView(request):
         if status is None:
             status="d"
         ret_stat=False
-        if title is not None and title is not None:
+        if title is not None:
             try:
                 post=Posts(post_title=title,catagory=catagory,body_custom=data,status=status,owner=user)
                 post.save()

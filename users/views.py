@@ -30,7 +30,7 @@ from django.views.decorators.csrf import csrf_protect, requires_csrf_token,ensur
 from django.core.mail import EmailMultiAlternatives 
 from django.template.loader import get_template
 from django.core.mail import EmailMessage
-
+from posts.handle_upload import *
 from django.template import Context, context
 # from 
 
@@ -287,7 +287,7 @@ def homeView(request):
             Ratings=PostRate.objects.filter(post_id__id=all_blogs[i].get('id')).count()
             all_blogs[i]['comment_no']=noOfComments
             all_blogs[i]['rated_no']=Ratings
-            all_blogs[i]['user_info']=Register.objects.filter(email=all_blogs[i].get('owner_id')).values('user_name','profile_pic','profile_pic_name')[0]
+            all_blogs[i]['user_info']=Register.objects.filter(email=all_blogs[i].get('owner_id')).values('user_name','profile_pic_url')[0]
             currentTime=datetime.datetime.now(datetime.timezone.utc)
             daysDiff=currentTime-all_blogs[i].get('post_created')
             all_blogs[i]['days_diff']=daysDiff.days
@@ -356,7 +356,7 @@ def postViewByTag(request,tag_name):
             Ratings=PostRate.objects.filter(post_id__id=all_blogs[i].get('id')).count()
             all_blogs[i]['comment_no']=noOfComments
             all_blogs[i]['rated_no']=Ratings
-            all_blogs[i]['user_info']=Register.objects.filter(email=all_blogs[i].get('owner_id')).values('user_name','profile_pic','profile_pic_name')[0]
+            all_blogs[i]['user_info']=Register.objects.filter(email=all_blogs[i].get('owner_id')).values('user_name','profile_pic_url')[0]
             currentTime=datetime.datetime.now(datetime.timezone.utc)
             daysDiff=currentTime-all_blogs[i].get('post_created')
             all_blogs[i]['days_diff']=daysDiff.days
@@ -413,9 +413,12 @@ def upDateProfile(request):
            
             if request.FILES:
                 # default_storage.save(request.FILES['profile_pic'].name, request.FILES['profile_pic'])
-                fs=FileSystemStorage(location=settings.MEDIA_ROOT+'/uploads/profile/')
-                fs.save(request.FILES['profile_pic'].name, request.FILES['profile_pic'])
-                Register.objects.filter(email__iexact=user.email).update(profile_pic=request.FILES['profile_pic'],profile_pic_name=request.FILES['profile_pic'].name)
+                # fs=FileSystemStorage(location=settings.MEDIA_ROOT+'/uploads/profile/')
+                # fs.save(request.FILES['profile_pic'].name, request.FILES['profile_pic'])
+                profile_pic=request.FILES['profile_pic']
+                profile_pic_name=request.FILES['profile_pic'].name
+                profile_pic_url=upload_image(profile_pic,profile_pic_name,"Blog/Profile/").get("secure_url")
+                Register.objects.filter(email__iexact=user.email).update(profile_pic_url=profile_pic_url)
             return redirect('profile')
             
     form=profileForm()
@@ -429,9 +432,8 @@ def upDateProfile(request):
         'interests': user.interests,
         'bio': user.bio,
         'date_of_birth': user.date_of_birth,
-        'ph_no': user.ph_no,
-        'profile_pic': user.profile_pic,
-        'profile_pic_name': user.profile_pic_name
+        'ph_no': user.ph_no, 
+        'profile_pic_url':user.profile_pic_url
     }
     # print(context)
     return render(request, 'updateprofile.html',context)

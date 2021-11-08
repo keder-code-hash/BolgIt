@@ -30,8 +30,8 @@ class CustomAccountManager(BaseUserManager):
 class Register(AbstractBaseUser, PermissionsMixin):
     user_name = models.CharField(max_length=100, unique=True)
     email = models.EmailField(_('email address'), blank=False, max_length=100, primary_key=True)
-    profile_pic=models.FileField(upload_to='uploads/profile/',null=True)
-    profile_pic_name=models.CharField(null=True,max_length=30)
+    # profile_pic=models.FileField(upload_to='uploads/profile/',null=True)
+    profile_pic_url=models.CharField(null=True,max_length=300,default="https://res.cloudinary.com/dvcjj1k7a/image/upload/v1636390885/Blog/Profile/663328_ti7cnp.png")
     first_name = models.CharField(default='', blank=False, max_length=20)
     last_name = models.CharField(default='', blank=False, max_length=20)
 

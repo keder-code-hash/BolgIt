@@ -16,12 +16,8 @@
           <div class="card card-profile shadow ml-5" >
             <div class="row justify-content-center">
               <div class="col-lg-offset-2">
-                <div class="card-profile-image ">
-                    {% if user.profile_pic_name is not None %}
-                        <img src="/media/uploads/profile/{{ user.profile_pic_name }}" class="rounded-circle" style="height:200px; width:200px ">
-                    {% else %}
-                        <img src="{% static 'fb.jpg' %}" class="rounded-circle" style="height:200px; width:200px ">
-                    {% endif %}
+                <div class="card-profile-image "> 
+                  <img src="{{ user.profile_pic_url }}" class="rounded-circle" style="height:200px; width:200px "> 
                 </div>
               </div>
             </div>

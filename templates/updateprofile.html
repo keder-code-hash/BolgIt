@@ -20,13 +20,9 @@
                         </div>
                         <div class="card-text">
                             <div class="row">
-                                <div class="col-sm-4">
-                                    {% if user.profile_pic_name is not None %}
-                                        <img src="{{ user.profile_pic.url }}" class="rounded-circle" style="height:200px; width:200px ">
-                                    {% else %}
-                                        <img src="{% static 'fb.jpg' %}" class="rounded-circle" style="height:200px; width:200px ">
-                                    {% endif %}
-                                      <input type="file" name="profile_pic" id="profile_pic" value="{{ profile_pic }}">
+                                <div class="col-sm-4"> 
+                                    <img src="{{ user.profile_pic_url }}" class="rounded-circle" style="height:200px; width:200px "> 
+                                    <input type="file" name="profile_pic" id="profile_pic" value="{{ profile_pic }}">
                                 </div>
                                 <div class="col-sm-8">
                                         <div class="form-group row">

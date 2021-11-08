@@ -88,14 +88,9 @@
                             </div>
                             <section>
                                 <div class="row mt-5 justify-content-center ">
-                                    <div class="offset-sm-1 offset-md-1 col-md-2 col-sm-2 col-2">
-                                        {% if posts.owner.profile_pic_name is not None %}
-                                          <img src="/media/uploads/profile/{{ posts.owner.profile_pic_name }}" class="rounded-circle "
-                                              style="height:40px; width:40px;margin-left:50%">
-                                          {% else %}
-                                          <img src="{% static 'fb.jpg' %}" class="rounded-circle "
-                                            style="height:40px; width:40px;margin-left:50%">
-                                        {% endif %}
+                                    <div class="offset-sm-1 offset-md-1 col-md-2 col-sm-2 col-2"> 
+                                          <img src="{{ posts.owner.profile_pic_url }}" class="rounded-circle "
+                                              style="height:40px; width:40px;margin-left:50%"> 
                                     </div>
                                     <div class="col-md-4 col-sm-4 col-4">
                                         <section>
@@ -168,7 +163,7 @@
           
                     <div class="d-flex justify-content-between">
           
-                      <div><img class="avatar_single mr-3" src="/media/uploads/profile/{{ node.owner.profile_pic_name }}" style="height:40px; width:40px;border-radius: 50%;">By {{ node.owner }}</div>
+                      <div><img class="avatar_single mr-3" src="{{ node.owner.profile_pic_url }}" style="height:40px; width:40px;border-radius: 50%;">By {{ node.owner }}</div>
                       {{ node.publish }}
           
           
@@ -177,7 +172,7 @@
                     <div class="node-content">{{ node.comment }}</div>
           
                     <div class="d-flex flex-row-reverse">
-                      {% if node.level < 3 %}
+                      {% if node.level < 10 %}
                       <button class="btn btn-primary btn-sm" onclick="myFunction({{ node.id }})">Reply</button>
                       {% endif %}
                       {% if node.owner|stringformat:"s" ==  user_name  %}
