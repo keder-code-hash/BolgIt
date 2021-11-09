@@ -97,12 +97,12 @@ window.onload=()=>
                 let bq = document.createElement("div");
                 let cd = document.createElement("code");
                 let pr = document.createElement("pre");
-                pr.textContent = blocks[ind].data.code;
-                pr.style.background = "#e3dfdf";
-                pr.style.color = "#090909";
-                pr.style.padding = "15px"; 
-                cd.appendChild(pr); 
-                postBody.appendChild(cd);
+                cd.textContent = blocks[ind].data.code;
+                // pr.style.background = "#e3dfdf";
+                // pr.style.color = "#090909";
+                // pr.style.padding = "15px"; 
+                pr.appendChild(cd); 
+                postBody.appendChild(pr);
                 break;
             case "list":
                 if(blocks[ind].data.style==="unordered")

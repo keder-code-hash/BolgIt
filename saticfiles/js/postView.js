@@ -1,6 +1,15 @@
+
+
 window.onload=()=>
 {
+    // fix the social div after scrolling
+    
+    
+
+    // load the icon for social icon
     feather.replace();
+
+    //implementing the star rating system
     const sr=document.getElementById("starrating");
     
 
@@ -22,7 +31,7 @@ window.onload=()=>
     //contact submit
 
 
-
+    // main postveiw code
     const postBody=document.getElementById("postBody");
     let body=JSON.parse(postData);
     // console.log("length of the block is: ",JSON.parse(body.body_custom).blocks);
@@ -85,15 +94,14 @@ window.onload=()=>
                 postBody.appendChild(code);
                 break;
             case "Code":
-                let bq = document.createElement("blockquote");
+                let bq = document.createElement("div");
                 let cd = document.createElement("code");
                 let pr = document.createElement("pre");
-                pr.textContent = blocks[ind].data.code;
-                pr.style.background = "#e3dfdf";
-                pr.style.color = "#090909";
-                pr.style.padding = "15px";
-                cd.appendChild(pr);
-                postBody.appendChild(cd);
+                cd.innerText=blocks[ind].data.code; 
+                console.log(blocks[ind].data.code);
+                pr.appendChild(cd); 
+                bq.appendChild(pr);
+                postBody.appendChild(bq);
                 break;
             case "list":
                 if(blocks[ind].data.style==="unordered")
@@ -205,7 +213,7 @@ window.onload=()=>
                     '</g>\n' +
                     '</svg>\n'
                 let deliDiv=document.createElement("div");
-                deliDiv.className='container';
+                deliDiv.className='container-fluid';
                 deliDiv.style='display: flex;\n' +
                     '  justify-content: center;'
                 let sectionDiv=document.createElement("h2");

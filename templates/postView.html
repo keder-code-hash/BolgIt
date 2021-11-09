@@ -24,11 +24,11 @@
     <!-- <script src="/static/js/jquery-3.1.1.min.js"></script>
     <script src="/static/js/jquery.waypoints.min.js"></script> -->
     <script src={% static 'js/postView.js' %}></script>
-    <script src={% static 'js/starRating.js' %}></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/themes/prism.min.css" />
+    <script src={% static 'js/starRating.js' %}></script> 
 
-    <!-- script tag -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/prism.min.js"></script>
+      <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.0/styles/default.min.css">
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script>
     <!-- <script src={% static 'css/postView.js' %}></script> -->
 </head>
 <style>
@@ -105,13 +105,127 @@
     display: grid;
   } 
 } 
-code{
+/* code{
   border-radius: 12px;
-} 
-code pre{
-  font-size: 1.2rem;
-}
+}  */
+/* code {
+  font-size: 1.2rem; 
+  background-color:#eee;
+  color:#444;
+  font-size:13px;
+  line-height:1.75em;
+  padding:10px 15px;
+  border-left:3px solid ; 
+} */
+.hljs {
+            display: block;
+            overflow-x: auto;
+            padding: 0.5em;
+            background: #1E1E1E;
+            color: #DCDCDC;
+            font-weight: normal;
+            font-size: 1.25em !important;
+        }
 
+        .hljs-keyword,
+        .hljs-literal,
+        .hljs-symbol,
+        .hljs-name {
+            color: #569CD6;
+        }
+
+        .hljs-link {
+            color: #569CD6;
+            text-decoration: underline;
+        }
+
+        .hljs-built_in,
+        .hljs-type {
+            color: #4EC9B0;
+        }
+
+        .hljs-number,
+        .hljs-class {
+            color: #B8D7A3;
+        }
+
+        .hljs-string,
+        .hljs-meta-string {
+            color: #D69D85;
+        }
+
+        .hljs-regexp,
+        .hljs-template-tag {
+            color: #9A5334;
+        }
+
+        .hljs-subst,
+        .hljs-function,
+        .hljs-title,
+        .hljs-params,
+        .hljs-formula {
+            color: #DCDCDC;
+        }
+
+        .hljs-comment,
+        .hljs-quote {
+            color: #57A64A;
+            font-style: italic;
+        }
+
+        .hljs-doctag {
+            color: #608B4E;
+        }
+
+        .hljs-meta,
+        .hljs-meta-keyword,
+        .hljs-tag {
+            color: #9B9B9B;
+        }
+
+        .hljs-variable,
+        .hljs-template-variable {
+            color: #BD63C5;
+        }
+
+        .hljs-attr,
+        .hljs-attribute,
+        .hljs-builtin-name {
+            color: #9CDCFE;
+        }
+
+        .hljs-section {
+            color: gold;
+        }
+
+        .hljs-emphasis {
+            font-style: italic;
+        }
+
+        .hljs-strong {
+            font-weight: bold;
+        }
+
+        .hljs-bullet,
+        .hljs-selector-tag,
+        .hljs-selector-id,
+        .hljs-selector-class,
+        .hljs-selector-attr,
+        .hljs-selector-pseudo {
+            color: #D7BA7D;
+        }
+
+        .hljs-addition {
+            background-color: #144212;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .hljs-deletion {
+            background-color: #600;
+            display: inline-block;
+            width: 100%;
+        }
 </style>
 <body >
    
@@ -190,6 +304,42 @@ code pre{
                         <img src="https://wallpaperaccess.com/full/186244.jpg" class="img-fluid full-width">
                     </section>
                     <div class="mb-auto">
+                        <!-- <pre> 
+                          <code >
+package in.assign.Accounts4_3;
+
+public class CurrentAccount extends Account{
+  private final int minimumBalance=100;
+  private int balance;
+  private int interestRate;
+  private int serviceCharge=150;
+  public CurrentAccount(int balance,int interestRate,String customername, String accountNumber, String accountType) {
+    super(customername, accountNumber, accountType);
+    this.balance=balance;
+    this.interestRate=interestRate;
+  }
+  public void deposit(int amount) {
+    this.balance+=amount;
+  }
+  public void withdrawl(int amount)  throws BalanceExcep{
+    if(minimumBalance > this.balance) {
+      this.balance=-this.serviceCharge;
+      throw new BalanceExcep(this.minimumBalance, this.balance,this.serviceCharge);
+    }
+    else {
+      this.balance-=amount;			
+    }
+  } 
+  public void calInterest(float time) {
+    float interest=((float)(this.balance*this.interestRate)*time)/100;
+    this.balance+=(int)interest;
+  }
+  public void print() {
+    System.out.println("Balance:- "+this.balance);
+  }
+}
+                          </code>
+                        </pre> -->
                         <section id="postBody">
                             <div class="container-fluid mt-5 mb-auto">
                                 <script>
