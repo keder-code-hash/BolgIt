@@ -25,6 +25,10 @@
     <script src="/static/js/jquery.waypoints.min.js"></script> -->
     <script src={% static 'js/postView.js' %}></script>
     <script src={% static 'js/starRating.js' %}></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/themes/prism.min.css" />
+
+    <!-- script tag -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/prism.min.js"></script>
     <!-- <script src={% static 'css/postView.js' %}></script> -->
 </head>
 <style>
@@ -91,7 +95,7 @@
   h1 {font: size 2.5rem !important;} /*1rem = 16px*/
   #shareSocial ul li{
     display: grid;
-  }
+  } 
 }
  
 /* Extra large devices (large desktops, 1200px and up) */
@@ -99,18 +103,34 @@
   h1 {font: size 3rem !important;} /*1rem = 16px*/  
   #shareSocial ul li{
     display: grid;
-  }  
+  } 
+} 
+code{
+  border-radius: 12px;
+} 
+code pre{
+  font-size: 1.2rem;
 }
+
 </style>
-<body>
+<body >
+   
+  
     <div class="container-fluid d-flex flex-column" style="min-height: 100%;">
         <div class="row ">
-            <div class="col-md-12 col-sm-12 col-lg-3 col-xl-3 order-md-2 order-sm-2 order-lg-1 order-xl-1 order-2" style="
-            margin-block-start: 25%;">
+            <div class="col-md-12 col-sm-12 col-lg-3 col-xl-3 order-md-2 order-sm-2 order-lg-3 order-xl-3 order-3" >
                 <div class="pt-5 pb-5 px-0"></div>
                 
-                <div class="card showOtherPost">
-                    <h5 class="card-header text-center">Other Posts From {{ posts.owner.user_name }}</h5>
+                <div class="card showOtherPost" style="margin-top:60%" >
+                    <h5 class="card-header text-center">
+                      <section>
+                        <div class="mt-2 mb-5"> 
+                            <img class="text-center" src="{{ posts.owner.profile_pic_url }}" style="height:50px; width:50px;border-radius:50%;">   
+                            <p >{{ posts.owner.user_name }}</p> 
+                            <h6 class="blog-post-meta">{{ posts.post_created|date:"Y-m-d "  }} </h6> 
+                        </div>
+                    </section>
+                      Other Posts From {{ posts.owner.user_name }}</h5>
                     <div class="card-body">
                         <ul>
                             {% for p in other_post %}
@@ -126,7 +146,7 @@
                     </div>
                 </div> 
                 <br/>
-                <div class="card text-center starCard">
+                 <div class="card text-center starCard" >
                     <div id="rate" class="container-fluid" style="padding: 2px;">
                         <div id="starrating"></div>
                         </br>
@@ -151,44 +171,8 @@
                             }
                         </script>
                     </div>
-                </div> 
-                <div class="justify-content-center" id="shareSocial" style="margin-block-start: 50%; ">
-                  <ul class="share">
-  
-                    <!-- Facebook -->
-                    <li>
-                      <button onclick="window.open('https://facebook.com/share.php?u=https://sheltered-journey-30026.herokuapp.com/{% url 'postView' posts.id %}&amp;t={{ posts.post_title }}', '_blank', 'top=150,left=400,width=450,height=550')" title="Facebook"><i data-feather="facebook"></i></button>
-                    </li>
-                        
-                    <!-- Twitter -->
-                    <li>
-                      <button class="share-twitter" onclick="window.open('https://twitter.com/intent/tweet?text=PAGE_TITLE_HERE&amp;url=PAGE_LINK_HERE&amp;via=USERNAME_HERE', '_blank', 'top=150,left=400,width=550,height=350')" title="Twitter"><i data-feather="twitter"></i></button>
-                    </li>
-                      
-                    <!-- Linkedin -->
-                    <li>
-                      <button onclick="window.open('https://www.linkedin.com/shareArticle?mini=true&amp;url=PAGE_LINK_HERE&amp;title=PAGE_TITLE_HERE&amp;summary=PAGE_DESCRIPTION_HERE&amp;source=PAGE_NAME_HERE', '_blank', 'top=150,left=550,width=450,height=650')" title="LinkedIn"><i data-feather="linkedin"></i></button>
-                    </li>
-                    
-                     
-                    <li>
-                      <button onclick="window.open('https://pinterest.com/pin/create/button/?url=PAGE_LINK_HERE&media=MEDIA_LINK_HERE&description=PAGE_DESCRIPTION_HERE', '_blank', 'top=150,left=550,width=450,height=650')" title="Pinterest">Pinterest
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,0A12,12,0,0,0,7.63,23.17a11.7,11.7,0,0,1,0-3.44l1.41-6A4.33,4.33,0,0,1,8.72,12c0-1.67,1-2.92,2.17-2.92a1.51,1.51,0,0,1,1.52,1.69,23.74,23.74,0,0,1-1,4,1.73,1.73,0,0,0,1.77,2.17c2.13,0,3.77-2.25,3.77-5.49a4.73,4.73,0,0,0-5-4.88,5.18,5.18,0,0,0-5.41,5.2,4.62,4.62,0,0,0,.89,2.74.36.36,0,0,1,.08.35c-.09.38-.29,1.19-.34,1.36s-.17.27-.4.16c-1.49-.69-2.43-2.89-2.43-4.64,0-3.79,2.75-7.26,7.93-7.26,4.16,0,7.39,3,7.39,6.93,0,4.13-2.61,7.46-6.22,7.46a3.2,3.2,0,0,1-2.75-1.38s-.61,2.29-.75,2.85a13.28,13.28,0,0,1-1.49,3.15A12.2,12.2,0,0,0,12,24,12,12,0,0,0,12,0Z"></path></svg>
-                      </button>
-                    </li> 
-                    
-                    <!-- WhatsApp -->
-                    <li>
-                      <a href="whatsapp://send?text=PAGE_TITLE_HERE - PAGE_LINK_HERE" target="_blank" title="WhatsApp"><i data-feather="message-circle"></i></a>
-                    </li>
-                    
-                  <!-- Email -->
-                    <li>
-                      <a href="mailto:?subject=PAGE_TITLE_HERE&amp;body=PAGE_LINK_HERE" rel="noopener" title="Email"><i data-feather="mail"></i></a>
-                    </li>
-                    
-                  </ul>
-                </div>
+                </div>  
+                
             </div>
             <div class="col-md-12 col-sm-12 col-lg-7 col-xl-7  blog-top order-md-1 order-sm-1 order-lg-2  order-xl-2 "
                 style="padding-bottom: 10%;">
@@ -198,26 +182,12 @@
                             <div style="padding-top: 2%;padding-bottom: 2%;">
                               <p class="text-center display-4" style="font-size: 4rem;font-weight: bold ;word-break: break-word; ">{{ posts.post_title }} </p>
                               </div>
-                            <section>
-                                <div class="row mt-5 justify-content-center ">
-                                    <div class="offset-sm-1 offset-md-1 col-md-2 col-sm-2 col-2"> 
-                                          <img src="{{ posts.owner.profile_pic_url }}" class="rounded-circle "
-                                              style="height:40px; width:40px;margin-left:50%"> 
-                                    </div>
-                                    <div class="col-md-4 col-sm-4 col-4">
-                                        <section>
-                                            <span>{{ posts.owner.user_name }}</span>
-                                        </section>
-                                        <section>
-                                            <h6 class="blog-post-meta">{{ posts.post_created|date:"Y-m-d "  }} </h6>
-                                        </section>
-                                    </div>
-                                </div>
-                            </section>
                         </section>
+                        
+                      
                     </div>
                     <section class="mt-5">
-                        <img src="{% static '3.png'%}" class="img-fluid full-width">
+                        <img src="https://wallpaperaccess.com/full/186244.jpg" class="img-fluid full-width">
                     </section>
                     <div class="mb-auto">
                         <section id="postBody">
@@ -230,7 +200,45 @@
                     </div>
                 </article>
             </div>
-            <div class="col-md-2 col-sm-2 col-lg-2 order-md-3 order-sm-3 order-lg-3 "></div>
+            <div class="col-md-2 col-sm-2 col-lg-2 order-md-1 order-sm-1 order-lg-1 ">
+              <div class="justify-content-center ss mt-5 " id="shareSocial" style="margin-top:40%">
+                <ul class="share">
+
+                  <!-- Facebook -->
+                  <li>
+                    <button onclick="window.open('https://facebook.com/share.php?u=https://sheltered-journey-30026.herokuapp.com/{% url 'postView' posts.id %}&amp;t={{ posts.post_title }}', '_blank', 'top=150,left=400,width=450,height=550')" title="Facebook"><i data-feather="facebook"></i></button>
+                  </li>
+                      
+                  <!-- Twitter -->
+                  <li>
+                    <button class="share-twitter" onclick="window.open('https://twitter.com/intent/tweet?text={{ posts.post_title }}&amp;url=https://sheltered-journey-30026.herokuapp.com/{% url 'postView' posts.id %}&amp;via=USERNAME_HERE', '_blank', 'top=150,left=400,width=550,height=350')" title="Twitter"><i data-feather="twitter"></i></button>
+                  </li>
+                    
+                  <!-- Linkedin -->
+                  <li>
+                    <button onclick="window.open('https://www.linkedin.com/shareArticle?mini=true&amp;url=https://sheltered-journey-30026.herokuapp.com/{% url 'postView' posts.id %}&amp;title={{ posts.post_title }}&amp;summary=PAGE_DESCRIPTION_HERE&amp;source=PAGE_NAME_HERE', '_blank', 'top=150,left=550,width=450,height=650')" title="LinkedIn"><i data-feather="linkedin"></i></button>
+                  </li>
+                  
+                   
+                  <li>
+                    <button onclick="window.open('https://pinterest.com/pin/create/button/?url=https://sheltered-journey-30026.herokuapp.com/{% url 'postView' posts.id %}&media=MEDIA_LINK_HERE&description=PAGE_DESCRIPTION_HERE', '_blank', 'top=150,left=550,width=450,height=650')" title="Pinterest">Pinterest
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,0A12,12,0,0,0,7.63,23.17a11.7,11.7,0,0,1,0-3.44l1.41-6A4.33,4.33,0,0,1,8.72,12c0-1.67,1-2.92,2.17-2.92a1.51,1.51,0,0,1,1.52,1.69,23.74,23.74,0,0,1-1,4,1.73,1.73,0,0,0,1.77,2.17c2.13,0,3.77-2.25,3.77-5.49a4.73,4.73,0,0,0-5-4.88,5.18,5.18,0,0,0-5.41,5.2,4.62,4.62,0,0,0,.89,2.74.36.36,0,0,1,.08.35c-.09.38-.29,1.19-.34,1.36s-.17.27-.4.16c-1.49-.69-2.43-2.89-2.43-4.64,0-3.79,2.75-7.26,7.93-7.26,4.16,0,7.39,3,7.39,6.93,0,4.13-2.61,7.46-6.22,7.46a3.2,3.2,0,0,1-2.75-1.38s-.61,2.29-.75,2.85a13.28,13.28,0,0,1-1.49,3.15A12.2,12.2,0,0,0,12,24,12,12,0,0,0,12,0Z"></path></svg>
+                    </button>
+                  </li>  
+                  <!-- WhatsApp 
+                  <li>
+                    <a href="whatsapp://send?text={{ posts.post_title }} - https://sheltered-journey-30026.herokuapp.com/{% url 'postView' posts.id %}" target="_blank" title="WhatsApp"><i data-feather="message-circle"></i></a>
+                  </li> -->
+                  
+                <!-- Email -->
+                  <li>
+                    <a href="mailto:?subject={{ posts.post_title }}&amp;body=https://sheltered-journey-30026.herokuapp.com/{% url 'postView' posts.id %}" rel="noopener" title="Email"><i data-feather="mail"></i></a>
+                  </li>
+                  
+                </ul>
+              </div>
+
+            </div>
         </div>
     </div>
     <hr/> 
@@ -426,6 +434,23 @@
       
         
       </script>
+      <script> 
+        var pos=document.getElementsByClassName("ss")[0].offsetTop; 
+        $(window).scroll(function() {
+            var currentScroll = $(window).scrollTop();
+            if (currentScroll >= pos) {
+                $('.ss').css({
+                    position: 'fixed',
+                    top:'40',
+                    left: '2'
+                });
+            } else {
+                $('.ss').css({ 
+                  position:'static'
+                });
+            }
+        }); 
+    </script>
 </body>
 
 </html>
