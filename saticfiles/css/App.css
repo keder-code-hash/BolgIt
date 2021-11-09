@@ -1,8 +1,9 @@
 /* @import url('https://fonts.googleapis.com/css?family=Roboto');   */
-@import url('https://fonts.googleapis.com/css?family=Comfortaa:300,400,700'); 
+/* @import url('https://fonts.googleapis.com/css?family=Comfortaa:300,400,700');  */
  body {
-   background: #e5ded8;
+   background: #ffe1aa;
    box-sizing: border-box;
+   font-family: monospace;
 }
 .navbar {
     margin-top: 2px;
@@ -542,4 +543,3 @@ section.cards {
 
 
 /* blog card design */
-

@@ -1,7 +1,9 @@
 window.onload=()=>
 {
+    feather.replace();
     const sr=document.getElementById("starrating");
     
+
     for(var i=0;i<5;i++){
 
         const span=document.createElement('span');
@@ -44,17 +46,16 @@ window.onload=()=>
             case "image":
                 let div=document.createElement("div");
                 let img=document.createElement("img");
-                let cap=document.createElement("small");
-                img.src=`${blocks[ind].data.file.url}`
-                // console.log(`${blocks[ind].data}`)
-                img.style="margin-top:20px";
+                let cap=document.createElement("lead");
+                img.src=`${blocks[ind].data.file.url}` 
+                img.style="margin-top:10%";
                 img.height=300;
-                img.width=320;
+                img.style="width:100%;max-width:70%;border-radius:7px;box-shadow: 10px -9px;"  
                 cap.textContent=blocks[ind].data.caption;
-                cap.style="margin-top:5px";
+                cap.style="margin-top:2%;font-weight:500px;margin-bottom:2%;";
                 div.appendChild(img);
                 div.appendChild(cap)
-                div.style="width:100%;display:grid;place-items:center";
+                div.style="width:100%;display:grid;place-items:center;padding-top:10%;padding-bottom:10%";
                 postBody.appendChild(div);
                 break;
             case "quote":
