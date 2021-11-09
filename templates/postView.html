@@ -19,36 +19,112 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
     </script>
-
+    <script src="https://unpkg.com/feather-icons@4.10.0/dist/feather.min.js"></script>
     <link rel="stylesheet" href={% static 'css/star.css' %}>
     <!-- <script src="/static/js/jquery-3.1.1.min.js"></script>
     <script src="/static/js/jquery.waypoints.min.js"></script> -->
     <script src={% static 'js/postView.js' %}></script>
     <script src={% static 'js/starRating.js' %}></script>
+    <!-- <script src={% static 'css/postView.js' %}></script> -->
 </head>
+<style>
+  button {
+  display: inline-block;
+  cursor: pointer;
+  padding: 1rem 1.5rem;
+  line-height: 1;
+  margin-bottom: 1rem;
+  color: #000;
+  font-size: 1rem;
+  font-weight: bold;
+  border: 2px solid #000;
+  border-radius: 2rem;
+  background: #fff;
+}
 
+.share {
+  list-style: none;
+  margin: 0 auto 2rem;
+}
+.share li {
+  float: none;
+  display: inline-block;
+}
+.share button, .share a {
+  float: left;
+  display: block;
+  height: 64px;
+  width: 64px;
+  margin: .5rem;
+  padding: 1rem;
+  border-radius: 50%;
+  font-size: 0;
+  color: #000;
+  cursor: pointer;
+  background: #fff;
+  transition: all 150ms ease-in-out;
+  border: 2px solid #000;
+}
+.share button:hover, .share button:focus,
+.share a:hover, .share a:focus {
+  background: #000;
+}
+.share button:hover svg, .share button:focus svg,
+.share a:hover svg, .share a:focus svg {
+  color: #fff;
+}
+/* Small devices (landscape phones, 544px and up) */
+@media (min-width: 544px) {  
+  h1 {font: size 1.5rem !important;} /*1rem = 16px*/
+}
+ 
+/* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
+@media (min-width: 768px) {  
+  h1 {font: size 2rem !important;} /*1rem = 16px*/
+  #shareSocial ul li{
+    display: grid;
+  }
+}
+ 
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) { 
+  h1 {font: size 2.5rem !important;} /*1rem = 16px*/
+  #shareSocial ul li{
+    display: grid;
+  }
+}
+ 
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {  
+  h1 {font: size 3rem !important;} /*1rem = 16px*/  
+  #shareSocial ul li{
+    display: grid;
+  }  
+}
+</style>
 <body>
     <div class="container-fluid d-flex flex-column" style="min-height: 100%;">
         <div class="row ">
-            <div class="col-md-12 col-sm-12 col-lg-3 col-xl-3 order-md-2 order-sm-2 order-lg-1 order-xl-1 order-2">
+            <div class="col-md-12 col-sm-12 col-lg-3 col-xl-3 order-md-2 order-sm-2 order-lg-1 order-xl-1 order-2" style="
+            margin-block-start: 25%;">
                 <div class="pt-5 pb-5 px-0"></div>
-                    <div class="card showOtherPost">
-                        <h5 class="card-header text-center">Other Posts From {{ posts.owner.user_name }}</h5>
-                        <div class="card-body">
-                            <ul>
-                                {% for p in other_post %}
-                                    <li>
-                                        <p class="card-text">
-                                            <a href={% url 'postView' p.id %} class="stretched-link" target="_blank" >{{ p.post_title }}</a>
-                                        </p>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                            <!-- <h5 class="card-title">Special title treatment</h5>
-                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
-                        </div>
+                
+                <div class="card showOtherPost">
+                    <h5 class="card-header text-center">Other Posts From {{ posts.owner.user_name }}</h5>
+                    <div class="card-body">
+                        <ul>
+                            {% for p in other_post %}
+                                <li>
+                                    <p class="card-text">
+                                        <a href={% url 'postView' p.id %} class="stretched-link" target="_blank" >{{ p.post_title }}</a>
+                                    </p>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <!-- <h5 class="card-title">Special title treatment</h5>
+                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
                     </div>
-                <br/>
+                </div> 
                 <br/>
                 <div class="card text-center starCard">
                     <div id="rate" class="container-fluid" style="padding: 2px;">
@@ -75,6 +151,43 @@
                             }
                         </script>
                     </div>
+                </div> 
+                <div class="justify-content-center" id="shareSocial" style="margin-block-start: 50%; ">
+                  <ul class="share">
+  
+                    <!-- Facebook -->
+                    <li>
+                      <button onclick="window.open('https://facebook.com/share.php?u=https://sheltered-journey-30026.herokuapp.com/{% url 'postView' posts.id %}&amp;t={{ posts.post_title }}', '_blank', 'top=150,left=400,width=450,height=550')" title="Facebook"><i data-feather="facebook"></i></button>
+                    </li>
+                        
+                    <!-- Twitter -->
+                    <li>
+                      <button class="share-twitter" onclick="window.open('https://twitter.com/intent/tweet?text=PAGE_TITLE_HERE&amp;url=PAGE_LINK_HERE&amp;via=USERNAME_HERE', '_blank', 'top=150,left=400,width=550,height=350')" title="Twitter"><i data-feather="twitter"></i></button>
+                    </li>
+                      
+                    <!-- Linkedin -->
+                    <li>
+                      <button onclick="window.open('https://www.linkedin.com/shareArticle?mini=true&amp;url=PAGE_LINK_HERE&amp;title=PAGE_TITLE_HERE&amp;summary=PAGE_DESCRIPTION_HERE&amp;source=PAGE_NAME_HERE', '_blank', 'top=150,left=550,width=450,height=650')" title="LinkedIn"><i data-feather="linkedin"></i></button>
+                    </li>
+                    
+                     
+                    <li>
+                      <button onclick="window.open('https://pinterest.com/pin/create/button/?url=PAGE_LINK_HERE&media=MEDIA_LINK_HERE&description=PAGE_DESCRIPTION_HERE', '_blank', 'top=150,left=550,width=450,height=650')" title="Pinterest">Pinterest
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,0A12,12,0,0,0,7.63,23.17a11.7,11.7,0,0,1,0-3.44l1.41-6A4.33,4.33,0,0,1,8.72,12c0-1.67,1-2.92,2.17-2.92a1.51,1.51,0,0,1,1.52,1.69,23.74,23.74,0,0,1-1,4,1.73,1.73,0,0,0,1.77,2.17c2.13,0,3.77-2.25,3.77-5.49a4.73,4.73,0,0,0-5-4.88,5.18,5.18,0,0,0-5.41,5.2,4.62,4.62,0,0,0,.89,2.74.36.36,0,0,1,.08.35c-.09.38-.29,1.19-.34,1.36s-.17.27-.4.16c-1.49-.69-2.43-2.89-2.43-4.64,0-3.79,2.75-7.26,7.93-7.26,4.16,0,7.39,3,7.39,6.93,0,4.13-2.61,7.46-6.22,7.46a3.2,3.2,0,0,1-2.75-1.38s-.61,2.29-.75,2.85a13.28,13.28,0,0,1-1.49,3.15A12.2,12.2,0,0,0,12,24,12,12,0,0,0,12,0Z"></path></svg>
+                      </button>
+                    </li> 
+                    
+                    <!-- WhatsApp -->
+                    <li>
+                      <a href="whatsapp://send?text=PAGE_TITLE_HERE - PAGE_LINK_HERE" target="_blank" title="WhatsApp"><i data-feather="message-circle"></i></a>
+                    </li>
+                    
+                  <!-- Email -->
+                    <li>
+                      <a href="mailto:?subject=PAGE_TITLE_HERE&amp;body=PAGE_LINK_HERE" rel="noopener" title="Email"><i data-feather="mail"></i></a>
+                    </li>
+                    
+                  </ul>
                 </div>
             </div>
             <div class="col-md-12 col-sm-12 col-lg-7 col-xl-7  blog-top order-md-1 order-sm-1 order-lg-2  order-xl-2 "
@@ -82,10 +195,9 @@
                 <article class="blog-view">
                     <div class="justify-content-center">
                         <section>
-                            <div>
-                                <h1 class="text-center" style="font-size: xx-large; line-height: 3px; letter-spacing: normal;">{{ posts.post_title | convert_markdown |safe}}
-                                </h1>
-                            </div>
+                            <div style="padding-top: 2%;padding-bottom: 2%;">
+                              <p class="text-center display-4" style="font-size: 4rem;font-weight: bold ;word-break: break-word; ">{{ posts.post_title }} </p>
+                              </div>
                             <section>
                                 <div class="row mt-5 justify-content-center ">
                                     <div class="offset-sm-1 offset-md-1 col-md-2 col-sm-2 col-2"> 

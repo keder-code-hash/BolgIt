@@ -20,7 +20,7 @@ class Posts(models.Model):
     tag=models.ManyToManyField(postTag)
 
     def __str__(self):
-        return self.post_title
+        return str(self.post_title)
     class Meta:
         ordering=['post_title']
 
