@@ -1,5 +1,3 @@
-
-
 window.onload=()=>
 {
     // fix the social div after scrolling
@@ -26,16 +24,13 @@ window.onload=()=>
     if (starCount>0){
         const starNode=document.getElementById(`starSpan ${starCount-1}`);
         giveStar(starNode);
-    }
-    
-    //contact submit
-
-
+    } 
     // main postveiw code
     const postBody=document.getElementById("postBody");
     let body=JSON.parse(postData);
     // console.log("length of the block is: ",JSON.parse(body.body_custom).blocks);
     let blocks=JSON.parse(body.body_custom).blocks;
+    console.log(blocks);
     for(let ind=0;ind<=blocks.length;ind++){
         switch (blocks[ind].type) {
             case "paragraph":
@@ -56,7 +51,7 @@ window.onload=()=>
                 let div=document.createElement("div");
                 let img=document.createElement("img");
                 let cap=document.createElement("lead");
-                img.src=`${blocks[ind].data.file.url}` 
+                img.src=`${blocks[ind].data.file.url}` ;
                 img.style="margin-top:10%";
                 img.height=300;
                 img.style="width:100%;max-width:70%;border-radius:7px;box-shadow: 10px -9px;"  
@@ -82,27 +77,26 @@ window.onload=()=>
                 figureDiv.appendChild(figCaption)
                 postBody.appendChild(figureDiv)
                 break;
+            // case "raw":
+            //     let blockquote = document.createElement("blockquote");
+            //     let code = document.createElement("code");
+            //     let pre = document.createElement("pre");
+            //     pre.textContent = blocks[ind].data.html;
+            //     pre.style.background = "#131313";
+            //     pre.style.color = "#dddddd";
+            //     pre.style.padding = "15px";
+            //     code.appendChild(pre);
+            //     postBody.appendChild(code);
+            //     break;
             case "raw":
-                let blockquote = document.createElement("blockquote");
-                let code = document.createElement("code");
-                let pre = document.createElement("pre");
-                pre.textContent = blocks[ind].data.html;
-                pre.style.background = "#131313";
-                pre.style.color = "#dddddd";
-                pre.style.padding = "15px";
-                code.appendChild(pre);
-                postBody.appendChild(code);
-                break;
-            case "Code":
                 let bq = document.createElement("div");
                 let cd = document.createElement("code");
                 let pr = document.createElement("pre");
-                cd.textContent = blocks[ind].data.code;
-                // pr.style.background = "#e3dfdf";
-                // pr.style.color = "#090909";
-                // pr.style.padding = "15px"; 
+                cd.innerText=blocks[ind].data.html; 
+                // console.log(blocks[ind].data.code);
                 pr.appendChild(cd); 
-                postBody.appendChild(pr);
+                bq.appendChild(pr);
+                postBody.appendChild(bq);
                 break;
             case "list":
                 if(blocks[ind].data.style==="unordered")
