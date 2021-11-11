@@ -10,48 +10,69 @@
             <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
             <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-             
+            <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+             <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
             <link rel="stylesheet" type="text/css" href={% static 'css/App.css' %}>
+             
+            <!-- <link href={% static 'css/bootstrap.min.css' %} rel="stylesheet"> -->
+            <link href={% static 'css/fontawesome-all.min.css' %} rel="stylesheet">
+            <link href={% static 'css/swiper.css' %} rel="stylesheet">
+            <link href={% static 'css/styles.css' %} rel="stylesheet">
+            <link rel="stylesheet" href={% static 'css/App.css' %}> 
+             <!-- SEO Meta Tags -->
+            <meta name="BlogIt" content="Blogging Web Application">
+            <meta name="Keder" content="Keder Nath Mallick">
+
+            
+
+            <!-- Webpage Title -->
+            <title>BlogIt</title>
+            
+            
+            <!-- Favicon  -->
+            <link rel="icon" href={% static 'images/favicon.png' %}>
     </head>
 <body>
-    <div class="container-fluid" style="overflow: auto;">
+    <div class="container-fluid"  style="overflow: auto;">
         <!-- <div class="row"> -->
-            <div class="navContainer">
-                <nav class="navbar navbar-expand-lg">
-                    <!-- <div class="container"> -->
-                    <a class="nav-link" href="{% url 'homePage' %}">
-                        <h1 color="white">BlogIt</h1>
-                    </a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                        <!-- <span class="navbar-toggler-icon"> -->
-                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAABmJLR0QA/wD/AP+gvaeTAAAAqklEQVR4nO3bMQqAMBQFQfX+d9ZaSBXELGSmTBXY8vGPAwCA752Dt/v3X+zt1eBa9QvGBIkRJEaQGEFiBIkRBAAAAACYMtrU/7b7hm9TLxMkRpAYQWIEiREkRhAAAAAAYIo79fVs6mWCxAgSI0iMIDGCxAgCAAAAAExxp76eTb1MkBhBYgSJESRGkBhBAAAAAIAp7tTXs6mXCRIjSIwgMYLECBIjCAAAG3gAa8EFTGvREHIAAAAASUVORK5CYII="/>
-                        <!-- </span> -->
+            <nav id="navbarExample" class="navbar navbar-expand-lg fixed-top navbar-light" aria-label="Main navigation">
+                <div class="container-fluid">
+        
+                    <!-- Image Logo -->
+                    <a class="navbar-brand logo-image" href={% url 'homePage' %}>BlogIt</a>   
+        
+                    <!-- Text Logo - Use this if you don't have a graphic logo -->
+                    <!-- <a class="navbar-brand logo-text" href="index.html">Zinc</a> -->
+        
+                    <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
                     </button>
-                      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                        <ul class="navbar-nav ml-auto">
+        
+                    <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+                        <ul class="navbar-nav ms-auto navbar-nav-scroll">
                             {% if is_authenticated %}
                                 <li class="nav-item py-0 px-0" data-toggle="collapse" data-target=".navbar-collapse ">
-                                    <a href="{% url 'profile' %}" class=" btn btn-outline-light px-5" role="button" >MyProfile</a>
+                                    <a class="btn-solid-sm" href="{% url 'profile' %}" class=" btn btn-outline-light px-5" role="button" >MyProfile</a>
                                 </li>
                                 <li class="nav-item py-0 px-0" data-toggle="collapse" data-target=".navbar-collapse ">
-                                    <a href={%url 'createpost' %} class=" btn btn-outline-light px-5" role="button" >Post</a>
+                                    <a class="btn-solid-sm" href={%url 'createpost' %} class=" btn btn-outline-light px-5" role="button" >Post</a>
                                 </li>
                                 <li class="nav-item py-0 px-0" >
-                                    <a href={%url 'logout' %} class=" btn btn-outline-light px-5" role="button">LogOut</a>
+                                    <a class="btn-solid-sm" href={%url 'logout' %} class=" btn btn-outline-light px-5" role="button">LogOut</a>
                                 </li>
                             {% else %}
                                 <li class="nav-item py-0 px-0" data-toggle="collapse" data-target=".navbar-collapse">
-                                <a href={%url 'register' %} class="btn btn-outline-light px-5 " role="button" >Signup</a>
+                                <a class="btn-solid-sm" href={%url 'register' %} class="btn btn-outline-light px-5 " role="button" >Signup</a>
                                 </li>
                                 <li class="nav-item py-0 px-0" data-toggle="collapse" data-target=".navbar-collapse">
-                                    <a href={%url 'login' %} class=" btn btn-outline-light px-5" role="button" >Login</a>
+                                    <a class="btn-solid-sm" href={%url 'login' %} class=" btn btn-outline-light px-5" role="button" >Login</a>
                                 </li>
                             {% endif %}
-                        </ul>
-                    </div>
-                <!-- </div> -->
-                </nav>
-            </div>
+                        </ul> 
+                    </div> <!-- end of navbar-collapse -->
+                </div> <!-- end of container -->
+            </nav>
         <!-- </div> -->
         
     </div>
@@ -63,26 +84,72 @@
    </br>
 <!-- <- </br></br></br></br></br> --> 
     <!-- <div class="footer" > -->
-        <footer class="page-footer font-small bg-info pt-3 ml-1 mr-1 sticky-md-bottom" style="padding-top: 50%; bottom: 0%;">
-            <div class="container-fluid">
-                <ul id="horul" class="list-unstyled list-inline text-center py-2">
-                    <li class="list-inline-item ">
-                        <a href="#!" class=" btn btn-outline-light px-5"role="button" >About Us</a>
-                    </li>
-                    <li class="list-inline-item">
-                    <a href="#!" class=" btn btn-outline-light px-5"role="button" >Privacy Policy</a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a class=" btn btn-outline-light px-5" role="button" data-toggle="modal" data-target="#contact-modal">contact</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="footer-copyright text-center py-3">© 2021 Copyright:
-                <a href="#" class="text-white">BlogIt</a>
-            </div>
-        </footer>
-   
-        <!-- <div id="contact"><button type="button" class="btn btn-info btn" data-toggle="modal" data-target="#contact-modal">Show Contact Form</button></div> -->
+        <div class="footer bg-gray">
+            <img class="decoration-city" src={% static 'images/decoration-city.svg' %} alt="alternative">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4>Made with Django And lots of ❤😊</h4>
+                        <div class="social-container">
+                            <span class="fa-stack">
+                                <a href="#your-link">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-facebook-f fa-stack-1x"></i>
+                                </a>
+                            </span>
+                            <span class="fa-stack">
+                                <a href="#your-link">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-twitter fa-stack-1x"></i>
+                                </a>
+                            </span>
+                            <span class="fa-stack">
+                                <a href="#your-link">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-pinterest-p fa-stack-1x"></i>
+                                </a>
+                            </span>
+                            <span class="fa-stack">
+                                <a href="#your-link">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-instagram fa-stack-1x"></i>
+                                </a>
+                            </span>
+                            <span class="fa-stack">
+                                <a href="#your-link">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-youtube fa-stack-1x"></i>
+                                </a>
+                            </span>
+                        </div> <!-- end of social-container -->
+                    </div> <!-- end of col -->
+                </div> <!-- end of row -->
+            </div> <!-- end of container -->
+        </div>
+        <!-- Copyright -->
+        <div class="copyright bg-gray">
+            <div class="container-fliud">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <ul class="list-unstyled li-space-lg p-small">
+                            <li>
+                                <a href="#!">About Us</a>
+                            </li>
+                            <li>
+                            <a href="#!">Privacy Policy</a>
+                            </li>
+                            <li>
+                                <a class="btn-solid-sm" role="button" data-toggle="modal" data-target="#contact-modal">contact</a>
+                            </li>
+                        </ul>
+                    </div> <!-- end of col -->
+                    <div class="col-lg-6">
+                        <p class="p-small statement">Copyright © <a href="#">Keder Nath Mallick</a></p>
+                    </div> <!-- end of col -->
+                </div> <!-- enf of row -->
+            </div> <!-- end of container -->
+        </div> <!-- end of copyright --> 
+    <!-- end of copyright --> 
         <div id="contact-modal" class="modal fade" role="dialog">    
             <div class="modal-dialog">
                 <div class="modal-content bg-dark">
@@ -151,6 +218,15 @@
             }
         </script>
     <!-- </div> -->
+    
+    <button onclick="topFunction()" id="myBtn">
+        <img src={% static 'images/up-arrow.png' %} alt="alternative">
+    </button>
+    <!-- <script src={% static  '/js/bootstrap.min.js' %}  type="text/javascript"></script> Bootstrap framework -->
+    <script src={% static 'js/swiper.min.js' %}  type="text/javascript"></script> <!-- Swiper for image and text sliders -->
+    <script src={% static 'js/purecounter.min.js' %} type="text/javascript"></script> <!-- Purecounter counter for statistics numbers -->
+    <script src={% static 'js/isotope.pkgd.min.js' %} type="text/javascript"></script> <!-- Isotope for filter -->
+   <!--  <script src={% static 'js/scripts.js' %} type="text/javascript"></script> Custom scripts -->
 </body>
 </html>
 

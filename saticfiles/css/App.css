@@ -1,5 +1,5 @@
 /* @import url('https://fonts.googleapis.com/css?family=Roboto');   */
-/* @import url('https://fonts.googleapis.com/css?family=Comfortaa:300,400,700');  */
+/* @import url('https://fonts.googleapis.com/css?family=Comfortaa:300,400,700');
  body {
    background: #f6e2bc;
    box-sizing: border-box;
@@ -31,10 +31,7 @@ li.nav-item.right.py-0.px-0 {
     padding: 0px;
     margin: 0px;
     margin-right: 2px;
-}
-/* div#navbarNavAltMarkup {
-    height: 5rem;
-} */
+} 
 .navContainer{
     position: fixed !important;
     top: 0;
@@ -50,7 +47,7 @@ li.nav-item.right.py-0.px-0 {
 }
 
 .navbar-toggler{
-    background-color: #4CAF50; /* Green */
+    background-color: #4CAF50; 
     border: none;
     color: white;
     padding: 15px 32px;
@@ -67,42 +64,9 @@ li.nav-item.right.py-0.px-0 {
 .navbar-nav{
     right: 0px;
 }
+*/
 
-
-
-         
-footer {
-    /* position: fixed; */
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background-color: rgb(247, 243, 243);
-    color: white;
-    text-align: center;
-
-    
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
-    background: rgb(35,78,212);
-    background: -moz-linear-gradient(90deg, rgba(35,78,212,0.8799894957983193) 88%, rgba(53,94,226,1) 100%);
-    background: -webkit-linear-gradient(90deg, rgba(35,78,212,0.8799894957983193) 88%, rgba(53,94,226,1) 100%);
-    background: linear-gradient(90deg, rgba(35,78,212,0.8799894957983193) 88%, rgba(53,94,226,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#234ed4",endColorstr="#355ee2",GradientType=1);
- }
-
-
- footer{
-  /* position: fixed; */
-  /* left: 0; */
-  /* bottom: 0; */
- }
- footer .btn{
-    color:black;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    border-radius: 10px;
- }
-
+   
  .showOtherPost{
     width: 70%;
     box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
@@ -425,13 +389,6 @@ input[type="checkbox"]:checked + label {
 }
 
 
-.container {
-  max-width: 948px;
-  margin: 4em auto;
-  padding: 4em;
-  background: #fff;
-  border-radius: 1em;
-}
 
 section.cards {
   margin: 0 auto;

@@ -80,8 +80,15 @@
   color: #fff;
 }
 /* Small devices (landscape phones, 544px and up) */
-@media (min-width: 544px) {  
+@media (max-width: 425px) {  
   h1 {font: size 1.5rem !important;} /*1rem = 16px*/
+  #shareSocial ul {
+    display: flex;
+  
+  }
+  #shareSocial {
+    position:absolute;
+  } 
 }
  
 /* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
@@ -89,7 +96,11 @@
   h1 {font: size 2rem !important;} /*1rem = 16px*/
   #shareSocial ul li{
     display: grid;
+  
   }
+  #shareSocial {
+    position:absolute;
+  }  
 }
  
 /* Large devices (desktops, 992px and up) */
@@ -97,6 +108,7 @@
   h1 {font: size 2.5rem !important;} /*1rem = 16px*/
   #shareSocial ul li{
     display: grid;
+  
   } 
 }
  
@@ -105,7 +117,8 @@
   h1 {font: size 3rem !important;} /*1rem = 16px*/  
   #shareSocial ul li{
     display: grid;
-  } 
+  
+  }
 } 
 /* code{
   border-radius: 12px;
@@ -125,7 +138,7 @@
   
     <div class="container-fluid d-flex flex-column" style="min-height: 100%;">
         <div class="row ">
-            <div class="col-md-12 col-sm-12 col-lg-3 col-xl-3 order-md-2 order-sm-2 order-lg-3 order-xl-3 order-3" >
+            <div class="col-md-12 col-sm-12 col-lg-3 col-xl-3 order-md-3 order-sm-3 order-lg-3 order-xl-3 order-3" >
                 <div class="pt-5 pb-5 px-0"></div>
                 
                 <div class="card showOtherPost" style="margin-top:60%" >
@@ -196,43 +209,7 @@
                     <section class="mt-5">
                         <img src="https://wallpaperaccess.com/full/186244.jpg" class="img-fluid full-width">
                     </section>
-                    <div class="mb-auto">
-                        <!-- <pre> 
-                          <code >
-package in.assign.Accounts4_3;
-
-public class CurrentAccount extends Account{
-  private final int minimumBalance=100;
-  private int balance;
-  private int interestRate;
-  private int serviceCharge=150;
-  public CurrentAccount(int balance,int interestRate,String customername, String accountNumber, String accountType) {
-    super(customername, accountNumber, accountType);
-    this.balance=balance;
-    this.interestRate=interestRate;
-  }
-  public void deposit(int amount) {
-    this.balance+=amount;
-  }
-  public void withdrawl(int amount)  throws BalanceExcep{
-    if(minimumBalance > this.balance) {
-      this.balance=-this.serviceCharge;
-      throw new BalanceExcep(this.minimumBalance, this.balance,this.serviceCharge);
-    }
-    else {
-      this.balance-=amount;			
-    }
-  } 
-  public void calInterest(float time) {
-    float interest=((float)(this.balance*this.interestRate)*time)/100;
-    this.balance+=(int)interest;
-  }
-  public void print() {
-    System.out.println("Balance:- "+this.balance);
-  }
-}
-                          </code>
-                        </pre> -->
+                    <div class="mb-auto"> 
                         <section id="postBody">
                             <div class="container-fluid mt-5 mb-auto">
                                 <script>
@@ -243,7 +220,7 @@ public class CurrentAccount extends Account{
                     </div>
                 </article>
             </div>
-            <div class="col-md-2 col-sm-2 col-lg-2 order-md-1 order-sm-1 order-lg-1 ">
+            <div class="col-md-12 col-sm-12 col-lg-2 order-md-2 order-sm-2 order-lg-1 order-xl-1 order-2">
               <div class="justify-content-center ss mt-5 " id="shareSocial" style="margin-top:40%">
                 <ul class="share">
 
@@ -590,7 +567,7 @@ public class CurrentAccount extends Account{
                 let cd = document.createElement("code");
                 let pr = document.createElement("pre");
                 cd.innerHTML=blocks[ind].data.html; 
-                cd.className="java";
+                // cd.className="java";
                 // cd.id="code";
                 // console.log(blocks[ind].data.code);
                 pr.appendChild(cd); 
