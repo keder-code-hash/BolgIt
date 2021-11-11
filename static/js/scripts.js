@@ -7,9 +7,9 @@ window.onscroll = function () {
 	scrollFunctionBTT(); // back to top button
 };
 
-window.onload = function () {
-	scrollFunction();
-};
+// window.onload = function () {
+// 	scrollFunction();
+// };
 
 function scrollFunction() {
 	if (document.documentElement.scrollTop > 30) {
