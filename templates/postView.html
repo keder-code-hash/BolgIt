@@ -32,8 +32,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/github-dark-dimmed.min.css" integrity="sha512-zcatBMvxa7rT7dDklfjauWsfiSFParF+hRfCdf4Zr40/MmA1gkFcBRbop0zMpvYF3FmznYFgcL8wlcuO/GwHoA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
       <script>hljs.initHighlightingOnLoad();</script>
     <!-- <script src={% static 'css/postView.js' %}></script> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css" integrity="sha384-R4558gYOUz8mP9YWpZJjofhk+zx0AS11p36HnD2ZKj/6JR5z27gSSULCNHIRReVs" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js" integrity="sha384-z1fJDqw8ZApjGO3/unPWUPsIymfsJmyrDVWC8Tv/a1HeOtGmkwNd/7xUS0Xcnvsx" crossorigin="anonymous"></script> 
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/contrib/auto-render.min.js" integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
 </head>
 <style>
+  .katex { 
+        font-size: 2.1em;
+        line-height: 2.2;
+        text-indent: 5px;
+  }
   button {
   display: inline-block;
   cursor: pointer;
@@ -504,7 +513,7 @@
     let body=JSON.parse(postData);
     // console.log("length of the block is: ",JSON.parse(body.body_custom).blocks);
     let blocks=JSON.parse(body.body_custom).blocks;
-    // console.log(blocks);
+    console.log(blocks);
     for(let ind=0;ind<=blocks.length;ind++){
         switch (blocks[ind].type) {
             case "paragraph":
@@ -512,6 +521,17 @@
                 par.innerHTML = blocks[ind].data.text;
                 par.id="editorP"
                 postBody.appendChild(par)
+                break;
+            case "Math":
+                const conDiv=document.createElement("div");
+                conDiv.style.alignItems="center";
+                conDiv.style.boxShadow="5px 5px 5px #666";
+                const mathSpan=document.createElement("span");
+                mathSpan.className="math";
+                mathSpan.style.color="black";
+                mathSpan.innerHTML=blocks[ind].data.math;
+                conDiv.appendChild(mathSpan);
+                postBody.appendChild(conDiv);
                 break;
             case "header":
                 let size=blocks[ind].data.level;
@@ -699,8 +719,32 @@
                 break;
         }
     }
-// };
+// };document.addEventListener("DOMContentLoaded", function() {
     </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+          renderMathInElement(document.body, { 
+            delimiters: [
+                  {left: '$$', right: '$$', display: true},
+                  {left: '$', right: '$', display: false},
+                  {left: '\\(', right: '\\)', display: false},
+                  {left: '\\[', right: '\\]', display: true}, 
+                  {left: "\\(", right: "\\)", display: false},
+                  {left: "\\begin{equation}", right: "\\end{equation}", display: true},
+                  {left: "\\begin{align}", right: "\\end{align}", display: true},
+                  {left: "\\begin{alignat}", right: "\\end{alignat}", display: true},
+                  {left: "\\begin{gather}", right: "\\end{gather}", display: true},
+                  {left: "\\begin{CD}", right: "\\end{CD}", display: true},
+                  {left: "\\[", right: "\\]", display: true}
+            ], 
+            throwOnError : false
+          });
+          var math = document.getElementsByClassName('math');
+          for (var i = 0; i < math.length; i++) {
+              katex.render(math[i].textContent, math[i]);
+          } 
+      }); 
+  </script>
 </body>
 
 </html>

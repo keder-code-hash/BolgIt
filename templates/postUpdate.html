@@ -22,6 +22,14 @@
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/paragraph"></script>
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/delimiter"></script>
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/image@2.3.0"></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@2.19.0/dist/editor.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/mdgaziur/EditorJS-LaTeX@latest/dist/editorjs-latex.bundle-min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mdgaziur/EditorJS-LaTeX@latest/dist/editorjs-latex.bundle.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css"></link>
+
+
   <script src={% static 'image/simple-image.js' %}></script>
   <link href={% static 'image/simple-image.css' %} rel="stylesheet"/>
   <script src={% static 'js/jquery-3.1.1.min.js' %}></script>
@@ -55,8 +63,11 @@
               const editor = new EditorJS({
                 autofocus: true,
                 tools:{
-                    
-                  image: {
+                    Math:{
+                        class: EJLaTeX,
+                        shortcut: 'CMD+SHIFT+M'
+                    },
+                    image: {
                       class: ImageTool,
                       config: {
                         endpoints: {

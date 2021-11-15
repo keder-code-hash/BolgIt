@@ -39,6 +39,12 @@ window.onload=()=>
                 par.id="editorP"
                 postBody.appendChild(par)
                 break;
+            case "Math":
+                const mathSpan=document.createElement("span");
+                mathSpan.className="math";
+                mathSpan.innerHTML=blocks[ind].data.text;
+                postBody.appendChild(mathDiv);
+                break;
             case "header":
                 let size=blocks[ind].data.level;
                 let text=blocks[ind].data.text;
@@ -223,4 +229,24 @@ window.onload=()=>
                 break;
         }
     }
+    renderMathInElement(document.body, { 
+        delimiters: [
+              {left: '$$', right: '$$', display: true},
+              {left: '$', right: '$', display: false},
+              {left: '\\(', right: '\\)', display: false},
+              {left: '\\[', right: '\\]', display: true}, 
+              {left: "\\(", right: "\\)", display: false},
+              {left: "\\begin{equation}", right: "\\end{equation}", display: true},
+              {left: "\\begin{align}", right: "\\end{align}", display: true},
+              {left: "\\begin{alignat}", right: "\\end{alignat}", display: true},
+              {left: "\\begin{gather}", right: "\\end{gather}", display: true},
+              {left: "\\begin{CD}", right: "\\end{CD}", display: true},
+              {left: "\\[", right: "\\]", display: true}
+        ], 
+        throwOnError : false
+      });
+      var math = document.getElementsByClassName('math');
+      for (var i = 0; i < math.length; i++) {
+          katex.render(math[i].textContent, math[i]);
+      } 
 };
