@@ -500,9 +500,3 @@ table#change-history tbody th {
 .popup #header {
     padding: 10px 20px;
 }
-#changelist {
-    display: flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-    flex-direction: column;
-}

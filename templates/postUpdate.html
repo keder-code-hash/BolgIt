@@ -11,7 +11,6 @@
   <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
   <meta content="utf-8" http-equiv="encoding">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-  <link href="https://goodies.pixabay.com/jquery/tag-editor/jquery.tag-editor.css" rel="stylesheet" />
 
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>
@@ -29,10 +28,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css"></link>
 
+  <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js" integrity="sha256-xNjb53/rY+WmG+4L6tTl9m6PpqknWZvRt0rO1SRnJzw=" crossorigin="anonymous"></script>
+  <script src={% static 'tageditor/jquery.caret.min.js' %}></script>
+  <script src={% static 'tageditor/jquery.json-tag-editor.min.js' %}></script>
+  <link rel="stylesheet" href={% static 'tageditor/jquery.json-tag-editor.css' %}>
 
   <script src={% static 'image/simple-image.js' %}></script>
   <link href={% static 'image/simple-image.css' %} rel="stylesheet"/>
-  <script src={% static 'js/jquery-3.1.1.min.js' %}></script>
+  <!-- <script src={% static 'js/jquery-3.1.1.min.js' %}></script> -->
   <script src={%static 'js/jquery.waypoints.min.js' %}></script>
 </head>
 <body>
@@ -51,7 +55,8 @@
             <label for="post_category">Catagory</label> 
             <br>
             <small id="textHelp" class="form-text text-muted">Select your Post Catagory Here.</small> 
-            <div id="demo2"></div>
+            <textarea id="hero-demo">
+            </textarea>
           </div>
 
 
@@ -60,6 +65,7 @@
               let body=JSON.parse("{{ body_custom | escapejs}}");
               var blocks=JSON.parse(JSON.stringify(body.body_custom));
               console.log("{{ data.catagory }}");
+              
               const editor = new EditorJS({
                 autofocus: true,
                 tools:{
@@ -144,24 +150,17 @@
         </br>
         </br>
           <button id="save-data" type="submit" class="btn btn-primary">Submit</button>
-        <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-        <script src="https://code.jquery.com/ui/1.10.2/jquery-ui.min.js"></script>
-        <script src="https://goodies.pixabay.com/jquery/tag-editor/jquery.caret.min.js"></script>
-        <script src="https://goodies.pixabay.com/jquery/tag-editor/jquery.tag-editor.js"></script>
+         
         <script>
-          const source = {{tags | safe}};
-
-          $('#demo2').tagEditor({
-          autocomplete: {
-              delay: 0, // show suggestions immediately
-              position: {
-              collision: 'flip'
-              }, // automatic menu position up/down
-              source
-          },
-          forceLowercase: false, 
-          initialTags: {{initTags | safe}},
-          placeholder: 'Tags ...', 
+          const source = new Array("{{ data.catagory | safe }}");
+          // console.log(source);
+          console.log(source)
+          $(function() {
+            $('#hero-demo').jsonTagEditor({
+                autocomplete: { delay: 0, position: { collision: 'flip' }, source: source },
+                forceLowercase: false,
+                placeholder: 'Blog Tags ...'
+            }); 
           });
           // console.log('postData');
           let but=document.getElementById('save-data');

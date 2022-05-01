@@ -7,7 +7,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link  href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-  <link href="https://goodies.pixabay.com/jquery/tag-editor/jquery.tag-editor.css" rel="stylesheet" />
 
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>
@@ -25,11 +24,19 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mdgaziur/EditorJS-LaTeX@latest/dist/editorjs-latex.bundle.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css"></link>
-  
-  <script src={% static 'js/jquery-3.1.1.min.js' %}></script>
-  <script src={%static 'js/jquery.waypoints.min.js' %}></script>
+     
+
+  <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js" integrity="sha256-xNjb53/rY+WmG+4L6tTl9m6PpqknWZvRt0rO1SRnJzw=" crossorigin="anonymous"></script>
+  <script src={% static 'tageditor/jquery.caret.min.js' %}></script>
+  <script src={% static 'tageditor/jquery.json-tag-editor.min.js' %}></script>
+  <link rel="stylesheet" href={% static 'tageditor/jquery.json-tag-editor.css' %}>
+
+  <!-- <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script> -->
+  <script src={% static 'js/jquery.waypoints.min.js' %}></script>
   <script src={% static 'image/simple-image.js' %}></script>
   <link href={% static 'image/simple-image.css' %} >
+  
 </head>
 <body>
   <div class="container">
@@ -41,19 +48,21 @@
             <input type="text" class="form-control" id="PostTitle" aria-describedby="textHelp" >
             <small id="textHelp" class="form-text text-muted">Enter your Post title Here.</small>
           </div>
+
           <div class="form-group">
             <label for="post_category">Catagory</label>
-            <!-- <input type="text" class="form-control" id="postCatagory" aria-describedby="textHelp"> -->
             <br>
-            <small id="textHelp" class="form-text text-muted">Select your Post Catagory Here.</small>
-
-            <!-- <div id="output"></div>
-            <select  data-placeholder="Choose tags ..." name="tags[]" multiple class="chosen-select" style="width: 50%;">
-              
-            </select> -->
             
-            <div id="demo2"></div>
+            <!-- <div style="border-top: 1px solid #eee;border-bottom:1px solid #eee;background:#fafafa;margin:30px 0;padding:20px 5px">
+              <div style="padding :0 7px 0 5px;max-width:900px;margin:auto"> -->
+                <textarea id="hero-demo">
+                </textarea>
+              <!-- </div> -->
+            <!-- </div> -->
+
+            <small id="textHelp" class="form-text text-muted">Select your Post Catagory Here.</small>
           </div>
+
           <div id="editorjs"></div>
           <script>
               const editor = new EditorJS({
@@ -131,24 +140,18 @@
 
 
 
-        <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-        <script src="https://code.jquery.com/ui/1.10.2/jquery-ui.min.js"></script>
-        <script src="https://goodies.pixabay.com/jquery/tag-editor/jquery.caret.min.js"></script>
-        <script src="https://goodies.pixabay.com/jquery/tag-editor/jquery.tag-editor.js"></script>
+        
         <script>
-          
           const source = {{tags | safe}};
 
-          $('#demo2').tagEditor({
-          autocomplete: {
-              delay: 0, // show suggestions immediately
-              position: {
-              collision: 'flip'
-              }, // automatic menu position up/down
-              source
-          },
-          forceLowercase: false,
-          placeholder: 'Tags ...', 
+           
+
+          $(function() {
+            $('#hero-demo').jsonTagEditor({
+                autocomplete: { delay: 0, position: { collision: 'flip' }, source: source },
+                forceLowercase: false,
+                placeholder: 'Blog Tags ...'
+            }); 
           });
 
           const but=document.getElementById('save-data');
@@ -169,7 +172,7 @@
                           },
                           data:{
                               "postTitle":document.getElementById('PostTitle')!==null ? document.getElementById('PostTitle').value : '',
-                              "postCatagory": $("#demo2").val(),
+                              "postCatagory": $("#hero-demo").val(),
                               "postStatus":document.getElementsByName('status')[0].checked==true ? document.getElementsByName('status')[0].value : document.getElementsByName('status')[1].value,
                               "postData":postData
                           },
